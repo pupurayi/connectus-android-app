@@ -37,7 +37,7 @@ import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
 import com.connectus.mobile.api.dto.TransactionType;
 import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
-import com.connectus.mobile.ui.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.initial.authorize.AuthorizeFragment;
 import com.connectus.mobile.ui.check.CheckPaymateFragment;
 import com.connectus.mobile.ui.notification.NotificationFragment;
 import com.connectus.mobile.ui.paymate.PaymateApplicationFragment;
@@ -49,7 +49,6 @@ import com.connectus.mobile.ui.check.CheckProfileFragment;
 import com.connectus.mobile.ui.transaction.TransactionRecyclerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.i18n.phonenumbers.NumberParseException;
 
 import java.util.Collections;
 import java.util.Comparator;

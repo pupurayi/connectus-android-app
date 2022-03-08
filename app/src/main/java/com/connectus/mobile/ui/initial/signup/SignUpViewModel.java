@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.signup;
+package com.connectus.mobile.ui.initial.signup;
 
 import android.content.Context;
 import android.util.Log;

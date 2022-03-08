@@ -49,161 +49,161 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/user/authorize/{phoneNumber}")
+    @GET("/api/v1/user/authorize/{phoneNumber}")
     Call<ResponseDTO<AuthorizationResponse>> authorize(@Path("phoneNumber") String phoneNumber);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/user/sign-in")
+    @POST("/api/v1/user/sign-in")
     Call<AuthenticationResponse> signIn(@Body SignInRequest signInRequest);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/user/sign-up")
+    @POST("/api/v1/user/sign-up")
     Call<AuthenticationResponse> signUp(@Body SignUpRequest signUpRequest);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/user/verification")
+    @GET("/api/v1/user/verification")
     Call<ResponseDTO> userVerificationOTP(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/user/verification")
+    @POST("/api/v1/user/verification")
     Call<ResponseDTO> userVerification(@Header("Authorization") String authentication, @Body ValidateOTPRequest validateOTO);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/user/reset-password/{username}")
+    @GET("/api/v1/user/reset-password/{username}")
     Call<ResponseDTO> resetPassword(@Path("username") String username);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/user/reset-password/{username}/{otp}")
+    @GET("/api/v1/user/reset-password/{username}/{otp}")
     Call<ResponseDTO> resetPassword(@Path("username") String username, @Path("otp") String otp);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/user/reset-password")
+    @POST("/api/v1/user/reset-password")
     Call<ResponseDTO> resetPassword(@Body ResetPasswordRequest resetPasswordRequest);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/user/change-password")
+    @POST("/api/v1/user/change-password")
     Call<ResponseDTO> changePassword(@Header("Authorization") String authentication, @Body ChangePasswordRequest changePasswordRequest);
 
     @Headers({
             "Accept: application/json"
     })
     @Multipart
-    @POST("/core/api/v1/user/profile-picture")
+    @POST("/api/v1/user/profile-picture")
     Call<ResponseDTO> uploadProfilePicture(@Header("Authorization") String authentication, @Part MultipartBody.Part profilePicture);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/profile")
+    @GET("/api/v1/profile")
     Call<ProfileDTO> getProfile(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
-    @PUT("/core/api/v1/profile")
+    @PUT("/api/v1/profile")
     Call<ProfileDTO> updateProfile(@Header("Authorization") String authentication, @Body UpdateProfileRequest updateProfileRequest);
 
 
     @Headers({
             "Accept: application/json"
     })
-    @PUT("/core/api/v1/profile/address")
+    @PUT("/api/v1/profile/address")
     Call<ResponseDTO<ProfileDTO>> updateAddress(@Header("Authorization") String authentication, @Body UpdateAddressRequest updateAddressRequest);
 
     @Headers({
             "Accept: application/json"
     })
-    @PUT("/core/api/v1/profile/identification")
+    @PUT("/api/v1/profile/identification")
     Call<ResponseDTO<ProfileDTO>> updateIdentification(@Header("Authorization") String authentication, @Body UpdateIdentificationRequest updateIdentificationRequest);
 
     @Headers({
             "Accept: application/json"
     })
     @Multipart
-    @POST("/core/api/v1/profile/upload/{type}")
+    @POST("/api/v1/profile/upload/{type}")
     Call<ResponseDTO> uploadProfileDocuments(@Header("Authorization") String authentication, @Path("type") String type, @Part MultipartBody.Part document);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/profile/check/{username}")
+    @GET("/api/v1/profile/check/{username}")
     Call<ResponseDTO<CheckProfileDTO>> checkProfile(@Header("Authorization") String authentication, @Path("username") String username);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/transaction/process")
+    @POST("/api/v1/transaction/process")
     Call<TransactionDto> processTransaction(@Header("Authorization") String authentication, @Body TransactionDto transactionDto);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/transaction")
+    @GET("/api/v1/transaction")
     Call<ResponseDTO<List<Transaction>>> getTransactionHistory(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/transaction/banks/{username}")
+    @GET("/api/v1/transaction/banks/{username}")
     Call<ResponseDTO<List<BankDto>>> getBanks(@Header("Authorization") String authorization, @Path("username") String username);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/paymate/update-business-location")
+    @POST("/api/v1/paymate/update-business-location")
     Call<ResponseDTO<PaymateApplication>> updatePaymateBusinessLocation(@Header("Authorization") String authentication, @Body PaymateBusinessLocation paymateBusinessLocation);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/paymate/application")
+    @GET("/api/v1/paymate/application")
     Call<ResponseDTO<PaymateApplication>> getPaymateApplication(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
     @Multipart
-    @POST("/core/api/v1/paymate/upload-document/{documentType}")
+    @POST("/api/v1/paymate/upload-document/{documentType}")
     Call<ResponseDTO<PaymateApplication>> uploadPaymateApplicationDocument(@Header("Authorization") String authentication, @Path("documentType") String documentType, @Part MultipartBody.Part document);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/paymate/check/{paymateCode}")
+    @GET("/api/v1/paymate/check/{paymateCode}")
     Call<ResponseDTO<CheckPaymateDTO>> checkPaymate(@Header("Authorization") String authentication, @Path("paymateCode") long paymateCode);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/core/api/v1/airtime/operator/{phoneNumber}")
+    @GET("/api/v1/airtime/operator/{phoneNumber}")
     Call<ResponseDTO<OperatorResponse>> getMobileOperator(@Header("Authorization") String authentication, @Path("phoneNumber") String phoneNumber);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/airtime/topup")
+    @POST("/api/v1/airtime/topup")
     Call<ResponseDTO<BalanceDTO>> mobileTopup(@Header("Authorization") String authorization, @Body MobileTopupRequest mobileTopupRequest);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/core/api/v1/payfast/create-token")
+    @POST("/api/v1/payfast/create-token")
     Call<ResponseDTO<CreateTokenResponseDto>> createToken(@Header("Authorization") String authorization, @Body CreatePayFastToken createPayFastToken);
 
     @Headers({

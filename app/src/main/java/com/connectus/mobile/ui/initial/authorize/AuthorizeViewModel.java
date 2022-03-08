@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.authorize;
+package com.connectus.mobile.ui.initial.authorize;
 
 import android.content.Context;
 import android.util.Log;

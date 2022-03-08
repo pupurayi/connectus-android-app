@@ -83,7 +83,7 @@ public class Common {
     public static void loadAvatar(boolean isAvatarAvailable, ImageView imageView, UUID userId) {
         if (isAvatarAvailable) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/core/api/v1/user/profile-picture/" + userId + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageView);
@@ -93,7 +93,7 @@ public class Common {
     public void loadAvatar(boolean avatarAvailable, UUID userId, ImageView imageView) {
         if (avatarAvailable) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/core/api/v1/user/profile-picture/" + userId + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageView);

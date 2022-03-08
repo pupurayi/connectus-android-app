@@ -147,7 +147,7 @@ public class CashWithdrawalFragment extends Fragment {
     public void loadAvatar(boolean avatarAvailable, UUID userId, ImageView imageView) {
         if (avatarAvailable) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/core/api/v1/user/profile-picture/" + userId + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageView);

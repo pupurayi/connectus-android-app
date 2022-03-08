@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.authorize;
+package com.connectus.mobile.ui.initial.authorize;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -22,8 +22,8 @@ import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.AuthorizationResponse;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.signin.SignInFragment;
-import com.connectus.mobile.ui.signup.SignUpFragment;
+import com.connectus.mobile.ui.initial.signin.SignInFragment;
+import com.connectus.mobile.ui.initial.signup.SignUpFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.hbb20.CountryCodePicker;
 

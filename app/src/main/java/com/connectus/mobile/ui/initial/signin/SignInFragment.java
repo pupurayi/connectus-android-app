@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.signup;
+package com.connectus.mobile.ui.initial.signin;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -25,12 +25,13 @@ import android.widget.TextView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.AuthorizationResponse;
 import com.connectus.mobile.api.dto.ResponseDTO;
-import com.connectus.mobile.api.dto.SignUpRequest;
+import com.connectus.mobile.api.dto.SignInRequest;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.profile.EditProfileAddressFragment;
-import com.connectus.mobile.ui.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.initial.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.resetpassword.ForgotPasswordFragment;
+import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,20 +41,20 @@ import com.google.firebase.messaging.FirebaseMessaging;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class SignUpFragment extends Fragment {
-    private static final String TAG = SignUpFragment.class.getSimpleName();
+public class SignInFragment extends Fragment {
+    private static final String TAG = SignInFragment.class.getSimpleName();
 
+    EditText editTextPassword;
+    TextView textViewPhoneNumber, textViewChangePhone, textViewForgotPassword;
+    Button buttonSignIn;
     ProgressDialog pd;
-    TextView textViewPhoneNumber, textViewChangePhone;
-    EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
-    Button buttonSignUp;
 
-    String phoneNumber;
+    private String phoneNumber;
     boolean passwordShow = false;
 
-    SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
-    private SignUpViewModel signUpViewModel;
+    private SignInViewModel signInViewModel;
+    SharedPreferencesManager sharedPreferencesManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,9 @@ public class SignUpFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        return inflater.inflate(R.layout.fragment_sign_in, container, false);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -77,12 +78,9 @@ public class SignUpFragment extends Fragment {
         AuthorizationResponse authorizationResponse = sharedPreferencesManager.getAuthorization();
         phoneNumber = authorizationResponse.getUsername();
 
+
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_number);
         textViewPhoneNumber.setText(phoneNumber);
-        editTextFirstName = view.findViewById(R.id.edit_text_first_name);
-        editTextLastName = view.findViewById(R.id.edit_text_last_name);
-        editTextEmail = view.findViewById(R.id.edit_text_email);
-
         editTextPassword = view.findViewById(R.id.edit_text_password);
         editTextPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -106,45 +104,48 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-        buttonSignUp = view.findViewById(R.id.button_next);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+
+        textViewForgotPassword = getView().findViewById(R.id.text_view_otp_title);
+        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstName = editTextFirstName.getText().toString().trim();
-                String lastName = editTextLastName.getText().toString().trim();
-                String email = editTextEmail.getText().toString().trim();
+                ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.add(R.id.container, forgotPasswordFragment, ForgotPasswordFragment.class.getSimpleName());
+                transaction.addToBackStack(TAG);
+                transaction.commit();
+            }
+        });
+
+        buttonSignIn = view.findViewById(R.id.button_sign_in);
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String password = editTextPassword.getText().toString().trim();
-                // TODO validations pwd>=8 email
-                if (firstName.length() > 2 && lastName.length() > 2 && email.length() != 0 && password.length() >= 8) {
-                    pd.setMessage("Please Wait ...");
+                if (password.length() != 0) {
+                    pd.setMessage("Authenticating ...");
                     pd.show();
+
                     FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
                         public void onComplete(@NonNull Task<String> task) {
                             String fcm_token = null;
                             if (!task.isSuccessful()) {
                                 Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                pd.dismiss();
                             } else {
                                 fcm_token = task.getResult();
                             }
-                            signUp(firstName, lastName, email, phoneNumber, password, fcm_token);
+                            signIn(view, phoneNumber, password, fcm_token);
                         }
                     });
                 } else {
-                    if (firstName.length() == 0) {
-                        Snackbar.make(view, "Enter First Name!", Snackbar.LENGTH_LONG).show();
-                    } else if (lastName.length() == 0) {
-                        Snackbar.make(view, "Enter Last Name!", Snackbar.LENGTH_LONG).show();
-                    } else if (email.length() == 0) {
-                        Snackbar.make(view, "Enter valid Email!", Snackbar.LENGTH_LONG).show();
-                    } else if (password.length() < 8) {
-                        Snackbar.make(view, "Password should have at least 8 characters!", Snackbar.LENGTH_LONG).show();
-                    }
+                    Snackbar.make(view, "Enter Password!", Snackbar.LENGTH_LONG).show();
                 }
             }
         });
 
-        textViewChangePhone = view.findViewById(R.id.text_view_change_phone);
+        textViewChangePhone = getView().findViewById(R.id.text_view_change_phone);
         textViewChangePhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,26 +162,25 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    public void signUp(String firstName, String lastName, String email, String username, String password, String fcm_token) {
-        signUpViewModel.hitSignUpApi(getActivity(), new SignUpRequest(firstName, lastName, email, username, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+    public void signIn(View view, String username, String password, String fcm_token) {
+        signInViewModel.hitSignInApi(getActivity(), new SignInRequest(username, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
             @Override
             public void onChanged(ResponseDTO responseDTO) {
-                pd.dismiss();
                 switch (responseDTO.getStatus()) {
                     case "success":
                         Common.subscribeToTopic(Constants.GENERAL_TOPIC);
-                        EditProfileAddressFragment editProfileAddressFragment = new EditProfileAddressFragment();
+                        DashboardFragment dashboardFragment = new DashboardFragment();
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, editProfileAddressFragment, EditProfileAddressFragment.class.getSimpleName());
+                        transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
                         transaction.commit();
                         break;
                     case "failed":
                     case "error":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                         break;
                 }
+                pd.dismiss();
             }
         });
     }
-
 }

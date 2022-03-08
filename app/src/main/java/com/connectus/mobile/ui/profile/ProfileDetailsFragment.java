@@ -249,6 +249,6 @@ public class ProfileDetailsFragment extends Fragment {
     }
 
     private void invalidateAvatarCache(UUID userId) {
-        Picasso.get().invalidate(Constants.CORE_BASE_URL + "/core/api/v1/user/profile-picture/" + userId + ".png");
+        Picasso.get().invalidate(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png");
     }
 }

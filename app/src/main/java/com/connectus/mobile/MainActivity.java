@@ -10,10 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.connectus.mobile.api.dto.ProfileDTO;
 import com.connectus.mobile.common.Common;
-import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
-import com.connectus.mobile.ui.splashscreen.SplashScreenFragment;
+import com.connectus.mobile.ui.initial.splashscreen.SplashScreenFragment;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;

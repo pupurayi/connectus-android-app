@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.splashscreen;
+package com.connectus.mobile.ui.initial.splashscreen;
 
 import android.os.Bundle;
 
@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.AuthorizationResponse;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.authorize.AuthorizeFragment;
-import com.connectus.mobile.ui.signin.SignInFragment;
-import com.connectus.mobile.ui.signup.SignUpFragment;
+import com.connectus.mobile.ui.initial.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.initial.signin.SignInFragment;
+import com.connectus.mobile.ui.initial.signup.SignUpFragment;
 
 /**
  * A simple {@link Fragment} subclass.
