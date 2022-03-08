@@ -64,6 +64,14 @@ public interface APIService {
     @POST("/api/v1/user/sign-up")
     Call<AuthResponseDto> signUp(@Body SignUpRequest signUpRequest);
 
+
+    @Headers({
+            "Accept: application/json"
+    })
+    @POST("/api/v1/user/change-password")
+    Call<ResponseDTO> changePassword(@Header("Authorization") String authentication, @Body ChangePasswordRequest changePasswordRequest);
+
+
     @Headers({
             "Accept: application/json"
     })
@@ -93,12 +101,6 @@ public interface APIService {
     })
     @POST("/api/v1/user/reset-password")
     Call<ResponseDTO> resetPassword(@Body ResetPasswordRequest resetPasswordRequest);
-
-    @Headers({
-            "Accept: application/json"
-    })
-    @POST("/api/v1/user/change-password")
-    Call<ResponseDTO> changePassword(@Header("Authorization") String authentication, @Body ChangePasswordRequest changePasswordRequest);
 
     @Headers({
             "Accept: application/json"
