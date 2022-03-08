@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.TransactionType;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -51,7 +51,7 @@ public class ServicesFragment extends Fragment {
     private ServicesViewModel servicesViewModel;
     String authentication;
 
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     ServicesRecyclerAdapter servicesRecyclerAdapter;
     RecyclerView recyclerViewServices;

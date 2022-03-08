@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.SibaDepositDTO;
 import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.common.Common;
@@ -52,7 +52,7 @@ public class SibaDepositFragment extends Fragment {
 
     String sibaProfileId;
     SibaProfile sibaProfile;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
     String authentication;
     boolean dialogNotActive = true;
 

@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.ChangePasswordRequest;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -57,12 +57,12 @@ public class SettingsFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

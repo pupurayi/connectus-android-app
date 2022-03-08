@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.CheckProfileDTO;
 import com.connectus.mobile.api.dto.transaction.AdditionalDataTags;
 import com.connectus.mobile.api.dto.transaction.ResponseCodes;
@@ -70,14 +70,14 @@ public class TransferFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             UUID userId = UUID.fromString(arguments.getString("userId"));
-            String username = arguments.getString("username");
+            String msisdn = arguments.getString("msisdn");
             String userStatus = arguments.getString("userStatus");
             boolean avatarAvailable = arguments.getBoolean("avatarAvailable");
             UUID profileId = UUID.fromString(arguments.getString("profileId"));
             String firstName = arguments.getString("firstName");
             String lastName = arguments.getString("lastName");
             String profileStatus = arguments.getString("profileStatus");
-            checkProfileDTO = new CheckProfileDTO(userId, username, userStatus, avatarAvailable, profileId, firstName, lastName, profileStatus);
+            checkProfileDTO = new CheckProfileDTO(userId, msisdn, userStatus, avatarAvailable, profileId, firstName, lastName, profileStatus);
             Log.d(TAG, new Gson().toJson(checkProfileDTO));
         } else {
             getActivity().onBackPressed();
@@ -94,20 +94,20 @@ public class TransferFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.itf_image_view_profile_avatar);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
 
         imageViewRecipientAvatar = view.findViewById(R.id.itf_image_view_recipient_avatar);
-        Common.loadAvatar(checkProfileDTO.isAvatarAvailable(), imageViewRecipientAvatar, checkProfileDTO.getUserId());
+        Common.loadAvatar(checkProfileDTO.isAvatarAvailable(), imageViewRecipientAvatar, checkProfileDTO.getId());
 
         textViewDebitAccountName = view.findViewById(R.id.text_view_debit_account_name);
         String debitAccountHolder = checkProfileDTO.getFirstName() + " " + checkProfileDTO.getLastName();
         textViewDebitAccountName.setText(debitAccountHolder);
 
         textViewDebitAccountNumber = view.findViewById(R.id.text_view_debit_account_number);
-        textViewDebitAccountNumber.setText(checkProfileDTO.getUsername());
+        textViewDebitAccountNumber.setText(checkProfileDTO.getMsisdn());
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(new View.OnClickListener() {

@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.CheckProfileDTO;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.TransactionType;
@@ -69,7 +69,7 @@ public class CheckProfileFragment extends Fragment {
     private CheckViewModel checkViewModel;
 
     String authentication;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +109,7 @@ public class CheckProfileFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);
@@ -155,10 +155,10 @@ public class CheckProfileFragment extends Fragment {
                 } catch (Exception ignored) {
 
                 }
-                String username = String.format("+%s%s", countryCode, phoneNumber);
-                boolean isPhoneNumberValid = isValidMobileNumber(username);
+                String msisdn = String.format("+%s%s", countryCode, phoneNumber);
+                boolean isPhoneNumberValid = isValidMobileNumber(msisdn);
                 if (isPhoneNumberValid) {
-                    checkProfile(username);
+                    checkProfile(msisdn);
                 } else {
                     Toast.makeText(getContext(), "Enter a valid phone number!", Toast.LENGTH_LONG).show();
                 }
@@ -166,11 +166,11 @@ public class CheckProfileFragment extends Fragment {
         });
     }
 
-    public void checkProfile(String username) {
-        if (!profileDTO.getUsername().equals(username)) {
+    public void checkProfile(String msisdn) {
+        if (!profileDTO.getMsisdn().equals(msisdn)) {
             pd.setMessage("Checking Profile ...");
             pd.show();
-            checkViewModel.hitCheckProfileApi(authentication, username).observe(getViewLifecycleOwner(), new Observer<ResponseDTO<CheckProfileDTO>>() {
+            checkViewModel.hitCheckProfileApi(authentication, msisdn).observe(getViewLifecycleOwner(), new Observer<ResponseDTO<CheckProfileDTO>>() {
                 @Override
                 public void onChanged(ResponseDTO<CheckProfileDTO> responseDTO) {
                     pd.dismiss();
@@ -178,8 +178,8 @@ public class CheckProfileFragment extends Fragment {
                         case "success":
                             CheckProfileDTO checkProfileDTO = responseDTO.getData();
                             Bundle bundle = new Bundle();
-                            bundle.putString("userId", checkProfileDTO.getUserId().toString());
-                            bundle.putString("username", checkProfileDTO.getUsername());
+                            bundle.putString("userId", checkProfileDTO.getId().toString());
+                            bundle.putString("msisdn", checkProfileDTO.getMsisdn());
                             bundle.putString("userStatus", checkProfileDTO.getUserStatus());
                             bundle.putBoolean("avatarAvailable", checkProfileDTO.isAvatarAvailable());
                             bundle.putString("profileId", checkProfileDTO.getProfileId().toString());
@@ -252,9 +252,9 @@ public class CheckProfileFragment extends Fragment {
             JSONObject obj = null;
             try {
                 obj = new JSONObject(result);
-                String username = String.valueOf(obj.get("username"));
-                if (username != null) {
-                    checkProfile(username);
+                String msisdn = String.valueOf(obj.get("msisdn"));
+                if (msisdn != null) {
+                    checkProfile(msisdn);
                 } else {
                     Toast.makeText(getContext(), "QR Code is not valid!", Toast.LENGTH_SHORT).show();
                 }

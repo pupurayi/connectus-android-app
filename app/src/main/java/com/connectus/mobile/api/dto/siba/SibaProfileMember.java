@@ -7,19 +7,19 @@ public class SibaProfileMember {
     private String profile;
     private UUID memberProfileId;
     private UUID userId;
-    private String username;
+    private String msisdn;
     private String firstName;
     private String lastName;
     private String status;
     private String createdAt;
     private String updatedAt;
 
-    public SibaProfileMember(String _id, String profile, UUID memberProfileId, UUID userId, String username, String firstName, String lastName, String status, String createdAt, String updatedAt) {
+    public SibaProfileMember(String _id, String profile, UUID memberProfileId, UUID userId, String msisdn, String firstName, String lastName, String status, String createdAt, String updatedAt) {
         this._id = _id;
         this.profile = profile;
         this.memberProfileId = memberProfileId;
         this.userId = userId;
-        this.username = username;
+        this.msisdn = msisdn;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
@@ -51,7 +51,7 @@ public class SibaProfileMember {
         this.memberProfileId = memberProfileId;
     }
 
-    public UUID getUserId() {
+    public UUID getId() {
         return userId;
     }
 
@@ -59,12 +59,12 @@ public class SibaProfileMember {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMsisdn() {
+        return msisdn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public String getFirstName() {

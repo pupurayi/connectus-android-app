@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.DetailedChatMessage;
 
@@ -26,9 +26,9 @@ public class SibaMessagesRecyclerAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private final List<DetailedChatMessage> detailedChatMessages;
-    private final ProfileDTO profileDTO;
+    private final ProfileDto profileDTO;
 
-    public SibaMessagesRecyclerAdapter(Context context, List<DetailedChatMessage> detailedChatMessages, ProfileDTO profileDTO) {
+    public SibaMessagesRecyclerAdapter(Context context, List<DetailedChatMessage> detailedChatMessages, ProfileDto profileDTO) {
         this.context = context;
         this.detailedChatMessages = detailedChatMessages;
         this.profileDTO = profileDTO;
@@ -111,7 +111,7 @@ public class SibaMessagesRecyclerAdapter extends RecyclerView.Adapter {
 
         void bind(DetailedChatMessage detailedChatMessage) {
             textViewDate.setText(Common.getFormattedTime("MMM dd", detailedChatMessage.getCreatedAt()));
-            Common.loadAvatar(true, imageViewIncomingMessageAvatar, detailedChatMessage.getSender().getUserId());
+            Common.loadAvatar(true, imageViewIncomingMessageAvatar, detailedChatMessage.getSender().getId());
             String firstName = String.valueOf(detailedChatMessage.getSender().getNickName());
             textViewFirstName.setText(firstName);
             textViewMessage.setText(detailedChatMessage.getMessage());

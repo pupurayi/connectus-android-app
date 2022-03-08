@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.api.dto.siba.SibaProfileMember;
 import com.connectus.mobile.common.Common;
@@ -45,7 +45,7 @@ public class SibaProfileMembersFragment extends Fragment {
     SibaViewModel sibaViewModel;
 
     String authentication, sibaProfileId;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
     SibaProfile sibaProfile;
     List<SibaProfileMember> sibaProfileMembers;
     SibaProfileMembersRecyclerAdapter sibaProfileMembersRecyclerAdapter;
@@ -82,7 +82,7 @@ public class SibaProfileMembersFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

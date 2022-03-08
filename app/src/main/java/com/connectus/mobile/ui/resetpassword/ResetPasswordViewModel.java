@@ -62,9 +62,9 @@ public class ResetPasswordViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<ResponseDTO> hitResetPasswordApi(String username, String otp) {
+    public MutableLiveData<ResponseDTO> hitResetPasswordApi(String msisdn, String otp) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO> ul = apiService.resetPassword(username, otp);
+        Call<ResponseDTO> ul = apiService.resetPassword(msisdn, otp);
         try {
             ul.enqueue(new Callback<ResponseDTO>() {
                 @Override
@@ -98,9 +98,9 @@ public class ResetPasswordViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<ResponseDTO> hitResetPasswordApi(final Context context, String username) {
+    public MutableLiveData<ResponseDTO> hitResetPasswordApi(final Context context, String msisdn) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO> ul = apiService.resetPassword(username);
+        Call<ResponseDTO> ul = apiService.resetPassword(msisdn);
         try {
             ul.enqueue(new Callback<ResponseDTO>() {
                 @Override

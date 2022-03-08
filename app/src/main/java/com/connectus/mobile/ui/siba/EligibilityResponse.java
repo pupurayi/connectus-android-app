@@ -2,13 +2,13 @@ package com.connectus.mobile.ui.siba;
 
 public class EligibilityResponse {
     private Long profileId;
-    private String username;
+    private String msisdn;
     private String firstName;
     private String lastName;
 
-    public EligibilityResponse(Long profileId, String username, String firstName, String lastName) {
+    public EligibilityResponse(Long profileId, String msisdn, String firstName, String lastName) {
         this.profileId = profileId;
-        this.username = username;
+        this.msisdn = msisdn;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -21,12 +21,12 @@ public class EligibilityResponse {
         this.profileId = profileId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMsisdn() {
+        return msisdn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public String getFirstName() {

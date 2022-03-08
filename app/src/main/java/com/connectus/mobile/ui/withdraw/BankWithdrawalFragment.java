@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.BankDto;
 import com.connectus.mobile.api.dto.transaction.AdditionalDataTags;
 import com.connectus.mobile.api.dto.transaction.ResponseCodes;
@@ -94,10 +94,10 @@ public class BankWithdrawalFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.cw_image_view_profile_avatar);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(new View.OnClickListener() {

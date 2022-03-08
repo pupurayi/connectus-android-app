@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class CheckProfileDTO {
     private UUID userId;
-    private String username;
+    private String msisdn;
     private String userStatus;
     private boolean avatarAvailable;
     private UUID profileId;
@@ -12,9 +12,9 @@ public class CheckProfileDTO {
     private String lastName;
     private String profileStatus;
 
-    public CheckProfileDTO(UUID userId, String username, String userStatus, boolean avatarAvailable, UUID profileId, String firstName, String lastName, String profileStatus) {
+    public CheckProfileDTO(UUID userId, String msisdn, String userStatus, boolean avatarAvailable, UUID profileId, String firstName, String lastName, String profileStatus) {
         this.userId = userId;
-        this.username = username;
+        this.msisdn = msisdn;
         this.userStatus = userStatus;
         this.avatarAvailable = avatarAvailable;
         this.profileId = profileId;
@@ -23,7 +23,7 @@ public class CheckProfileDTO {
         this.profileStatus = profileStatus;
     }
 
-    public UUID getUserId() {
+    public UUID getId() {
         return userId;
     }
 
@@ -31,12 +31,12 @@ public class CheckProfileDTO {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMsisdn() {
+        return msisdn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public String getUserStatus() {

@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.connectus.mobile.MainActivity;
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.FirestoreHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -69,10 +69,10 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         FirestoreHandler firestoreHandler = new FirestoreHandler();
-        if (profileDTO.getUserId() != null) {
-            firestoreHandler.saveFCMToken(profileDTO.getUserId(), token);
+        if (profileDTO.getId() != null) {
+            firestoreHandler.saveFCMToken(profileDTO.getId(), token);
         }
     }
 

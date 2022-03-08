@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.PaymateApplication;
 import com.connectus.mobile.api.dto.PaymateBusinessLocation;
 import com.connectus.mobile.api.dto.ResponseDTO;
@@ -79,7 +79,7 @@ public class PaymateApplicationFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
 
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         authentication = sharedPreferencesManager.getAuthenticationToken();
 
         imageViewBack = view.findViewById(R.id.image_view_back);

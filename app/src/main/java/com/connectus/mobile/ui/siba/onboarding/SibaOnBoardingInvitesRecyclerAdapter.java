@@ -42,9 +42,9 @@ public class SibaOnBoardingInvitesRecyclerAdapter extends RecyclerView.Adapter<S
         EligibilityResponse eligibilityResponse = invites.get(position);
         String fullName = eligibilityResponse.getFirstName() + " " + eligibilityResponse.getLastName();
         holder.textViewFullName.setText(fullName);
-        String username = eligibilityResponse.getUsername();
-        holder.textViewUsername.setText(username);
-        holder.ccpCountryCode.setFullNumber(username);
+        String msisdn = eligibilityResponse.getMsisdn();
+        holder.textViewMsisdn.setText(msisdn);
+        holder.ccpCountryCode.setFullNumber(msisdn);
         holder.position = position;
     }
 
@@ -55,14 +55,14 @@ public class SibaOnBoardingInvitesRecyclerAdapter extends RecyclerView.Adapter<S
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewFullName, textViewUsername;
+        private TextView textViewFullName, textViewMsisdn;
         private CountryCodePicker ccpCountryCode;
         private int position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewFullName = (TextView) itemView.findViewById(R.id.text_view_full_name);
-            textViewUsername = (TextView) itemView.findViewById(R.id.text_view_username);
+            textViewMsisdn = (TextView) itemView.findViewById(R.id.text_view_msisdn);
             ccpCountryCode = (CountryCodePicker) itemView.findViewById(R.id.ccp_country_code);
 
 

@@ -85,12 +85,12 @@ public class ForgotPasswordFragment extends Fragment {
                 } catch (Exception ignored) {
 
                 }
-                String username = String.format("+%s%s", countryCode, phoneNumber);
-                boolean isPhoneNumberValid = isValidMobileNumber(username);
+                String msisdn = String.format("+%s%s", countryCode, phoneNumber);
+                boolean isPhoneNumberValid = isValidMobileNumber(msisdn);
                 if (isPhoneNumberValid) {
                     pd.setMessage("Requesting OTP...");
                     pd.show();
-                    resetPasswordViewModel.hitResetPasswordApi(getActivity(), username).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+                    resetPasswordViewModel.hitResetPasswordApi(getActivity(), msisdn).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
                         @Override
                         public void onChanged(ResponseDTO responseDTO) {
                             Common.hideSoftKeyboard(getActivity());
@@ -101,7 +101,7 @@ public class ForgotPasswordFragment extends Fragment {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("otpType", "PASSWORD_RESET");
                                     bundle.putString("otpTitle", "Reset Password");
-                                    bundle.putString("username", username);
+                                    bundle.putString("msisdn", msisdn);
 
                                     OTPFragment otpFragment = new OTPFragment();
                                     otpFragment.setArguments(bundle);

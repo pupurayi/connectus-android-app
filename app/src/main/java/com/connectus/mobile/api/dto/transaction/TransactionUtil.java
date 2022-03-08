@@ -1,6 +1,6 @@
 package com.connectus.mobile.api.dto.transaction;
 
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 
 import java.util.Date;
@@ -13,8 +13,8 @@ public class TransactionUtil {
     public static TransactionDto prepareTransaction(SharedPreferencesManager sharedPreferencesManager,
                                                     String transactionType,
                                                     String extendedType, String extendedTranType) {
-        ProfileDTO profile = sharedPreferencesManager.getProfile();
-        String msisdn = profile.getUsername();
+        ProfileDto profile = sharedPreferencesManager.getProfile();
+        String msisdn = profile.getMsisdn();
         TransactionDto transactionDto = new TransactionDto(
                 CHANNEL,
                 transactionType,

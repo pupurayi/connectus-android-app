@@ -30,7 +30,7 @@ import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.UpdateProfileRequest;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Sex;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -84,7 +84,7 @@ public class EditProfileFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         String firstName = profileDTO.getFirstName();
         String lastName = profileDTO.getLastName();
         String email = profileDTO.getEmail();
@@ -156,7 +156,7 @@ public class EditProfileFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

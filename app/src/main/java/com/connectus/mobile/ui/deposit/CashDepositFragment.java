@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.transaction.ResponseCodes;
 import com.connectus.mobile.api.dto.transaction.TransactionDto;
 import com.connectus.mobile.api.dto.transaction.TransactionDtoAccount;
@@ -69,7 +69,7 @@ public class CashDepositFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             userId = UUID.fromString(arguments.getString("userId"));
-            debitAccountNumber = arguments.getString("username");
+            debitAccountNumber = arguments.getString("msisdn");
             avatarAvailable = arguments.getBoolean("avatarAvailable");
             firstName = arguments.getString("firstName");
             lastName = arguments.getString("lastName");
@@ -88,10 +88,10 @@ public class CashDepositFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.itf_image_view_profile_avatar);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
 
         imageViewRecipientAvatar = view.findViewById(R.id.itf_image_view_recipient_avatar);
         Common.loadAvatar(avatarAvailable, imageViewRecipientAvatar, userId);

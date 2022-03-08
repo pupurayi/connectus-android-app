@@ -11,8 +11,8 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.BalanceDTO;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDTO;
-import com.connectus.mobile.api.dto.AuthenticationResponse;
+import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.JWT;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.SignInRequest;
@@ -35,19 +35,19 @@ public class SignInViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDTO> hitSignInApi(final Context context, SignInRequest signInRequest) {
         responseLiveData = new MutableLiveData<>();
-        Call<AuthenticationResponse> ul = apiService.signIn(signInRequest);
+        Call<AuthResponseDto> ul = apiService.signIn(signInRequest);
         try {
-            ul.enqueue(new Callback<AuthenticationResponse>() {
+            ul.enqueue(new Callback<AuthResponseDto>() {
                 @Override
-                public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
+                public void onResponse(Call<AuthResponseDto> call, Response<AuthResponseDto> response) {
                     if (response.code() == 200) {
-                        AuthenticationResponse authenticationResponse = response.body();
+                        AuthResponseDto authResponseDto = response.body();
 
                         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        JWT jwt = authenticationResponse.getJWT();
+                        JWT jwt = authResponseDto.getJwt();
                         sharedPreferencesManager.setJWT(jwt);
 
-                        ProfileDTO profileDTO = authenticationResponse.getProfile();
+                        ProfileDto profileDTO = authResponseDto.getProfile();
                         sharedPreferencesManager.setProfile(profileDTO);
 
                         Set<BalanceDTO> balances = profileDTO.getBalances();
@@ -73,7 +73,7 @@ public class SignInViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
+                public void onFailure(Call<AuthResponseDto> call, Throwable t) {
                     Log.d("error", t.toString());
                     responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
                 }

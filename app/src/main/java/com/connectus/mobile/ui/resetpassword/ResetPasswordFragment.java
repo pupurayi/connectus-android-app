@@ -40,7 +40,7 @@ public class ResetPasswordFragment extends Fragment {
     boolean passwordShow = false;
     boolean verifyPasswordShow = false;
 
-    String username, otp;
+    String msisdn, otp;
 
     FragmentManager fragmentManager;
     ResetPasswordViewModel resetPasswordViewModel;
@@ -55,7 +55,7 @@ public class ResetPasswordFragment extends Fragment {
         resetPasswordViewModel = new ViewModelProvider(this).get(ResetPasswordViewModel.class);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            username = arguments.getString("username");
+            msisdn = arguments.getString("msisdn");
             otp = arguments.getString("otp");
         } else {
             getActivity().onBackPressed();
@@ -126,7 +126,7 @@ public class ResetPasswordFragment extends Fragment {
                 if (password.length() >= 8 && password.equals(verifyPassword)) {
                     pd.setMessage("Please Wait...");
                     pd.show();
-                    resetPasswordViewModel.hitResetPasswordApi(new ResetPasswordRequest(username, otp, password)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+                    resetPasswordViewModel.hitResetPasswordApi(new ResetPasswordRequest(msisdn, otp, password)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
                         @Override
                         public void onChanged(ResponseDTO responseDTO) {
                             pd.dismiss();

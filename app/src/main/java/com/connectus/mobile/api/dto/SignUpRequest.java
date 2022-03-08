@@ -17,9 +17,9 @@ public class SignUpRequest {
     @Expose
     private String email;
 
-    @SerializedName("username")
+    @SerializedName("msisdn")
     @Expose
-    private String username;
+    private String msisdn;
 
     @SerializedName("password")
     @Expose
@@ -29,11 +29,11 @@ public class SignUpRequest {
     @Expose
     private String fcmToken;
 
-    public SignUpRequest(String firstName, String lastName, String email, String username, String password, String fcmToken) {
+    public SignUpRequest(String firstName, String lastName, String email, String msisdn, String password, String fcmToken) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.username = username;
+        this.msisdn = msisdn;
         this.password = password;
         this.fcmToken = fcmToken;
     }

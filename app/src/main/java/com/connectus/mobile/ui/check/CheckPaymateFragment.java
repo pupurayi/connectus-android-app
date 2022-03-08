@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.CheckPaymateDTO;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.TransactionType;
@@ -64,7 +64,7 @@ public class CheckPaymateFragment extends Fragment {
     private TransactionType transactionType;
     private SharedPreferencesManager sharedPreferencesManager;
     private CheckViewModel checkViewModel;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
 
     @Override
@@ -123,7 +123,7 @@ public class CheckPaymateFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);
@@ -163,7 +163,7 @@ public class CheckPaymateFragment extends Fragment {
                             bundle.putLong("paymateCode", checkPaymateDTO.getPaymateCode());
                             bundle.putString("paymateName", checkPaymateDTO.getPaymateName());
                             bundle.putBoolean("avatarAvailable", checkPaymateDTO.isAvatarAvailable());
-                            bundle.putString("userId", checkPaymateDTO.getUserId());
+                            bundle.putString("userId", checkPaymateDTO.getId());
                             bundle.putString("paymateStatus", checkPaymateDTO.getPaymateStatus());
 
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

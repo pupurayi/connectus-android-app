@@ -33,7 +33,7 @@ import com.connectus.mobile.api.dto.UpdateAddressRequest;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
@@ -99,7 +99,7 @@ public class EditProfileAddressFragment extends Fragment {
         });
 
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         AddressResponse addressResponse = profileDTO.getAddress();
 
         String addressLine1 = (addressResponse != null) ? addressResponse.getAddressLine1() : null;
@@ -111,7 +111,7 @@ public class EditProfileAddressFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

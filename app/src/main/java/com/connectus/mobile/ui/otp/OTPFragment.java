@@ -38,12 +38,12 @@ public class OTPFragment extends Fragment {
     // TODO OTP Count Down
     private static final String TAG = OTPFragment.class.getSimpleName();
 
-    String otpType, otpTitle, username;
+    String otpType, otpTitle, msisdn;
     EditText otp1, otp2, otp3, otp4, otp5, otp6;
 
     FragmentManager fragmentManager;
     ProgressDialog pd;
-    TextView textViewOTPTitle, textViewOTPDescription, textViewUsername;
+    TextView textViewOTPTitle, textViewOTPDescription, textViewMsisdn;
     Button buttonRequestOTP;
 
     private OTPViewModel otpViewModel;
@@ -63,7 +63,7 @@ public class OTPFragment extends Fragment {
         if (arguments != null) {
             otpType = arguments.getString("otpType");
             otpTitle = arguments.getString("otpTitle");
-            username = arguments.getString("username");
+            msisdn = arguments.getString("msisdn");
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_o_t_p, container, false);
@@ -73,7 +73,7 @@ public class OTPFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentManager = getActivity().getSupportFragmentManager();
-        if (otpType == null || otpTitle == null || username == null) {
+        if (otpType == null || otpTitle == null || msisdn == null) {
             getActivity().onBackPressed();
         }
 
@@ -86,7 +86,7 @@ public class OTPFragment extends Fragment {
                 initiateUserVerification(view, authentication);
                 break;
             case "PASSWORD_RESET":
-                initiateResetPassword(view, username);
+                initiateResetPassword(view, msisdn);
                 break;
             default:
                 getActivity().onBackPressed();
@@ -94,7 +94,7 @@ public class OTPFragment extends Fragment {
 
         textViewOTPTitle = view.findViewById(R.id.text_view_otp_title);
         textViewOTPDescription = view.findViewById(R.id.text_view_o_t_p_description);
-        textViewUsername = view.findViewById(R.id.text_view_full_name);
+        textViewMsisdn = view.findViewById(R.id.text_view_full_name);
         buttonRequestOTP = view.findViewById(R.id.button_send_otp);
         buttonRequestOTP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +108,7 @@ public class OTPFragment extends Fragment {
                         initiateUserVerification(view, authentication);
                         break;
                     case "PASSWORD_RESET":
-                        initiateResetPassword(view, username);
+                        initiateResetPassword(view, msisdn);
                         break;
                     default:
                         getActivity().onBackPressed();
@@ -117,7 +117,7 @@ public class OTPFragment extends Fragment {
         });
 
         textViewOTPTitle.setText(otpTitle);
-        textViewUsername.setText(username);
+        textViewMsisdn.setText(msisdn);
 
         otp1 = view.findViewById(R.id.otp1);
         otp2 = view.findViewById(R.id.otp2);
@@ -142,7 +142,7 @@ public class OTPFragment extends Fragment {
                                 executeProfileVerification(view, authentication, getOTP());
                                 break;
                             case "PASSWORD_RESET":
-                                executeResetPasswordOTPValidation(view, username, getOTP());
+                                executeResetPasswordOTPValidation(view, msisdn, getOTP());
                                 break;
                             default:
                                 getActivity().onBackPressed();
@@ -173,7 +173,7 @@ public class OTPFragment extends Fragment {
                                 executeProfileVerification(view, authentication, getOTP());
                                 break;
                             case "PASSWORD_RESET":
-                                executeResetPasswordOTPValidation(view, username, getOTP());
+                                executeResetPasswordOTPValidation(view, msisdn, getOTP());
                                 break;
                             default:
                                 getActivity().onBackPressed();
@@ -204,7 +204,7 @@ public class OTPFragment extends Fragment {
                                 executeProfileVerification(view, authentication, getOTP());
                                 break;
                             case "PASSWORD_RESET":
-                                executeResetPasswordOTPValidation(view, username, getOTP());
+                                executeResetPasswordOTPValidation(view, msisdn, getOTP());
                                 break;
                             default:
                                 getActivity().onBackPressed();
@@ -235,7 +235,7 @@ public class OTPFragment extends Fragment {
                                 executeProfileVerification(view, authentication, getOTP());
                                 break;
                             case "PASSWORD_RESET":
-                                executeResetPasswordOTPValidation(view, username, getOTP());
+                                executeResetPasswordOTPValidation(view, msisdn, getOTP());
                                 break;
                             default:
                                 getActivity().onBackPressed();
@@ -266,7 +266,7 @@ public class OTPFragment extends Fragment {
                                 executeProfileVerification(view, authentication, getOTP());
                                 break;
                             case "PASSWORD_RESET":
-                                executeResetPasswordOTPValidation(view, username, getOTP());
+                                executeResetPasswordOTPValidation(view, msisdn, getOTP());
                                 break;
                             default:
                                 getActivity().onBackPressed();
@@ -296,7 +296,7 @@ public class OTPFragment extends Fragment {
                                 executeProfileVerification(view, authentication, getOTP());
                                 break;
                             case "PASSWORD_RESET":
-                                executeResetPasswordOTPValidation(view, username, getOTP());
+                                executeResetPasswordOTPValidation(view, msisdn, getOTP());
                                 break;
                             default:
                                 getActivity().onBackPressed();
@@ -361,10 +361,10 @@ public class OTPFragment extends Fragment {
     }
 
 
-    private void initiateResetPassword(View view, String username) {
+    private void initiateResetPassword(View view, String msisdn) {
         pd.setMessage("Sending OTP...");
         pd.show();
-        resetPasswordViewModel.hitResetPasswordApi(getActivity(), username).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+        resetPasswordViewModel.hitResetPasswordApi(getActivity(), msisdn).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
             @Override
             public void onChanged(ResponseDTO responseDTO) {
                 pd.dismiss();
@@ -383,16 +383,16 @@ public class OTPFragment extends Fragment {
         });
     }
 
-    private void executeResetPasswordOTPValidation(View view, String username, String otp) {
+    private void executeResetPasswordOTPValidation(View view, String msisdn, String otp) {
         pd.setMessage("Validating OTP...");
         pd.show();
-        resetPasswordViewModel.hitResetPasswordApi(username, otp).observe(getViewLifecycleOwner(), responseDTO -> {
+        resetPasswordViewModel.hitResetPasswordApi(msisdn, otp).observe(getViewLifecycleOwner(), responseDTO -> {
             pd.dismiss();
             switch (responseDTO.getStatus()) {
                 case "success":
                     Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     Bundle bundle = new Bundle();
-                    bundle.putString("username", username);
+                    bundle.putString("msisdn", msisdn);
                     bundle.putString("otp", otp);
                     ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
                     resetPasswordFragment.setArguments(bundle);

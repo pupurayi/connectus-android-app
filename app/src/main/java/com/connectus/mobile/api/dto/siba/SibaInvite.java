@@ -6,18 +6,18 @@ public class SibaInvite {
     private String _id;
     private String profile;
     private Long invitedProfileId;
-    private String username;
+    private String msisdn;
     private String firstName;
     private String lastName;
     private String status;
     private Date createdAt;
     private Date updatedAt;
 
-    public SibaInvite(String _id, String profile, Long invitedProfileId, String username, String firstName, String lastName, String status, Date createdAt, Date updatedAt) {
+    public SibaInvite(String _id, String profile, Long invitedProfileId, String msisdn, String firstName, String lastName, String status, Date createdAt, Date updatedAt) {
         this._id = _id;
         this.profile = profile;
         this.invitedProfileId = invitedProfileId;
-        this.username = username;
+        this.msisdn = msisdn;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
@@ -49,12 +49,12 @@ public class SibaInvite {
         this.invitedProfileId = invitedProfileId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMsisdn() {
+        return msisdn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public String getFirstName() {

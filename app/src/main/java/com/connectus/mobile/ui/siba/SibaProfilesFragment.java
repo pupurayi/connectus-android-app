@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -51,7 +51,7 @@ public class SibaProfilesFragment extends Fragment {
     Button buttonSibaInvites;
 
     String authentication;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

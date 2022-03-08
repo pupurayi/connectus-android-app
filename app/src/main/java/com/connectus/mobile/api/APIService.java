@@ -1,7 +1,7 @@
 package com.connectus.mobile.api;
 
-import com.connectus.mobile.api.dto.ProfileDTO;
-import com.connectus.mobile.api.dto.AuthenticationResponse;
+import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.BalanceDTO;
 import com.connectus.mobile.api.dto.BankDto;
@@ -56,13 +56,13 @@ public interface APIService {
             "Accept: application/json"
     })
     @POST("/api/v1/user/sign-in")
-    Call<AuthenticationResponse> signIn(@Body SignInRequest signInRequest);
+    Call<AuthResponseDto> signIn(@Body SignInRequest signInRequest);
 
     @Headers({
             "Accept: application/json"
     })
     @POST("/api/v1/user/sign-up")
-    Call<AuthenticationResponse> signUp(@Body SignUpRequest signUpRequest);
+    Call<AuthResponseDto> signUp(@Body SignUpRequest signUpRequest);
 
     @Headers({
             "Accept: application/json"
@@ -79,14 +79,14 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/user/reset-password/{username}")
-    Call<ResponseDTO> resetPassword(@Path("username") String username);
+    @GET("/api/v1/user/reset-password/{msisdn}")
+    Call<ResponseDTO> resetPassword(@Path("msisdn") String msisdn);
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/user/reset-password/{username}/{otp}")
-    Call<ResponseDTO> resetPassword(@Path("username") String username, @Path("otp") String otp);
+    @GET("/api/v1/user/reset-password/{msisdn}/{otp}")
+    Call<ResponseDTO> resetPassword(@Path("msisdn") String msisdn, @Path("otp") String otp);
 
     @Headers({
             "Accept: application/json"
@@ -111,26 +111,26 @@ public interface APIService {
             "Accept: application/json"
     })
     @GET("/api/v1/profile")
-    Call<ProfileDTO> getProfile(@Header("Authorization") String authentication);
+    Call<ProfileDto> getProfile(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
     @PUT("/api/v1/profile")
-    Call<ProfileDTO> updateProfile(@Header("Authorization") String authentication, @Body UpdateProfileRequest updateProfileRequest);
+    Call<ProfileDto> updateProfile(@Header("Authorization") String authentication, @Body UpdateProfileRequest updateProfileRequest);
 
 
     @Headers({
             "Accept: application/json"
     })
     @PUT("/api/v1/profile/address")
-    Call<ResponseDTO<ProfileDTO>> updateAddress(@Header("Authorization") String authentication, @Body UpdateAddressRequest updateAddressRequest);
+    Call<ResponseDTO<ProfileDto>> updateAddress(@Header("Authorization") String authentication, @Body UpdateAddressRequest updateAddressRequest);
 
     @Headers({
             "Accept: application/json"
     })
     @PUT("/api/v1/profile/identification")
-    Call<ResponseDTO<ProfileDTO>> updateIdentification(@Header("Authorization") String authentication, @Body UpdateIdentificationRequest updateIdentificationRequest);
+    Call<ResponseDTO<ProfileDto>> updateIdentification(@Header("Authorization") String authentication, @Body UpdateIdentificationRequest updateIdentificationRequest);
 
     @Headers({
             "Accept: application/json"
@@ -142,8 +142,8 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/profile/check/{username}")
-    Call<ResponseDTO<CheckProfileDTO>> checkProfile(@Header("Authorization") String authentication, @Path("username") String username);
+    @GET("/api/v1/profile/check/{msisdn}")
+    Call<ResponseDTO<CheckProfileDTO>> checkProfile(@Header("Authorization") String authentication, @Path("msisdn") String msisdn);
 
     @Headers({
             "Accept: application/json"
@@ -160,8 +160,8 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/transaction/banks/{username}")
-    Call<ResponseDTO<List<BankDto>>> getBanks(@Header("Authorization") String authorization, @Path("username") String username);
+    @GET("/api/v1/transaction/banks/{msisdn}")
+    Call<ResponseDTO<List<BankDto>>> getBanks(@Header("Authorization") String authorization, @Path("msisdn") String msisdn);
 
     @Headers({
             "Accept: application/json"
@@ -209,8 +209,8 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/siba/api/v1/profile/check-eligibility/{username}")
-    Call<ResponseDTO> checkEligibility(@Header("Authorization") String authorization, @Path("username") String username);
+    @GET("/siba/api/v1/profile/check-eligibility/{msisdn}")
+    Call<ResponseDTO> checkEligibility(@Header("Authorization") String authorization, @Path("msisdn") String msisdn);
 
     @Headers({
             "Accept: application/json"

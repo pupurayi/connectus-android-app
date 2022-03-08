@@ -39,7 +39,7 @@ public class CheckPaymateDTO {
         this.avatarAvailable = avatarAvailable;
     }
 
-    public String getUserId() {
+    public String getId() {
         return userId;
     }
 

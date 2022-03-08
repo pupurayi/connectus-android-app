@@ -7,16 +7,19 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
-public class ProfileDTO {
-    private UUID userId;
-    private String username;
+public class ProfileDto {
+    private UUID id;
+    private String msisdn;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updatedAt;
+
     private String userStatus;
     private boolean avatarAvailable;
     private UUID profileId;
     private String referralCode;
-    private String email;
-    private String firstName;
-    private String lastName;
     private Date dob;
     private Sex sex;
     private AddressResponse address;
@@ -24,12 +27,11 @@ public class ProfileDTO {
     private String profileStatus;
     private Set<BalanceDTO> balances;
     private PaymateDTO paymate;
-    private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
 
-    public ProfileDTO(UUID userId, String username, String userStatus, boolean avatarAvailable, UUID profileId, String referralCode, String email, String firstName, String lastName, Date dob, Sex sex, AddressResponse address, IdentificationResponse identification, String profileStatus, PaymateDTO paymate, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
-        this.userId = userId;
-        this.username = username;
+
+    public ProfileDto(UUID id, String msisdn, String userStatus, boolean avatarAvailable, UUID profileId, String referralCode, String email, String firstName, String lastName, Date dob, Sex sex, AddressResponse address, IdentificationResponse identification, String profileStatus, PaymateDTO paymate, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
+        this.id = id;
+        this.msisdn = msisdn;
         this.userStatus = userStatus;
         this.avatarAvailable = avatarAvailable;
         this.profileId = profileId;
@@ -47,20 +49,60 @@ public class ProfileDTO {
         this.updatedAt = updatedAt;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMsisdn() {
+        return msisdn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getUserStatus() {
@@ -93,30 +135,6 @@ public class ProfileDTO {
 
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Date getDob() {
@@ -173,21 +191,5 @@ public class ProfileDTO {
 
     public void setPaymate(PaymateDTO paymate) {
         this.paymate = paymate;
-    }
-
-    public ZonedDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public ZonedDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

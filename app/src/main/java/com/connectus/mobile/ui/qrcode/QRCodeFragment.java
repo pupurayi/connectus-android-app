@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.gson.Gson;
@@ -53,14 +53,14 @@ public class QRCodeFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
 
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
         imageViewQRCode = view.findViewById(R.id.image_view_qr_code);
         textViewProfileFullName = view.findViewById(R.id.text_view_full_name);
 
         Map<String, String> qrData = new HashMap<>();
-        qrData.put("username", profileDTO.getUsername());
+        qrData.put("msisdn", profileDTO.getMsisdn());
         if (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) {
             qrData.put("paymateCode", String.valueOf(profileDTO.getPaymate().getPaymateCode()));
         }
@@ -70,7 +70,7 @@ public class QRCodeFragment extends Fragment {
 
         Bitmap bitmap = Common.generateQRCode(contents);
         imageViewQRCode.setImageBitmap(bitmap);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
         String fullName = profileDTO.getFirstName() + " " + profileDTO.getLastName();
         textViewProfileFullName.setText(fullName);
 

@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.api.dto.siba.SibaProfileMember;
 import com.connectus.mobile.api.dto.siba.chat.ChatMessage;
@@ -71,7 +71,7 @@ public class SibaChatFragment extends Fragment {
     FirebaseFirestore db;
 
     String authentication;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -246,7 +246,7 @@ public class SibaChatFragment extends Fragment {
         List<DetailedChatMessage> detailedChatMessages = new LinkedList<>();
         for (ChatMessage chatMessage : chatMessages) {
             SibaProfileMember sibaProfileMember = sibaProfileMembers.get(chatMessage.getSender_profile_id());
-            Sender sender = new Sender(sibaProfileMember.getMemberProfileId(), sibaProfileMember.getUserId(), sibaProfileMember.getFirstName());
+            Sender sender = new Sender(sibaProfileMember.getMemberProfileId(), sibaProfileMember.getId(), sibaProfileMember.getFirstName());
             DetailedChatMessage detailedChatMessage = new DetailedChatMessage(chatMessage.getMessageId(), sender, chatMessage.getMessage(), chatMessage.getCreatedAt());
             detailedChatMessages.add(detailedChatMessage);
         }
@@ -255,7 +255,7 @@ public class SibaChatFragment extends Fragment {
 
     public DetailedChatMessage fetchDetailedMessage(ChatMessage chatMessage) {
         SibaProfileMember sibaProfileMember = sibaProfileMembers.get(chatMessage.getSender_profile_id());
-        Sender sender = new Sender(sibaProfileMember.getMemberProfileId(), sibaProfileMember.getUserId(), sibaProfileMember.getFirstName());
+        Sender sender = new Sender(sibaProfileMember.getMemberProfileId(), sibaProfileMember.getId(), sibaProfileMember.getFirstName());
         return new DetailedChatMessage(chatMessage.getMessageId(), sender, chatMessage.getMessage(), chatMessage.getCreatedAt());
     }
 }

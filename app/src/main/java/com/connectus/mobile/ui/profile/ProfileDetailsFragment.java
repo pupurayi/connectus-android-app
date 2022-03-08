@@ -28,7 +28,7 @@ import com.connectus.mobile.api.dto.IdentificationResponse;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
@@ -79,7 +79,7 @@ public class ProfileDetailsFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
 
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         authentication = sharedPreferencesManager.getAuthenticationToken();
 
         long lastSync = sharedPreferencesManager.getLastSync();
@@ -95,7 +95,7 @@ public class ProfileDetailsFragment extends Fragment {
                     switch (responseDTO.getStatus()) {
                         case "success":
                             Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                            ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+                            ProfileDto profileDTO = sharedPreferencesManager.getProfile();
                             populateFields(profileDTO);
                             break;
                         case "failed":
@@ -117,7 +117,7 @@ public class ProfileDetailsFragment extends Fragment {
             }
         });
 
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
 
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_value);
@@ -155,15 +155,15 @@ public class ProfileDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         populateFields(profileDTO);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(),imageViewProfileAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(),imageViewProfileAvatar, profileDTO.getId());
     }
 
-    public void populateFields(ProfileDTO profileDTO) {
+    public void populateFields(ProfileDto profileDTO) {
         String firstName = profileDTO.getFirstName();
         String fullName = firstName + " " + profileDTO.getLastName();
-        String username = profileDTO.getUsername();
+        String msisdn = profileDTO.getMsisdn();
         String email = profileDTO.getEmail();
         Date dob = profileDTO.getDob();
         String sex = (profileDTO.getSex() != null) ? profileDTO.getSex().getTitle() : null;
@@ -181,7 +181,7 @@ public class ProfileDetailsFragment extends Fragment {
         }
 
         textViewFullName.setText(fullName);
-        textViewPhoneNumber.setText(username);
+        textViewPhoneNumber.setText(msisdn);
         textViewEmail.setText(email);
         textViewIdentificationLabel.setText(identificationType);
         textViewIdentificationValue.setText(identificationNumber);
@@ -234,9 +234,9 @@ public class ProfileDetailsFragment extends Fragment {
                 pd.dismiss();
                 switch (responseDTO.getStatus()) {
                     case "success":
-                        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
-                        invalidateAvatarCache(profileDTO.getUserId());
-                        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
+                        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+                        invalidateAvatarCache(profileDTO.getId());
+                        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
                         Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                         break;
                     case "failed":

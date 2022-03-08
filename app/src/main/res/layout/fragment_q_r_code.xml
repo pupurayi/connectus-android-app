@@ -78,11 +78,11 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
-                        android:id="@+id/text_view_emalyami_qr_code"
+                        android:id="@+id/text_view_connectus_qr_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="@string/emalyami_qr_code"
+                        android:text="@string/connectus_qr_code"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <ImageView

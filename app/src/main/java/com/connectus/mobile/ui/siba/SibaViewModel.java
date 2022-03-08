@@ -31,9 +31,9 @@ public class SibaViewModel extends ViewModel {
     private final APIService apiService = new RestClients().get();
 
 
-    public MutableLiveData<ResponseDTO> hitCheckEligibilityByUsernameApi(String authentication, String username) {
+    public MutableLiveData<ResponseDTO> hitCheckEligibilityByMsisdnApi(String authentication, String msisdn) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO> ul = apiService.checkEligibility(authentication, username);
+        Call<ResponseDTO> ul = apiService.checkEligibility(authentication, msisdn);
         try {
             ul.enqueue(new Callback<ResponseDTO>() {
                 @Override

@@ -21,7 +21,7 @@ public class Sender {
         this.profileId = profileId;
     }
 
-    public UUID getUserId() {
+    public UUID getId() {
         return userId;
     }
 

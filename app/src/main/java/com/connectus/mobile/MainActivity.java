@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressDialog pd;
     SharedPreferencesManager sharedPreferencesManager;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     // https://developer.android.com/guide/playcore/in-app-updates/kotlin-java
     AppUpdateManager appUpdateManager;

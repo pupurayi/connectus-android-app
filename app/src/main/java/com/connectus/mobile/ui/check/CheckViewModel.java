@@ -26,9 +26,9 @@ public class CheckViewModel extends ViewModel {
 
     private final APIService apiService = new RestClients().get();
 
-    public MutableLiveData<ResponseDTO<CheckProfileDTO>> hitCheckProfileApi(String authentication, String username) {
+    public MutableLiveData<ResponseDTO<CheckProfileDTO>> hitCheckProfileApi(String authentication, String msisdn) {
         MutableLiveData<ResponseDTO<CheckProfileDTO>> responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<CheckProfileDTO>> ul = apiService.checkProfile(authentication, username);
+        Call<ResponseDTO<CheckProfileDTO>> ul = apiService.checkProfile(authentication, msisdn);
         try {
             ul.enqueue(new Callback<ResponseDTO<CheckProfileDTO>>() {
                 @Override

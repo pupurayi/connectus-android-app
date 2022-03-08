@@ -42,8 +42,8 @@ public class SibaProfileInvitesRecyclerAdapter extends RecyclerView.Adapter<Siba
         SibaInvite sibaInvite = sibaInvites.get(position);
         String fullName = sibaInvite.getFirstName() + " " + sibaInvite.getLastName();
         holder.textViewFullName.setText(fullName);
-        holder.textViewUsername.setText(sibaInvite.getUsername());
-        holder.ccpCountryCode.setFullNumber(sibaInvite.getUsername());
+        holder.textViewMsisdn.setText(sibaInvite.getMsisdn());
+        holder.ccpCountryCode.setFullNumber(sibaInvite.getMsisdn());
         holder.position = position;
     }
 
@@ -54,14 +54,14 @@ public class SibaProfileInvitesRecyclerAdapter extends RecyclerView.Adapter<Siba
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewFullName, textViewUsername;
+        private TextView textViewFullName, textViewMsisdn;
         private CountryCodePicker ccpCountryCode;
         private int position = 0;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewFullName = (TextView) itemView.findViewById(R.id.text_view_full_name);
-            textViewUsername = (TextView) itemView.findViewById(R.id.text_view_username);
+            textViewMsisdn = (TextView) itemView.findViewById(R.id.text_view_msisdn);
             ccpCountryCode = (CountryCodePicker) itemView.findViewById(R.id.ccp_country_code);
 
             itemView.setOnClickListener(new View.OnClickListener() {

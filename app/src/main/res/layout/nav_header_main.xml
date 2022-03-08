@@ -35,12 +35,12 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/text_view_nav_header_username"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_nav_header_msisdn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_view_nav_header_avatar" />
 
     <TextView
-        android:id="@+id/text_view_nav_header_username"
+        android:id="@+id/text_view_nav_header_msisdn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

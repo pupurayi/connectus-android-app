@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.BalanceDTO;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.Transaction;
@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
     DrawerLayout drawerLayout;
 
-    TextView textViewFullName, textViewNavHeaderFullName, textViewUsername, textViewNavHeaderUsername, textViewProfileBalance;
+    TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn, textViewProfileBalance;
     ImageView imageViewProfileAvatar, imageViewNavHeaderAvatar, imageViewMenu, imageViewRefresh, imageViewQRCode;
     ImageView imageViewInternalTransfer, imageViewCashWithdraw, imageViewPay;
     Button buttonMoreServices;
@@ -77,7 +77,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
     FragmentManager fragmentManager;
     SharedPreferencesManager sharedPreferencesManager;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
     String authentication;
     private DashboardViewModel dashboardViewModel;
     private ProfileDetailsViewModel profileDetailsViewModel;
@@ -123,11 +123,11 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
         imageViewNavHeaderAvatar = navHeaderView.findViewById(R.id.image_view_nav_header_avatar);
         textViewNavHeaderFullName = navHeaderView.findViewById(R.id.text_view_nav_header_full_name);
-        textViewNavHeaderUsername = navHeaderView.findViewById(R.id.text_view_nav_header_username);
+        textViewNavHeaderMsisdn = navHeaderView.findViewById(R.id.text_view_nav_header_msisdn);
 
         imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
         textViewFullName = view.findViewById(R.id.text_view_full_name);
-        textViewUsername = view.findViewById(R.id.text_view_username);
+        textViewMsisdn = view.findViewById(R.id.text_view_msisdn);
         textViewProfileBalance = view.findViewById(R.id.text_view_profile_balance);
 
         long lastSync = sharedPreferencesManager.getLastSync();
@@ -350,7 +350,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 //                freshchatUser.setLastName(profileDTO.getLastName());
 //                freshchatUser.setEmail(profileDTO.getEmail());
 //                try {
-//                    String[] phoneNumber = Common.splitCountryCodeFromPhone(profileDTO.getUsername());
+//                    String[] phoneNumber = Common.splitCountryCodeFromPhone(profileDTO.getMsisdn());
 //                    freshchatUser.setPhone(phoneNumber[0], phoneNumber[1]);
 //                } catch (NumberParseException e) {
 //                    e.printStackTrace();
@@ -402,10 +402,10 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         });
     }
 
-    public void syncDisplay(ProfileDTO profileDTO) {
+    public void syncDisplay(ProfileDto profileDTO) {
         String firstName = profileDTO.getFirstName();
         String fullName = firstName + " " + profileDTO.getLastName();
-        String username = (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) ? "Paymate Code: " + profileDTO.getPaymate().getPaymateCode() : profileDTO.getUsername();
+        String msisdn = (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) ? "Paymate Code: " + profileDTO.getPaymate().getPaymateCode() : profileDTO.getMsisdn();
         DbHandler dbHandler = new DbHandler(getContext());
         Set<BalanceDTO> balances = dbHandler.getBalances();
         String profileBalance = null;
@@ -414,12 +414,12 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
                 profileBalance = String.format("%s %.2f", balance.getCurrency(), balance.getAmount());
             }
         }
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getUserId());
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewNavHeaderAvatar, profileDTO.getUserId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewNavHeaderAvatar, profileDTO.getId());
         textViewFullName.setText(fullName);
         textViewNavHeaderFullName.setText(fullName);
-        textViewUsername.setText(username);
-        textViewNavHeaderUsername.setText(username);
+        textViewMsisdn.setText(msisdn);
+        textViewNavHeaderMsisdn.setText(msisdn);
         textViewProfileBalance.setText(profileBalance);
     }
 

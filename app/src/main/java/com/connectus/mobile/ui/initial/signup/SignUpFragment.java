@@ -118,17 +118,14 @@ public class SignUpFragment extends Fragment {
                 if (firstName.length() > 2 && lastName.length() > 2 && email.length() != 0 && password.length() >= 8) {
                     pd.setMessage("Please Wait ...");
                     pd.show();
-                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                        @Override
-                        public void onComplete(@NonNull Task<String> task) {
-                            String fcm_token = null;
-                            if (!task.isSuccessful()) {
-                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            } else {
-                                fcm_token = task.getResult();
-                            }
-                            signUp(firstName, lastName, email, phoneNumber, password, fcm_token);
+                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                        String fcm_token = null;
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        } else {
+                            fcm_token = task.getResult();
                         }
+                        signUp(firstName, lastName, email, phoneNumber, password, fcm_token);
                     });
                 } else {
                     if (firstName.length() == 0) {
@@ -145,24 +142,21 @@ public class SignUpFragment extends Fragment {
         });
 
         textViewChangePhone = view.findViewById(R.id.text_view_change_phone);
-        textViewChangePhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Common.clearSessionData(sharedPreferencesManager, getContext());
-                fragmentManager.popBackStack();
-                Fragment authorizeFragment = fragmentManager.findFragmentByTag(CheckFragment.class.getSimpleName());
-                if (authorizeFragment == null) {
-                    authorizeFragment = new CheckFragment();
-                }
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, authorizeFragment, CheckFragment.class.getSimpleName());
-                transaction.commit();
+        textViewChangePhone.setOnClickListener(v -> {
+            Common.clearSessionData(sharedPreferencesManager, getContext());
+            fragmentManager.popBackStack();
+            Fragment authorizeFragment = fragmentManager.findFragmentByTag(CheckFragment.class.getSimpleName());
+            if (authorizeFragment == null) {
+                authorizeFragment = new CheckFragment();
             }
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.container, authorizeFragment, CheckFragment.class.getSimpleName());
+            transaction.commit();
         });
     }
 
-    public void signUp(String firstName, String lastName, String email, String username, String password, String fcm_token) {
-        signUpViewModel.hitSignUpApi(getActivity(), new SignUpRequest(firstName, lastName, email, username, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+    public void signUp(String firstName, String lastName, String email, String msisdn, String password, String fcm_token) {
+        signUpViewModel.hitSignUpApi(getActivity(), new SignUpRequest(firstName, lastName, email, msisdn, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
             @Override
             public void onChanged(ResponseDTO responseDTO) {
                 pd.dismiss();

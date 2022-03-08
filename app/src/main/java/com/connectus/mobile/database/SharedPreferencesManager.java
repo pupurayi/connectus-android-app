@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.PaymateDTO;
 import com.connectus.mobile.api.dto.JWT;
@@ -63,7 +63,7 @@ public class SharedPreferencesManager {
         this.sharedPreferences = getSharedPreferences();
         JWT jwt = getJWT();
         if (jwt != null) {
-            return String.format("%s %s", jwt.getToken_type(), jwt.getAccess_token());
+            return String.format("%s %s", jwt.getTokenType(), jwt.getAccessToken());
         }
         return null;
     }
@@ -73,21 +73,21 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
-    public void setProfile(ProfileDTO profileDTO) {
+    public void setProfile(ProfileDto profileDTO) {
         profileDTO.setBalances(null);
         editor.putString("profile", new Gson().toJson(profileDTO));
         editor.putLong("lastSync", new Date().getTime());
         editor.apply();
     }
 
-    public ProfileDTO getProfile() {
+    public ProfileDto getProfile() {
         this.sharedPreferences = getSharedPreferences();
-        return sharedPreferences.get("profile") != null ? new Gson().fromJson(sharedPreferences.get("profile").toString(), ProfileDTO.class) : null;
+        return sharedPreferences.get("profile") != null ? new Gson().fromJson(sharedPreferences.get("profile").toString(), ProfileDto.class) : null;
     }
 
-    public void syncPaymateTopicSubscription(ProfileDTO newProfileDTO) {
+    public void syncPaymateTopicSubscription(ProfileDto newProfileDto) {
         PaymateDTO oldPaymate = getProfile().getPaymate();
-        PaymateDTO newPaymate = newProfileDTO.getPaymate();
+        PaymateDTO newPaymate = newProfileDto.getPaymate();
 
         if (newPaymate != null) {
             if (oldPaymate == null && newPaymate.getPaymateStatus().equals("ACTIVE")) {

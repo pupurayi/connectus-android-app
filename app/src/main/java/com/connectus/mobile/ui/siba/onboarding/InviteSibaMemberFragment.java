@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -55,7 +55,7 @@ public class InviteSibaMemberFragment extends Fragment {
 
 
     String authentication, countryCode;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class InviteSibaMemberFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);
@@ -117,17 +117,17 @@ public class InviteSibaMemberFragment extends Fragment {
                 } catch (Exception ignored) {
 
                 }
-                String username = String.format("+%s%s", countryCode, phoneNumber);
-                boolean isPhoneNumberValid = isValidMobileNumber(username);
-                if (isPhoneNumberValid && !profileDTO.getUsername().equals(username)) {
+                String msisdn = String.format("+%s%s", countryCode, phoneNumber);
+                boolean isPhoneNumberValid = isValidMobileNumber(msisdn);
+                if (isPhoneNumberValid && !profileDTO.getMsisdn().equals(msisdn)) {
                     pd.setMessage("Checking Eligibility ...");
                     pd.show();
-                    sibaViewModel.hitCheckEligibilityByUsernameApi(authentication, username).observe(getViewLifecycleOwner(), responseDTO -> {
+                    sibaViewModel.hitCheckEligibilityByMsisdnApi(authentication, msisdn).observe(getViewLifecycleOwner(), responseDTO -> {
                         switch (responseDTO.getStatus()) {
                             case "success":
                                 LinkedTreeMap data = (LinkedTreeMap) responseDTO.getData();
                                 Long profileId = (new Double(data.get("profileId").toString())).longValue();
-                                EligibilityResponse eligibilityResponse = new EligibilityResponse(profileId, (String) data.get("username"), (String) data.get("firstName"), (String) data.get("lastName"));
+                                EligibilityResponse eligibilityResponse = new EligibilityResponse(profileId, (String) data.get("msisdn"), (String) data.get("firstName"), (String) data.get("lastName"));
                                 CreateSibaProfileFragment createSibaProfileFragment = (CreateSibaProfileFragment) fragmentManager.findFragmentByTag(CreateSibaProfileFragment.class.getSimpleName());
                                 createSibaProfileFragment.addInviteToView(eligibilityResponse);
                                 getActivity().onBackPressed();

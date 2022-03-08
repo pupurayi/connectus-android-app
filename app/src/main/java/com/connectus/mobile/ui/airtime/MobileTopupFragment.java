@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.airtime.OperatorResponse;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Common;
@@ -50,7 +50,7 @@ public class MobileTopupFragment extends Fragment {
     private ServicesViewModel servicesViewModel;
 
     String authentication, countryCode;
-    ProfileDTO profileDTO;
+    ProfileDto profileDTO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class MobileTopupFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

@@ -1,22 +1,22 @@
 package com.connectus.mobile.api.dto;
 
 public class ResetPasswordRequest {
-    private String username;
+    private String msisdn;
     private String otp;
     private String password;
 
-    public ResetPasswordRequest(String username, String otp, String password) {
-        this.username = username;
+    public ResetPasswordRequest(String msisdn, String otp, String password) {
+        this.msisdn = msisdn;
         this.otp = otp;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMsisdn() {
+        return msisdn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public String getOtp() {

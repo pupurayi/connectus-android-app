@@ -96,7 +96,7 @@
     <string name="delete_notifications">Delete Notifications</string>
     <string name="transact_with_qr_code">Transact with QR Code</string>
     <string name="qr_code">QR code</string>
-    <string name="emalyami_qr_code">eMalyami QR Code</string>
+    <string name="connectus_qr_code">ConnectUs QR Code</string>
     <string name="qr_code_privacy_statement">Your QR Code is private. If you share it with someone, they can scan it with their eMalyami camera to view your contact details.</string>
     <string name="tap_to_scan">Tap to Scan</string>
     <string name="proceed">Proceed</string>

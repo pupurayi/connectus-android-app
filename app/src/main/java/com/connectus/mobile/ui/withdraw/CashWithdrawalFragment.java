@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.transaction.ResponseCodes;
 import com.connectus.mobile.api.dto.transaction.TransactionDto;
 import com.connectus.mobile.api.dto.transaction.TransactionUtil;
@@ -83,10 +83,10 @@ public class CashWithdrawalFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.cw_image_view_profile_avatar);
-        loadAvatar(profileDTO.isAvatarAvailable(), profileDTO.getUserId(), imageViewProfileAvatar);
+        loadAvatar(profileDTO.isAvatarAvailable(), profileDTO.getId(), imageViewProfileAvatar);
 
         textViewPaymateName = view.findViewById(R.id.text_view_paymate_name);
         textViewPaymateName.setText(paymateName);

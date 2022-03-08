@@ -162,8 +162,8 @@ public class SignInFragment extends Fragment {
         });
     }
 
-    public void signIn(View view, String username, String password, String fcm_token) {
-        signInViewModel.hitSignInApi(getActivity(), new SignInRequest(username, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+    public void signIn(View view, String msisdn, String password, String fcm_token) {
+        signInViewModel.hitSignInApi(getActivity(), new SignInRequest(msisdn, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
             @Override
             public void onChanged(ResponseDTO responseDTO) {
                 switch (responseDTO.getStatus()) {

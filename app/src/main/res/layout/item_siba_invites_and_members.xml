@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_view_username"
+                android:id="@+id/text_view_msisdn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -36,7 +36,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/dummy_full_name"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/text_view_username"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_msisdn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

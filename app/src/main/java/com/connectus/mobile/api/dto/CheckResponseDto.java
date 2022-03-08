@@ -15,7 +15,7 @@ public class CheckResponseDto {
         this.success = success;
     }
 
-    public UUID getUserId() {
+    public UUID getId() {
         return userId;
     }
 

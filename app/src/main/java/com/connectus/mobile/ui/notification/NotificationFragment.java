@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -57,7 +57,7 @@ public class NotificationFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class NotificationFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

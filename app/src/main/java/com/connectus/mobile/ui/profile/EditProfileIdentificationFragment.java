@@ -36,7 +36,7 @@ import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.common.IdType;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDTO;
+import com.connectus.mobile.api.dto.ProfileDto;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.hbb20.CountryCodePicker;
@@ -103,7 +103,7 @@ public class EditProfileIdentificationFragment extends Fragment {
         });
 
 
-        ProfileDTO profileDTO = sharedPreferencesManager.getProfile();
+        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         IdentificationResponse identificationResponse = profileDTO.getIdentification();
         IdType type = (identificationResponse != null) ? identificationResponse.getType() : null;
         String number = (identificationResponse != null) ? identificationResponse.getNumber() : null;
@@ -113,7 +113,7 @@ public class EditProfileIdentificationFragment extends Fragment {
         imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getUserId() + ".png")
+                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
                     .placeholder(R.drawable.account_circle_gold)
                     .error(R.drawable.account_circle_gold)
                     .into(imageViewProfileAvatar);

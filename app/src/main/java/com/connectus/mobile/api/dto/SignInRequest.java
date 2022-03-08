@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class SignInRequest {
 
-    @SerializedName("username")
+    @SerializedName("msisdn")
     @Expose
-    private String username;
+    private String msisdn;
 
     @SerializedName("password")
     @Expose
@@ -19,8 +19,8 @@ public class SignInRequest {
     private String fcmToken;
 
 
-    public SignInRequest(String username, String password, String fcmToken) {
-        this.username = username;
+    public SignInRequest(String msisdn, String password, String fcmToken) {
+        this.msisdn = msisdn;
         this.password = password;
         this.fcmToken = fcmToken;
     }
