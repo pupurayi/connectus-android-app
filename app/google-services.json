@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "432529726554",
+    "project_id": "emalyami-6b26e",
+    "storage_bucket": "emalyami-6b26e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432529726554:android:88771dafc86bcf454e4c63",
+        "android_client_info": {
+          "package_name": "com.emalyami.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432529726554-andqinqt3sjcuni9corj9g0k03e02u99.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAjXAFvhBj1q1UjCnUOkD_W2wcm-L7P80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432529726554-andqinqt3sjcuni9corj9g0k03e02u99.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
