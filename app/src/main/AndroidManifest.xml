@@ -9,13 +9,17 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.location.network" android:required="false" />
-    <uses-feature android:name="android.hardware.location.gps" android:required="false"  />
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
 
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
@@ -26,7 +30,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.eMalyami">
+        android:theme="@style/Theme.ConnectUs">
         <!--        android:usesCleartextTraffic="true"-->
         <service
             android:name="com.connectus.mobile.service.FirebaseMessageReceiver"
@@ -39,7 +43,7 @@
         <activity
             android:name="com.connectus.mobile.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.eMalyami.NoActionBar">
+            android:theme="@style/Theme.ConnectUs.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,16 +68,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.connectus.mobile.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/freshchat_file_provider_paths" />
-        </provider>
     </application>
 
 </manifest>

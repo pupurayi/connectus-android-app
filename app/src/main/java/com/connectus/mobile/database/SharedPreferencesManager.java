@@ -32,11 +32,11 @@ public class SharedPreferencesManager {
     @SuppressLint("CommitPrefEdits")
     public SharedPreferencesManager(Context context) {
         this.context = context;
-        this.editor = context.getSharedPreferences("eMalyami", MODE_PRIVATE).edit();
+        this.editor = context.getSharedPreferences("connectus", MODE_PRIVATE).edit();
     }
 
     public Map<String, ?> getSharedPreferences() {
-        return context.getSharedPreferences("eMalyami", Context.MODE_PRIVATE).getAll();
+        return context.getSharedPreferences("connectus", Context.MODE_PRIVATE).getAll();
     }
 
     public void setAuthorization(AuthorizationResponse authorizationResponse) {

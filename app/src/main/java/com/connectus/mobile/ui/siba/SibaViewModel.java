@@ -29,12 +29,11 @@ public class SibaViewModel extends ViewModel {
 
     private MutableLiveData<ResponseDTO> responseLiveData;
     private final APIService apiService = new RestClients().get();
-    private final APIService sibaApiService = new RestClients().getSibaApiService();
 
 
     public MutableLiveData<ResponseDTO> hitCheckEligibilityByUsernameApi(String authentication, String username) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO> ul = sibaApiService.checkEligibility(authentication, username);
+        Call<ResponseDTO> ul = apiService.checkEligibility(authentication, username);
         try {
             ul.enqueue(new Callback<ResponseDTO>() {
                 @Override
@@ -63,7 +62,7 @@ public class SibaViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDTO> hitCreateSibaProfileApi(String authentication, CreateSibaProfileDTO createSibaProfileDTO) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<SibaProfile>> ul = sibaApiService.createSibaProfile(authentication, createSibaProfileDTO);
+        Call<ResponseDTO<SibaProfile>> ul = apiService.createSibaProfile(authentication, createSibaProfileDTO);
         try {
             ul.enqueue(new Callback<ResponseDTO<SibaProfile>>() {
                 @Override
@@ -93,7 +92,7 @@ public class SibaViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDTO> hitGetMySibaProfiles(Context context, String authentication, UUID mProfileId) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<List<SibaProfile>>> ul = sibaApiService.getMySibaProfiles(authentication, mProfileId);
+        Call<ResponseDTO<List<SibaProfile>>> ul = apiService.getMySibaProfiles(authentication, mProfileId);
         try {
             ul.enqueue(new Callback<ResponseDTO<List<SibaProfile>>>() {
                 @Override
@@ -129,7 +128,7 @@ public class SibaViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDTO> hitGetMySibaInvites(Context context, String authentication, UUID mProfileId) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<List<MySibaInvite>>> ul = sibaApiService.getMySibaInvites(authentication, mProfileId);
+        Call<ResponseDTO<List<MySibaInvite>>> ul = apiService.getMySibaInvites(authentication, mProfileId);
         try {
             ul.enqueue(new Callback<ResponseDTO<List<MySibaInvite>>>() {
                 @Override
@@ -165,7 +164,7 @@ public class SibaViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDTO> hitActionInvite(String authentication, UUID mProfileId, String inviteId, String action) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO> ul = sibaApiService.actionInvite(authentication, mProfileId, inviteId, action);
+        Call<ResponseDTO> ul = apiService.actionInvite(authentication, mProfileId, inviteId, action);
         try {
             ul.enqueue(new Callback<ResponseDTO>() {
                 @Override
@@ -195,7 +194,7 @@ public class SibaViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDTO> hitDepositToSibaApi(Context context, String authentication, UUID mProfileId, UUID sibaProfileId, SibaDepositDTO sibaDepositDTO) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<BalanceDTO>> ul = sibaApiService.depositToSiba(authentication, mProfileId, sibaProfileId, sibaDepositDTO);
+        Call<ResponseDTO<BalanceDTO>> ul = apiService.depositToSiba(authentication, mProfileId, sibaProfileId, sibaDepositDTO);
         try {
             ul.enqueue(new Callback<ResponseDTO<BalanceDTO>>() {
                 @Override

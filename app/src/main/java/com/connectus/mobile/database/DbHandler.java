@@ -44,7 +44,7 @@ public class DbHandler extends SQLiteOpenHelper {
     @SuppressLint("SimpleDateFormat")
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-    private static final String DATABASE_NAME = "emalyami.db";
+    private static final String DATABASE_NAME = "connectus.db";
     // always update database version
     private static final int DATABASE_VERSION = 5;
 

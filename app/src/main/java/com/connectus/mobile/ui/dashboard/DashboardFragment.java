@@ -47,10 +47,6 @@ import com.connectus.mobile.ui.settings.SettingsFragment;
 import com.connectus.mobile.ui.siba.SibaProfilesFragment;
 import com.connectus.mobile.ui.check.CheckProfileFragment;
 import com.connectus.mobile.ui.transaction.TransactionRecyclerAdapter;
-import com.freshchat.consumer.sdk.FaqOptions;
-import com.freshchat.consumer.sdk.Freshchat;
-import com.freshchat.consumer.sdk.FreshchatUser;
-import com.freshchat.consumer.sdk.exception.MethodNotAllowedException;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -340,36 +336,33 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
                 transaction.addToBackStack(TAG);
                 break;
             case R.id.nav_faq:
-                FaqOptions faqOptions = new FaqOptions()
-                        .showFaqCategoriesAsGrid(true)
-                        .showContactUsOnAppBar(true)
-                        .showContactUsOnFaqScreens(true)
-                        .showContactUsOnFaqNotHelpful(true);
-
-                Freshchat.showFAQs(getActivity(), faqOptions);
+//                FaqOptions faqOptions = new FaqOptions()
+//                        .showFaqCategoriesAsGrid(true)
+//                        .showContactUsOnAppBar(true)
+//                        .showContactUsOnFaqScreens(true)
+//                        .showContactUsOnFaqNotHelpful(true);
+//
+//                Freshchat.showFAQs(getActivity(), faqOptions);
                 break;
             case R.id.nav_talk_to_us:
                 // Get the user object for the current installation
-                FreshchatUser freshchatUser = Freshchat.getInstance(getActivity().getApplicationContext()).getUser();
-                freshchatUser.setFirstName(profileDTO.getFirstName());
-                freshchatUser.setLastName(profileDTO.getLastName());
-                freshchatUser.setEmail(profileDTO.getEmail());
-                try {
-                    String[] phoneNumber = Common.splitCountryCodeFromPhone(profileDTO.getUsername());
-                    freshchatUser.setPhone(phoneNumber[0], phoneNumber[1]);
-                } catch (NumberParseException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    // Call setUser so that the user information is synced with Freshchat's servers
-                    Freshchat.getInstance(getActivity().getApplicationContext()).setUser(freshchatUser);
-                } catch (MethodNotAllowedException e) {
-                    e.printStackTrace();
-                }
-                Freshchat.showConversations(getActivity().getApplicationContext());
-//                CustomerSupportFragment customerSupportFragment = new CustomerSupportFragment();
-//                transaction.add(R.id.container, customerSupportFragment, CustomerSupportFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
+//                FreshchatUser freshchatUser = Freshchat.getInstance(getActivity().getApplicationContext()).getUser();
+//                freshchatUser.setFirstName(profileDTO.getFirstName());
+//                freshchatUser.setLastName(profileDTO.getLastName());
+//                freshchatUser.setEmail(profileDTO.getEmail());
+//                try {
+//                    String[] phoneNumber = Common.splitCountryCodeFromPhone(profileDTO.getUsername());
+//                    freshchatUser.setPhone(phoneNumber[0], phoneNumber[1]);
+//                } catch (NumberParseException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    Freshchat.getInstance(getActivity().getApplicationContext()).setUser(freshchatUser);
+//                } catch (MethodNotAllowedException e) {
+//                    e.printStackTrace();
+//                }
+//                Freshchat.showConversations(getActivity().getApplicationContext());
+
                 break;
             case R.id.nav_settings:
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -434,7 +427,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void logout() {
         pd.setMessage("Signing Out ...");
         pd.show();
-        Freshchat.resetUser(getActivity().getApplicationContext());
         Common.clearSessionData(sharedPreferencesManager, getContext());
         AuthorizeFragment authorizeFragment = new AuthorizeFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

@@ -159,7 +159,6 @@
     <string name="zar">ZAR</string>
     <string name="talk_to_us">Talk to us</string>
     <string name="customer_support">Customer Support</string>
-    <string name="freshchat_file_provider_authority">com.emalyami.mobile.provider</string>
     <string name="faq">FAQ</string>
     <string name="dummy_service_description">Description of the service goes here!</string>
     <string name="service_name">Service Name</string>

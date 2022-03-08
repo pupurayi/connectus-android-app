@@ -20,21 +20,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClients {
     private static APIService apiService;
-    private static APIService sibaApiService;
 
     public RestClients() {
         apiService = setupRestClient();
-        sibaApiService = setupSibaRestClient();
     }
 
     public APIService get() {
         return apiService;
     }
-
-    public APIService getSibaApiService() {
-        return sibaApiService;
-    }
-
 
     private APIService setupRestClient() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -47,7 +40,7 @@ public class RestClients {
 
     private APIService setupSibaRestClient() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.SIBA_BASE_URL)
+                .baseUrl(Constants.CORE_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new SelfSigningClientBuilder().createClient())
                 .build();

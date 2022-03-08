@@ -14,8 +14,6 @@ import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.splashscreen.SplashScreenFragment;
-import com.freshchat.consumer.sdk.Freshchat;
-import com.freshchat.consumer.sdk.FreshchatConfig;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -61,41 +59,17 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         pd = new ProgressDialog(this);
 
-        FreshchatConfig config = new FreshchatConfig(Constants.FRESH_CHAT_APP_ID, Constants.FRESH_CHAT_APP_KEY);
-        config.setDomain(Constants.FRESH_CHAT_DOMAIN);
-        config.setCameraCaptureEnabled(true);
-        config.setGallerySelectionEnabled(true);
-        config.setResponseExpectationEnabled(true);
-        Freshchat.getInstance(getApplicationContext()).init(config);
-
         sharedPreferencesManager = new SharedPreferencesManager(this);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (Common.isSessionValid(sharedPreferencesManager)) {
             profileDTO = sharedPreferencesManager.getProfile();
-//            if (profileDTO.getUserStatus().equals("PENDING_VERIFICATION")) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("otpType", "PHONE_VERIFICATION");
-//                bundle.putString("otpTitle", "Phone Verification");
-//                bundle.putString("username", profileDTO.getUsername());
-//                OTPFragment otpFragment = new OTPFragment();
-//                otpFragment.setArguments(bundle);
-//                transaction.add(R.id.container, otpFragment, OTPFragment.class.getSimpleName());
-//            } else {
             DashboardFragment dashboardFragment = new DashboardFragment();
             transaction.add(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
-//            }
         } else {
             SplashScreenFragment splashScreenFragment = new SplashScreenFragment();
             transaction.add(R.id.container, splashScreenFragment, SplashScreenFragment.class.getSimpleName());
         }
         transaction.commit();
-
-//        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                Toast.makeText(getApplicationContext(), "" + fragmentManager.getBackStackEntryCount(), Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
     public void updateApp(AppUpdateInfo appUpdateInfo, int appUpdateType) {

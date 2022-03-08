@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "432529726554",
-    "project_id": "emalyami-6b26e",
-    "storage_bucket": "emalyami-6b26e.appspot.com"
+    "project_number": "493004595301",
+    "project_id": "connectus-eec4e",
+    "storage_bucket": "connectus-eec4e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:432529726554:android:88771dafc86bcf454e4c63",
+        "mobilesdk_app_id": "1:493004595301:android:e046ea82a44f654ae3a68c",
         "android_client_info": {
-          "package_name": "com.emalyami.mobile"
+          "package_name": "com.connectus.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "432529726554-andqinqt3sjcuni9corj9g0k03e02u99.apps.googleusercontent.com",
+          "client_id": "493004595301-10u3udbmpr5csc1817ou0vtq565n9fsi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCAjXAFvhBj1q1UjCnUOkD_W2wcm-L7P80"
+          "current_key": "AIzaSyBrEs5Xz7Wa2M97gDTcp-6m17i3M_tb9Hk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "432529726554-andqinqt3sjcuni9corj9g0k03e02u99.apps.googleusercontent.com",
+              "client_id": "493004595301-10u3udbmpr5csc1817ou0vtq565n9fsi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
