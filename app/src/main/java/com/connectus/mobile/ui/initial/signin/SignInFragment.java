@@ -23,13 +23,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.AuthorizationResponse;
+import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.SignInRequest;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.initial.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.resetpassword.ForgotPasswordFragment;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,8 +75,8 @@ public class SignInFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        AuthorizationResponse authorizationResponse = sharedPreferencesManager.getAuthorization();
-        phoneNumber = authorizationResponse.getUsername();
+        CheckResponseDto checkResponseDto = sharedPreferencesManager.getAuthorization();
+        phoneNumber = checkResponseDto.getMsisdn();
 
 
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_number);
@@ -151,12 +151,12 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
                 Common.clearSessionData(sharedPreferencesManager, getContext());
                 fragmentManager.popBackStack();
-                Fragment authorizeFragment = fragmentManager.findFragmentByTag(AuthorizeFragment.class.getSimpleName());
+                Fragment authorizeFragment = fragmentManager.findFragmentByTag(CheckFragment.class.getSimpleName());
                 if (authorizeFragment == null) {
-                    authorizeFragment = new AuthorizeFragment();
+                    authorizeFragment = new CheckFragment();
                 }
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, authorizeFragment, AuthorizeFragment.class.getSimpleName());
+                transaction.replace(R.id.container, authorizeFragment, CheckFragment.class.getSimpleName());
                 transaction.commit();
             }
         });

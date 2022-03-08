@@ -37,7 +37,7 @@ import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
 import com.connectus.mobile.api.dto.TransactionType;
 import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
-import com.connectus.mobile.ui.initial.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.check.CheckPaymateFragment;
 import com.connectus.mobile.ui.notification.NotificationFragment;
 import com.connectus.mobile.ui.paymate.PaymateApplicationFragment;
@@ -427,9 +427,9 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Signing Out ...");
         pd.show();
         Common.clearSessionData(sharedPreferencesManager, getContext());
-        AuthorizeFragment authorizeFragment = new AuthorizeFragment();
+        CheckFragment checkFragment = new CheckFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.container, authorizeFragment, AuthorizeFragment.class.getSimpleName());
+        transaction.replace(R.id.container, checkFragment, CheckFragment.class.getSimpleName());
         transaction.commit();
         pd.dismiss();
     }

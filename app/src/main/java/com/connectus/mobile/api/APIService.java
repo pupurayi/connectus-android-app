@@ -2,7 +2,7 @@ package com.connectus.mobile.api;
 
 import com.connectus.mobile.api.dto.ProfileDTO;
 import com.connectus.mobile.api.dto.AuthenticationResponse;
-import com.connectus.mobile.api.dto.AuthorizationResponse;
+import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.BalanceDTO;
 import com.connectus.mobile.api.dto.BankDto;
 import com.connectus.mobile.api.dto.ChangePasswordRequest;
@@ -49,8 +49,8 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/user/authorize/{phoneNumber}")
-    Call<ResponseDTO<AuthorizationResponse>> authorize(@Path("phoneNumber") String phoneNumber);
+    @GET("/api/v1/user/check/{msisdn}")
+    Call<CheckResponseDto> check(@Path("msisdn") String msisdn);
 
     @Headers({
             "Accept: application/json"

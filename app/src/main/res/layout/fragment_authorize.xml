@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
     android:fillViewport="true"
-    tools:context=".ui.initial.authorize.AuthorizeFragment">
+    tools:context=".ui.initial.check.CheckFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

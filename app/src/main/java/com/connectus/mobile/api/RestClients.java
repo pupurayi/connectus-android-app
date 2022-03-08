@@ -38,15 +38,6 @@ public class RestClients {
         return retrofit.create(APIService.class);
     }
 
-    private APIService setupSibaRestClient() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.CORE_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(new SelfSigningClientBuilder().createClient())
-                .build();
-        return retrofit.create(APIService.class);
-    }
-
     public class SelfSigningClientBuilder {
         @SuppressWarnings("null")
         public OkHttpClient configureClient(final OkHttpClient.Builder client) {

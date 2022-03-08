@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.initial.authorize;
+package com.connectus.mobile.ui.initial.check;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
-import com.connectus.mobile.api.dto.AuthorizationResponse;
+import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.ResponseDTO;
 
@@ -21,25 +21,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuthorizeViewModel extends ViewModel {
-    private static final String TAG = AuthorizeViewModel.class.getSimpleName();
+public class CheckViewModel extends ViewModel {
+    private static final String TAG = CheckViewModel.class.getSimpleName();
 
     private MutableLiveData<ResponseDTO> responseLiveData;
     private final APIService apiService = new RestClients().get();
 
-    public MutableLiveData<ResponseDTO> hitAuthorizeApi(final Context context, String phoneNumber) {
+    public MutableLiveData<ResponseDTO> hitCheckApi(final Context context, String phoneNumber) {
         responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<AuthorizationResponse>> ul = apiService.authorize(phoneNumber);
+        Call<CheckResponseDto> ul = apiService.check(phoneNumber);
         try {
-            ul.enqueue(new Callback<ResponseDTO<AuthorizationResponse>>() {
+            ul.enqueue(new Callback<CheckResponseDto>() {
                 @Override
-                public void onResponse(Call<ResponseDTO<AuthorizationResponse>> call, Response<ResponseDTO<AuthorizationResponse>> response) {
+                public void onResponse(Call<CheckResponseDto> call, Response<CheckResponseDto> response) {
                     if (response.code() == 200) {
-                        AuthorizationResponse authorizationResponse = response.body().getData();
+                        CheckResponseDto checkResponseDto = response.body();
 
                         // TODO save
                         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        sharedPreferencesManager.setAuthorization(authorizationResponse);
+                        sharedPreferencesManager.setAuthorization(checkResponseDto);
 
                         responseLiveData.setValue(new ResponseDTO("success", null, null));
                     } else {
@@ -56,9 +56,9 @@ public class AuthorizeViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseDTO<AuthorizationResponse>> call, Throwable t) {
+                public void onFailure(Call<CheckResponseDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
+                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!"+t.toString(), null));
                 }
             });
         } catch (Exception e) {

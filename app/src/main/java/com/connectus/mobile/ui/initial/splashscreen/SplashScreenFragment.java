@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.AuthorizationResponse;
+import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.initial.authorize.AuthorizeFragment;
+import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.initial.signin.SignInFragment;
 import com.connectus.mobile.ui.initial.signup.SignUpFragment;
 
@@ -54,18 +54,18 @@ public class SplashScreenFragment extends Fragment {
 
             public void onFinish() {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                AuthorizationResponse authorizationResponse = sharedPreferencesManager.getAuthorization();
+                CheckResponseDto checkResponseDto = sharedPreferencesManager.getAuthorization();
                 Fragment fragment;
                 String tag;
-                if (authorizationResponse.isSuccess() && authorizationResponse.getUsername() != null) {
+                if (checkResponseDto.isSuccess() && checkResponseDto.getMsisdn() != null) {
                     fragment = new SignInFragment();
                     tag = SignInFragment.class.getSimpleName();
-                } else if (!authorizationResponse.isSuccess() && authorizationResponse.getUsername() != null) {
+                } else if (!checkResponseDto.isSuccess() && checkResponseDto.getMsisdn() != null) {
                     fragment = new SignUpFragment();
                     tag = SignUpFragment.class.getSimpleName();
                 } else {
-                    fragment = new AuthorizeFragment();
-                    tag = AuthorizeFragment.class.getSimpleName();
+                    fragment = new CheckFragment();
+                    tag = CheckFragment.class.getSimpleName();
                 }
                 transaction.add(R.id.container, fragment, tag);
                 transaction.commit();

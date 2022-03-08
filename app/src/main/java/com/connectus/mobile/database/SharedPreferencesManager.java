@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.connectus.mobile.api.dto.ProfileDTO;
-import com.connectus.mobile.api.dto.AuthorizationResponse;
+import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.PaymateDTO;
 import com.connectus.mobile.api.dto.JWT;
 import com.connectus.mobile.common.Common;
@@ -39,14 +39,14 @@ public class SharedPreferencesManager {
         return context.getSharedPreferences("connectus", Context.MODE_PRIVATE).getAll();
     }
 
-    public void setAuthorization(AuthorizationResponse authorizationResponse) {
-        editor.putString("authorization", new Gson().toJson(authorizationResponse));
+    public void setAuthorization(CheckResponseDto checkResponseDto) {
+        editor.putString("authorization", new Gson().toJson(checkResponseDto));
         editor.apply();
     }
 
-    public AuthorizationResponse getAuthorization() {
+    public CheckResponseDto getAuthorization() {
         this.sharedPreferences = getSharedPreferences();
-        return sharedPreferences.get("authorization") != null ? new Gson().fromJson(sharedPreferences.get("authorization").toString(), AuthorizationResponse.class) : new AuthorizationResponse();
+        return sharedPreferences.get("authorization") != null ? new Gson().fromJson(sharedPreferences.get("authorization").toString(), CheckResponseDto.class) : new CheckResponseDto();
     }
 
     public void setJWT(JWT jwt) {
