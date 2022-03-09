@@ -46,8 +46,7 @@ public class OfferingsRecyclerAdapter extends RecyclerView.Adapter<OfferingsRecy
         OfferingDto offeringDto = notifications.get(position);
         holder.textViewNotificationTitle.setText(offeringDto.getName());
         holder.textViewNotificationMessage.setText(offeringDto.getDescription());
-        ZonedDateTime created = offeringDto.getCreated();
-        holder.textViewSentTime.setText(dateFormat.format(created));
+        holder.textViewSentTime.setText(offeringDto.getCreated());
     }
 
     @Override

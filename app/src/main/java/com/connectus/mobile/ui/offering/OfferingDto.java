@@ -9,10 +9,10 @@ public class OfferingDto {
     private String name;
     private String description;
     private int rating;
-    private ZonedDateTime created;
-    private ZonedDateTime updated;
+    private String created;
+    private String updated;
 
-    public OfferingDto(UUID id, UUID userId, String name, String description, int rating, ZonedDateTime created, ZonedDateTime updated) {
+    public OfferingDto(UUID id, UUID userId, String name, String description, int rating, String created, String updated) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -62,19 +62,19 @@ public class OfferingDto {
         this.rating = rating;
     }
 
-    public ZonedDateTime getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(ZonedDateTime created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
-    public ZonedDateTime getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdated(ZonedDateTime updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 }

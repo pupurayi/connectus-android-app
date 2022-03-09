@@ -86,7 +86,9 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cValues = new ContentValues();
         cValues.put(OfferingContract.OfferingEntry.getOfferingId(), offeringDto.getId().toString());
-        cValues.put(OfferingContract.OfferingEntry.getUserId(), offeringDto.getUserId().toString());
+        if (offeringDto.getUserId() != null) {
+            cValues.put(OfferingContract.OfferingEntry.getUserId(), offeringDto.getUserId().toString());
+        }
         cValues.put(OfferingContract.OfferingEntry.getNAME(), offeringDto.getName());
         cValues.put(OfferingContract.OfferingEntry.getDESCRIPTION(), offeringDto.getDescription());
         cValues.put(OfferingContract.OfferingEntry.getRATING(), offeringDto.getRating());
@@ -113,16 +115,15 @@ public class DbHandler extends SQLiteOpenHelper {
         List<OfferingDto> offerings = new LinkedList<>();
         while (cursor.moveToNext()) {
             UUID offeringId = UUID.fromString(cursor.getString(offeringIdPos));
-            UUID userId = UUID.fromString(cursor.getString(userIdPos));
+            UUID userId = null;
+            if (cursor.getString(userIdPos) != null) {
+                userId = UUID.fromString(cursor.getString(userIdPos));
+            }
             String name = cursor.getString(namePos);
             String description = cursor.getString(descriptionPos);
             int rating = cursor.getInt(ratingPos);
-            ZonedDateTime created = null;
-            ZonedDateTime updated = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                created = ZonedDateTime.parse(cursor.getString(createdPos));
-                updated = ZonedDateTime.parse(cursor.getString(updatedPos));
-            }
+            String created = cursor.getString(createdPos);
+            String updated = cursor.getString(updatedPos);
             offerings.add(new OfferingDto(offeringId, userId, name, description, rating, created, updated));
         }
         cursor.close();

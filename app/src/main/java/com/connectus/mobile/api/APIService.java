@@ -71,7 +71,14 @@ public interface APIService {
             "Accept: application/json"
     })
     @POST("/api/v1/offering")
-    Call<OfferingDto> addNewOffering(@Header("Authorization") String authentication, @Body NewOfferingDto newOfferingDto);
+    Call<OfferingDto> createOffering(@Header("Authorization") String authentication, @Body NewOfferingDto newOfferingDto);
+
+
+    @Headers({
+            "Accept: application/json"
+    })
+    @GET("/api/v1/offering")
+    Call<List<OfferingDto>> getOfferings(@Header("Authorization") String authentication);
 
 
     @Headers({
