@@ -20,7 +20,7 @@ import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.FirestoreHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.notification.NotificationDTO;
+import com.connectus.mobile.ui.old.notification.NotificationDTO;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

@@ -30,7 +30,7 @@ import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.connectus.mobile.ui.resetpassword.ForgotPasswordFragment;
+import com.connectus.mobile.ui.old.resetpassword.ForgotPasswordFragment;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

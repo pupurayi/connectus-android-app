@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
     android:orientation="vertical"
-    tools:context=".ui.transaction.TransactionStatusFragment">
+    tools:context=".ui.old.transaction.TransactionStatusFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"

@@ -34,19 +34,18 @@ import com.connectus.mobile.api.dto.Transaction;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.offering.OfferingsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
 import com.connectus.mobile.api.dto.TransactionType;
 import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.connectus.mobile.ui.check.CheckPaymateFragment;
-import com.connectus.mobile.ui.notification.NotificationFragment;
-import com.connectus.mobile.ui.paymate.PaymateApplicationFragment;
+import com.connectus.mobile.ui.old.check.CheckPaymateFragment;
+import com.connectus.mobile.ui.old.paymate.PaymateApplicationFragment;
 import com.connectus.mobile.ui.qrcode.QRCodeFragment;
-import com.connectus.mobile.ui.services.ServicesFragment;
-import com.connectus.mobile.ui.settings.SettingsFragment;
-import com.connectus.mobile.ui.siba.SibaProfilesFragment;
-import com.connectus.mobile.ui.check.CheckProfileFragment;
-import com.connectus.mobile.ui.transaction.TransactionRecyclerAdapter;
+import com.connectus.mobile.ui.old.services.ServicesFragment;
+import com.connectus.mobile.ui.old.settings.SettingsFragment;
+import com.connectus.mobile.ui.old.check.CheckProfileFragment;
+import com.connectus.mobile.ui.old.transaction.TransactionRecyclerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -128,7 +127,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewMsisdn = view.findViewById(R.id.text_view_msisdn);
-        textViewProfileBalance = view.findViewById(R.id.text_view_profile_balance);
+//        textViewProfileBalance = view.findViewById(R.id.text_view_profile_balance);
 
         long lastSync = sharedPreferencesManager.getLastSync();
         long now = new Date().getTime();
@@ -163,65 +162,65 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             }
         });
 
-        imageViewPay = view.findViewById(R.id.image_view_pay);
-        imageViewPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("type", String.valueOf(TransactionType.GOODS_AND_SERVICES));
-                bundle.putString("title", "Payment");
-                CheckPaymateFragment checkPaymateFragment = new CheckPaymateFragment();
-                checkPaymateFragment.setArguments(bundle);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, checkPaymateFragment, CheckPaymateFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
-            }
-        });
-
-        imageViewCashWithdraw = view.findViewById(R.id.image_view_cash_withdraw);
-        imageViewCashWithdraw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("type", String.valueOf(TransactionType.CASH_WITHDRAWAL));
-                bundle.putString("title", "Withdraw");
-                CheckPaymateFragment checkPaymateFragment = new CheckPaymateFragment();
-                checkPaymateFragment.setArguments(bundle);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, checkPaymateFragment, CheckPaymateFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
-            }
-        });
-
-        imageViewInternalTransfer = view.findViewById(R.id.image_view_internal_transfer);
-        imageViewInternalTransfer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("type", String.valueOf(TransactionType.INTERNAL_TRANSFER));
-                bundle.putString("title", "Transfer");
-                CheckProfileFragment checkProfileFragment = new CheckProfileFragment();
-                checkProfileFragment.setArguments(bundle);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, checkProfileFragment, CheckProfileFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
-            }
-        });
-
-        buttonMoreServices = view.findViewById(R.id.button_more_services);
-        buttonMoreServices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ServicesFragment servicesFragment = new ServicesFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, servicesFragment, ServicesFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
-            }
-        });
+//        imageViewPay = view.findViewById(R.id.image_view_pay);
+//        imageViewPay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("type", String.valueOf(TransactionType.GOODS_AND_SERVICES));
+//                bundle.putString("title", "Payment");
+//                CheckPaymateFragment checkPaymateFragment = new CheckPaymateFragment();
+//                checkPaymateFragment.setArguments(bundle);
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.add(R.id.container, checkPaymateFragment, CheckPaymateFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                transaction.commit();
+//            }
+//        });
+//
+//        imageViewCashWithdraw = view.findViewById(R.id.image_view_cash_withdraw);
+//        imageViewCashWithdraw.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("type", String.valueOf(TransactionType.CASH_WITHDRAWAL));
+//                bundle.putString("title", "Withdraw");
+//                CheckPaymateFragment checkPaymateFragment = new CheckPaymateFragment();
+//                checkPaymateFragment.setArguments(bundle);
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.add(R.id.container, checkPaymateFragment, CheckPaymateFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                transaction.commit();
+//            }
+//        });
+//
+//        imageViewInternalTransfer = view.findViewById(R.id.image_view_internal_transfer);
+//        imageViewInternalTransfer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("type", String.valueOf(TransactionType.INTERNAL_TRANSFER));
+//                bundle.putString("title", "Transfer");
+//                CheckProfileFragment checkProfileFragment = new CheckProfileFragment();
+//                checkProfileFragment.setArguments(bundle);
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.add(R.id.container, checkProfileFragment, CheckProfileFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                transaction.commit();
+//            }
+//        });
+//
+//        buttonMoreServices = view.findViewById(R.id.button_more_services);
+//        buttonMoreServices.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ServicesFragment servicesFragment = new ServicesFragment();
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.add(R.id.container, servicesFragment, ServicesFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                transaction.commit();
+//            }
+//        });
 
 
         imageViewQRCode = view.findViewById(R.id.image_view_qr_code_options);
@@ -330,8 +329,8 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 //                transaction.addToBackStack(TAG);
 //                break;
             case R.id.nav_offerings:
-                PaymateApplicationFragment paymateApplicationFragment = new PaymateApplicationFragment();
-                transaction.add(R.id.container, paymateApplicationFragment, PaymateApplicationFragment.class.getSimpleName());
+                OfferingsFragment offeringsFragment = new OfferingsFragment();
+                transaction.add(R.id.container, offeringsFragment, OfferingsFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
 //            case R.id.nav_faq:
@@ -419,7 +418,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         textViewNavHeaderFullName.setText(fullName);
         textViewMsisdn.setText(msisdn);
         textViewNavHeaderMsisdn.setText(msisdn);
-        textViewProfileBalance.setText(profileBalance);
+//        textViewProfileBalance.setText(profileBalance);
     }
 
     public void logout() {

@@ -3,6 +3,10 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="menu_my_offerings">My Offerings</string>
+    <string name="service_providers">Service Providers</string>
+    <string name="delete_offerings">Delete Offerings</string>
+    <string name="offering">Offering</string>
+    <string name="offerings">Offerings</string>
 
 
     <string name="dont_have_account_yet">Don\'t have account yet?</string>
@@ -75,7 +79,7 @@
     <string name="deposit_to">DEPOSIT TO</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="dummy_date_time">2020-05-16 14:00:00</string>
-    <string name="recent_transactions">Recent Transactions</string>
+    <string name="featured">Featured</string>
     <string name="settings">Settings</string>
     <string name="more_services">More Services</string>
     <string name="services">Services</string>

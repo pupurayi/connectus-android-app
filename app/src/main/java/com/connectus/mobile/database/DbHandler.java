@@ -21,16 +21,19 @@ import com.connectus.mobile.database.contract.BalanceContract;
 import com.connectus.mobile.database.contract.ChatMessageContract;
 import com.connectus.mobile.database.contract.MySibaInviteContract;
 import com.connectus.mobile.database.contract.NotificationContract;
+import com.connectus.mobile.database.contract.OfferingContract;
 import com.connectus.mobile.database.contract.SibaProfileContract;
 import com.connectus.mobile.database.contract.SupportMessageContract;
 import com.connectus.mobile.database.contract.TransactionContract;
-import com.connectus.mobile.ui.notification.NotificationDTO;
+import com.connectus.mobile.ui.offering.OfferingDto;
+import com.connectus.mobile.ui.old.notification.NotificationDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -46,7 +49,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "connectus.db";
     // always update database version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public DbHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -54,6 +57,8 @@ public class DbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(OfferingContract.SQL_CREATE_ENTRIES);
+
         db.execSQL(BalanceContract.SQL_CREATE_ENTRIES);
         db.execSQL(NotificationContract.SQL_CREATE_ENTRIES);
         db.execSQL(TransactionContract.SQL_CREATE_ENTRIES);
@@ -65,6 +70,8 @@ public class DbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(OfferingContract.SQL_DROP_TABLE);
+
         db.execSQL(BalanceContract.SQL_DROP_TABLE);
         db.execSQL(NotificationContract.SQL_DROP_TABLE);
         db.execSQL(TransactionContract.SQL_DROP_TABLE);
@@ -74,6 +81,61 @@ public class DbHandler extends SQLiteOpenHelper {
         db.execSQL(SupportMessageContract.SQL_DROP_TABLE);
         onCreate(db);
     }
+
+    public void insertOffering(OfferingDto offeringDto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cValues = new ContentValues();
+        cValues.put(OfferingContract.OfferingEntry.getOfferingId(), offeringDto.getId().toString());
+        cValues.put(OfferingContract.OfferingEntry.getUserId(), offeringDto.getUserId().toString());
+        cValues.put(OfferingContract.OfferingEntry.getNAME(), offeringDto.getName());
+        cValues.put(OfferingContract.OfferingEntry.getDESCRIPTION(), offeringDto.getDescription());
+        cValues.put(OfferingContract.OfferingEntry.getRATING(), offeringDto.getRating());
+        cValues.put(OfferingContract.OfferingEntry.getCREATED(), offeringDto.getCreated().toString());
+        cValues.put(OfferingContract.OfferingEntry.getUPDATED(), offeringDto.getUpdated().toString());
+        long newRowId = db.replace(OfferingContract.OfferingEntry.getTableName(), null, cValues);
+        db.close();
+    }
+
+    public List<OfferingDto> getOfferings() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String[] columns = new String[]{OfferingContract.OfferingEntry.getOfferingId(), OfferingContract.OfferingEntry.getUserId(), OfferingContract.OfferingEntry.getNAME(), OfferingContract.OfferingEntry.getDESCRIPTION(), OfferingContract.OfferingEntry.getRATING(), OfferingContract.OfferingEntry.getCREATED(), OfferingContract.OfferingEntry.getUPDATED()};
+        Cursor cursor = db.query(OfferingContract.OfferingEntry.getTableName(), columns, null, null, null, null, null);
+
+        int offeringIdPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getOfferingId());
+        int userIdPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getUserId());
+        int namePos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getNAME());
+        int descriptionPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getDESCRIPTION());
+        int ratingPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getRATING());
+        int createdPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getCREATED());
+        int updatedPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getUPDATED());
+
+        List<OfferingDto> offerings = new LinkedList<>();
+        while (cursor.moveToNext()) {
+            UUID offeringId = UUID.fromString(cursor.getString(offeringIdPos));
+            UUID userId = UUID.fromString(cursor.getString(userIdPos));
+            String name = cursor.getString(namePos);
+            String description = cursor.getString(descriptionPos);
+            int rating = cursor.getInt(ratingPos);
+            ZonedDateTime created = null;
+            ZonedDateTime updated = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                created = ZonedDateTime.parse(cursor.getString(createdPos));
+                updated = ZonedDateTime.parse(cursor.getString(updatedPos));
+            }
+            offerings.add(new OfferingDto(offeringId, userId, name, description, rating, created, updated));
+        }
+        cursor.close();
+        db.close();
+        return offerings;
+    }
+
+    public void deleteAllOfferings() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(OfferingContract.OfferingEntry.getTableName(), null, null);
+        db.close();
+    }
+
 
     public void insertBalance(BalanceDTO balanceDTO) {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");

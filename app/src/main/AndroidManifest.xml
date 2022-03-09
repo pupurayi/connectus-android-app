@@ -54,13 +54,13 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <!-- Set custom default icon. This is used when no icon is set for incoming notificationDTO messages.
+        <!-- Set custom default icon. This is used when no icon is set for incoming offeringDto messages.
         See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher_foreground" />
-        <!-- Set color used with incoming notificationDTO messages. This is used when no color is set for the incoming
-             notificationDTO message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!-- Set color used with incoming offeringDto messages. This is used when no color is set for the incoming
+             offeringDto message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/blue" />
