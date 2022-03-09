@@ -117,7 +117,7 @@ public class MobileTopupFragment extends Fragment {
                     getMobileOperator(phoneNumber);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("eMalyami Alert")
+                    builder.setTitle("ConnectUs Alert")
                             .setMessage("Enter valid Phone Number!")
                             .setPositiveButton(android.R.string.yes, null)
                             .show();
@@ -149,7 +149,7 @@ public class MobileTopupFragment extends Fragment {
                     case "failed":
                     case "error":
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("eMalyami Alert")
+                        builder.setTitle("ConnectUs Alert")
                                 .setIcon(R.drawable.account_circle)
                                 .setMessage(responseDTO.getMessage())
                                 .setPositiveButton(android.R.string.yes, null)

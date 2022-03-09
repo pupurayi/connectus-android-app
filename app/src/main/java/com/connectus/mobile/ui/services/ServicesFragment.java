@@ -130,7 +130,7 @@ public class ServicesFragment extends Fragment {
                                     transaction.commit();
                                 } else {
                                     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-                                    alertBuilder.setTitle("eMalyami Alert")
+                                    alertBuilder.setTitle("ConnectUs Alert")
                                             .setMessage(String.format("Your Paymate profile is  %s, please contact eMalyami Support for Assistance!", profileDTO.getPaymate().getPaymateStatus()))
                                             .show();
                                 }

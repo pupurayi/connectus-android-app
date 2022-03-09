@@ -113,7 +113,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         View navHeaderView = navigationView.getHeaderView(0);
 
         Menu navMenu = navigationView.getMenu();
-        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_become_a_paymate);
+        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_offerings);
 
         if (profileDTO.getPaymate() == null) {
             becomeAnPaymateItem.setVisible(true);
@@ -319,22 +319,22 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             case R.id.nav_profile:
                 showProfileDetailsFragment();
                 break;
-            case R.id.nav_siba_savings:
-                SibaProfilesFragment sibaProfilesFragment = new SibaProfilesFragment();
-                transaction.add(R.id.container, sibaProfilesFragment, SibaProfilesFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                break;
-            case R.id.nav_notifications:
-                NotificationFragment notificationFragment = new NotificationFragment();
-                transaction.add(R.id.container, notificationFragment, NotificationFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                break;
-            case R.id.nav_become_a_paymate:
+//            case R.id.nav_siba_savings:
+//                SibaProfilesFragment sibaProfilesFragment = new SibaProfilesFragment();
+//                transaction.add(R.id.container, sibaProfilesFragment, SibaProfilesFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                break;
+//            case R.id.nav_notifications:
+//                NotificationFragment notificationFragment = new NotificationFragment();
+//                transaction.add(R.id.container, notificationFragment, NotificationFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                break;
+            case R.id.nav_offerings:
                 PaymateApplicationFragment paymateApplicationFragment = new PaymateApplicationFragment();
                 transaction.add(R.id.container, paymateApplicationFragment, PaymateApplicationFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
-            case R.id.nav_faq:
+//            case R.id.nav_faq:
 //                FaqOptions faqOptions = new FaqOptions()
 //                        .showFaqCategoriesAsGrid(true)
 //                        .showContactUsOnAppBar(true)
@@ -342,9 +342,9 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 //                        .showContactUsOnFaqNotHelpful(true);
 //
 //                Freshchat.showFAQs(getActivity(), faqOptions);
-                break;
-            case R.id.nav_talk_to_us:
-                // Get the user object for the current installation
+//                break;
+//            case R.id.nav_talk_to_us:
+//                 Get the user object for the current installation
 //                FreshchatUser freshchatUser = Freshchat.getInstance(getActivity().getApplicationContext()).getUser();
 //                freshchatUser.setFirstName(profileDTO.getFirstName());
 //                freshchatUser.setLastName(profileDTO.getLastName());
@@ -361,8 +361,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 //                    e.printStackTrace();
 //                }
 //                Freshchat.showConversations(getActivity().getApplicationContext());
-
-                break;
+//            break;
             case R.id.nav_settings:
                 SettingsFragment settingsFragment = new SettingsFragment();
                 transaction.add(R.id.container, settingsFragment, SettingsFragment.class.getSimpleName());

@@ -157,7 +157,7 @@ public class InviteSibaMemberFragment extends Fragment {
                 } else {
                     if (!isPhoneNumberValid) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                        alertDialog.setTitle("eMalyami Alert");
+                        alertDialog.setTitle("ConnectUs Alert");
                         alertDialog.setMessage("Enter a valid phone number!");
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                 new DialogInterface.OnClickListener() {
@@ -168,7 +168,7 @@ public class InviteSibaMemberFragment extends Fragment {
                         alertDialog.show();
                     } else {
                         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                        alertDialog.setTitle("eMalyami Alert");
+                        alertDialog.setTitle("ConnectUs Alert");
                         alertDialog.setMessage("You cannot invite yourself!");
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                 new DialogInterface.OnClickListener() {

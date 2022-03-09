@@ -140,7 +140,7 @@ public class SettingsFragment extends Fragment {
                                 editTextCurrentPassword.setText(null);
                                 editTextNewPassword.setText(null);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setTitle("eMalyami Alert")
+                                builder.setTitle("ConnectUs Alert")
                                         .setMessage(responseDTO.getMessage())
                                         .setPositiveButton(android.R.string.yes, null)
                                         .show();

@@ -89,7 +89,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("eMalyami Alert")
+                builder.setTitle("ConnectUs Alert")
                         .setMessage("Are you sure you want to delete all notifications?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override

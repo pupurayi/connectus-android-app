@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">ConnectUs</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="splash_app_description">eMalyami provides you with your own virtual credit card and virtual wallet that uses CryptoKwena to transact, transfer and save.</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="menu_my_offerings">My Offerings</string>
+
+
     <string name="dont_have_account_yet">Don\'t have account yet?</string>
     <string name="phone_number">Phone</string>
     <string name="password">Password</string>
@@ -83,7 +84,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_logout">Logout</string>
-    <string name="menu_become_a_paymate">Become a Paymate</string>
     <string name="profile">Profile</string>
     <string name="change_password">Change Password</string>
     <string name="current_password">Current Password</string>

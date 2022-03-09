@@ -207,7 +207,7 @@ public class CheckProfileFragment extends Fragment {
                         case "failed":
                         case "error":
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setTitle("eMalyami Alert")
+                            builder.setTitle("ConnectUs Alert")
                                     .setIcon(R.drawable.account_circle)
                                     .setMessage(responseDTO.getMessage())
                                     .setPositiveButton(android.R.string.yes, null)

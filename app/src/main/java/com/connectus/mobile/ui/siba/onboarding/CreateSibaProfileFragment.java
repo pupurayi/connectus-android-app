@@ -126,7 +126,7 @@ public class CreateSibaProfileFragment extends Fragment {
                             case "failed":
                             case "error":
                                 AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                                alertDialog.setTitle("eMalyami Alert");
+                                alertDialog.setTitle("ConnectUs Alert");
                                 alertDialog.setMessage(responseDTO.getMessage());
                                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                         new DialogInterface.OnClickListener() {
@@ -144,7 +144,7 @@ public class CreateSibaProfileFragment extends Fragment {
                         Toast.makeText(getContext(), "Please enter Profile Subject!", Toast.LENGTH_LONG).show();
                     } else {
                         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                        alertDialog.setTitle("eMalyami Alert");
+                        alertDialog.setTitle("ConnectUs Alert");
                         alertDialog.setMessage("Please add at lease 3 invites!");
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                 new DialogInterface.OnClickListener() {
