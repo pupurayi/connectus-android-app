@@ -47,7 +47,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/inter"
             android:gravity="center_vertical"
-            android:text="@string/add_offering"
+            android:text="@string/new_offering"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
@@ -104,6 +104,39 @@
                 android:inputType="textImeMultiLine"
                 android:keepScreenOn="false"
                 android:lines="4" />
+
+            <EditText
+                android:id="@+id/edit_text_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/price"
+                android:importantForAutofill="no"
+                android:inputType="text|numberDecimal"
+                android:keepScreenOn="false" />
+
+
+            <EditText
+                android:id="@+id/edit_text_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/location"
+                android:importantForAutofill="no"
+                android:inputType="text|numberDecimal"
+                android:keepScreenOn="false" />
+
+            <EditText
+                android:id="@+id/edit_text_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/attachment"
+                android:hint="@string/image"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+
 
             <Button
                 android:id="@+id/button_save_offering"

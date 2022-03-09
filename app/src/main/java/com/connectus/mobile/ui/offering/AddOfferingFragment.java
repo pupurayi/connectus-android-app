@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import android.widget.ImageView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.NewOfferingDto;
 import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.android.material.snackbar.Snackbar;
@@ -54,7 +52,7 @@ public class AddOfferingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         offeringViewModel = new ViewModelProvider(this).get(OfferingViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_offering, container, false);
+        return inflater.inflate(R.layout.fragment_create_offering, container, false);
     }
 
     @SuppressLint("ClickableViewAccessibility")

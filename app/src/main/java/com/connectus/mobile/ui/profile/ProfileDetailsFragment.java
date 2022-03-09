@@ -54,7 +54,7 @@ public class ProfileDetailsFragment extends Fragment {
 
     ImageView imageViewBack, imageViewPlus, imageViewProfileAvatar;
     ProgressDialog pd;
-    TextView textViewFullName, textViewPhoneNumber, textViewEmail, textViewDob, textViewSex, textViewIdentificationLabel, textViewIdentificationValue, textViewAddressValue;
+    TextView textViewFullName, textViewPhoneNumber, textViewEmail;
     Button buttonEditProfile;
     String authentication;
     SharedPreferencesManager sharedPreferencesManager;
@@ -122,11 +122,6 @@ public class ProfileDetailsFragment extends Fragment {
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_value);
         textViewEmail = view.findViewById(R.id.text_view_email_value);
-        textViewDob = view.findViewById(R.id.text_view_dob_value);
-        textViewSex = view.findViewById(R.id.text_view_sex_value);
-        textViewIdentificationLabel = view.findViewById(R.id.text_view_identification_label);
-        textViewIdentificationValue = view.findViewById(R.id.text_view_identification_value);
-        textViewAddressValue = view.findViewById(R.id.text_view_adrdess_value);
 
         populateFields(profileDTO);
 
@@ -157,7 +152,7 @@ public class ProfileDetailsFragment extends Fragment {
         super.onResume();
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         populateFields(profileDTO);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(),imageViewProfileAvatar, profileDTO.getId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
     }
 
     public void populateFields(ProfileDto profileDTO) {
@@ -183,17 +178,6 @@ public class ProfileDetailsFragment extends Fragment {
         textViewFullName.setText(fullName);
         textViewPhoneNumber.setText(msisdn);
         textViewEmail.setText(email);
-        textViewIdentificationLabel.setText(identificationType);
-        textViewIdentificationValue.setText(identificationNumber);
-        textViewAddressValue.setText(address);
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String dobToDisplay = null;
-        if (dob != null) {
-            dobToDisplay = simpleDateFormat.format(dob);
-        }
-        textViewDob.setText(dobToDisplay);
-        textViewSex.setText(sex);
     }
 
     public void pickImage() {

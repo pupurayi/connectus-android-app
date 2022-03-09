@@ -119,45 +119,6 @@
                 android:importantForAutofill="yes"
                 android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/edit_text_dob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/today"
-                android:drawableRight="@drawable/today"
-                android:hint="@string/date_of_birth" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/male"
-                    android:text="@string/male"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/radio_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="@string/female"
-                    android:text="@string/female"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/radio_male"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </RadioGroup>
-
             <Button
                 android:id="@+id/button_next"
                 android:layout_width="match_parent"
