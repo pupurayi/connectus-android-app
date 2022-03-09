@@ -34,6 +34,7 @@ import com.connectus.mobile.api.dto.Transaction;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.offering.AddOfferingFragment;
 import com.connectus.mobile.ui.offering.OfferingsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
 import com.connectus.mobile.api.dto.TransactionType;
@@ -289,12 +290,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public List<Transaction> sortTransactions(List<Transaction> transactions) {
-        Collections.sort(transactions, new Comparator<Transaction>() {
-            @Override
-            public int compare(Transaction t1, Transaction t2) {
-                return t2.getCreatedAt().compareTo(t1.getCreatedAt());
-            }
-        });
+        Collections.sort(transactions, (t1, t2) -> t2.getCreatedAt().compareTo(t1.getCreatedAt()));
         return transactions;
     }
 
@@ -318,49 +314,16 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             case R.id.nav_profile:
                 showProfileDetailsFragment();
                 break;
-//            case R.id.nav_siba_savings:
-//                SibaProfilesFragment sibaProfilesFragment = new SibaProfilesFragment();
-//                transaction.add(R.id.container, sibaProfilesFragment, SibaProfilesFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                break;
-//            case R.id.nav_notifications:
-//                NotificationFragment notificationFragment = new NotificationFragment();
-//                transaction.add(R.id.container, notificationFragment, NotificationFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                break;
             case R.id.nav_offerings:
                 OfferingsFragment offeringsFragment = new OfferingsFragment();
                 transaction.add(R.id.container, offeringsFragment, OfferingsFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
-//            case R.id.nav_faq:
-//                FaqOptions faqOptions = new FaqOptions()
-//                        .showFaqCategoriesAsGrid(true)
-//                        .showContactUsOnAppBar(true)
-//                        .showContactUsOnFaqScreens(true)
-//                        .showContactUsOnFaqNotHelpful(true);
-//
-//                Freshchat.showFAQs(getActivity(), faqOptions);
-//                break;
-//            case R.id.nav_talk_to_us:
-//                 Get the user object for the current installation
-//                FreshchatUser freshchatUser = Freshchat.getInstance(getActivity().getApplicationContext()).getUser();
-//                freshchatUser.setFirstName(profileDTO.getFirstName());
-//                freshchatUser.setLastName(profileDTO.getLastName());
-//                freshchatUser.setEmail(profileDTO.getEmail());
-//                try {
-//                    String[] phoneNumber = Common.splitCountryCodeFromPhone(profileDTO.getMsisdn());
-//                    freshchatUser.setPhone(phoneNumber[0], phoneNumber[1]);
-//                } catch (NumberParseException e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    Freshchat.getInstance(getActivity().getApplicationContext()).setUser(freshchatUser);
-//                } catch (MethodNotAllowedException e) {
-//                    e.printStackTrace();
-//                }
-//                Freshchat.showConversations(getActivity().getApplicationContext());
-//            break;
+            case R.id.nav_new_offering:
+                AddOfferingFragment addOfferingFragment = new AddOfferingFragment();
+                transaction.add(R.id.container, addOfferingFragment, AddOfferingFragment.class.getSimpleName());
+                transaction.addToBackStack(TAG);
+                break;
             case R.id.nav_settings:
                 SettingsFragment settingsFragment = new SettingsFragment();
                 transaction.add(R.id.container, settingsFragment, SettingsFragment.class.getSimpleName());
@@ -418,7 +381,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         textViewNavHeaderFullName.setText(fullName);
         textViewMsisdn.setText(msisdn);
         textViewNavHeaderMsisdn.setText(msisdn);
-//        textViewProfileBalance.setText(profileBalance);
     }
 
     public void logout() {

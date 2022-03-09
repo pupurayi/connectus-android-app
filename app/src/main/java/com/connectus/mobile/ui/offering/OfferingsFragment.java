@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,7 @@ import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +41,7 @@ public class OfferingsFragment extends Fragment {
     FloatingActionButton buttonDeleteOfferings;
 
     SharedPreferencesManager sharedPreferencesManager;
+    FragmentManager fragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,16 +59,12 @@ public class OfferingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
+        fragmentManager = getActivity().getSupportFragmentManager();
 
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
-        imageViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
@@ -83,22 +83,5 @@ public class OfferingsFragment extends Fragment {
         RecyclerView recyclerViewOfferings = view.findViewById(R.id.recycler_view_offerings);
         recyclerViewOfferings.setAdapter(offeringsRecyclerAdapter);
         recyclerViewOfferings.setLayoutManager(linearLayoutManager);
-
-        buttonDeleteOfferings = view.findViewById(R.id.fab_delete_offerings);
-        buttonDeleteOfferings.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("ConnectUs Alert")
-                    .setMessage("Are you sure you want to delete all offerings?")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dbHandler.deleteAllOfferings();
-                            offerings.clear();
-                            offeringsRecyclerAdapter.notifyDataSetChanged();
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, null)
-                    .show();
-        });
     }
 }

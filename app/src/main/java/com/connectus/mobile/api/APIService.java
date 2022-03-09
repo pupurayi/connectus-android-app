@@ -1,5 +1,6 @@
 package com.connectus.mobile.api;
 
+import com.connectus.mobile.api.dto.NewOfferingDto;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
@@ -28,6 +29,7 @@ import com.connectus.mobile.api.dto.siba.CreateSibaProfileDTO;
 import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.api.dto.siba.MySibaInvite;
 import com.connectus.mobile.api.dto.transaction.TransactionDto;
+import com.connectus.mobile.ui.offering.OfferingDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -63,6 +65,13 @@ public interface APIService {
     })
     @POST("/api/v1/user/sign-up")
     Call<AuthResponseDto> signUp(@Body SignUpRequest signUpRequest);
+
+
+    @Headers({
+            "Accept: application/json"
+    })
+    @POST("/api/v1/offering")
+    Call<OfferingDto> addNewOffering(@Header("Authorization") String authentication, @Body NewOfferingDto newOfferingDto);
 
 
     @Headers({

@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/fragment_add_offering.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_authorize.xml" value="0.25256673511293637" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1111111111111111" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile_address.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile_identification.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_mobile_topup.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_mobile_topup_checkout.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_my_siba_invites.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_offerings.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_siba_profiles.xml" value="0.1" />

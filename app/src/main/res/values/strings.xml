@@ -7,6 +7,8 @@
     <string name="delete_offerings">Delete Offerings</string>
     <string name="offering">Offering</string>
     <string name="offerings">Offerings</string>
+    <string name="offering_name">Offering Name</string>
+    <string name="new_offering">New Offering</string>
 
 
     <string name="dont_have_account_yet">Don\'t have account yet?</string>
@@ -197,4 +199,8 @@
     <string name="change_phone_number">Change Phone</string>
     <string name="reference">Reference</string>
     <string name="paymate_name">Paymate Name</string>
+    <string name="add_offering">Add Offering</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
