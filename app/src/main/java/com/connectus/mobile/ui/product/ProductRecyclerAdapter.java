@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 
-public class ProductRecyclerAdapter extends RecyclerView.Adapter<com.connectus.mobile.ui.product.ProductRecyclerAdapter.ViewHolder> {
+public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.ViewHolder> {
 
     @SuppressLint("SimpleDateFormat")
     DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");

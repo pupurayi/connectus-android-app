@@ -216,30 +216,28 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 //                transaction.commit();
 //            }
 //        });
-
-
-        imageViewQRCode = view.findViewById(R.id.image_view_qr_code_options);
-        imageViewQRCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                QRCodeFragment qrCodeFragment = new QRCodeFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, qrCodeFragment, QRCodeFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
-
-            }
-        });
-
-
-        imageViewRefresh = view.findViewById(R.id.image_view_refresh);
-        imageViewRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                syncProfileAndDisplay();
-                fetchTransactions();
-            }
-        });
+//        imageViewQRCode = view.findViewById(R.id.image_view_qr_code_options);
+//        imageViewQRCode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                QRCodeFragment qrCodeFragment = new QRCodeFragment();
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.add(R.id.container, qrCodeFragment, QRCodeFragment.class.getSimpleName());
+//                transaction.addToBackStack(TAG);
+//                transaction.commit();
+//
+//            }
+//        });
+//
+//
+//        imageViewRefresh = view.findViewById(R.id.image_view_refresh);
+//        imageViewRefresh.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                syncProfileAndDisplay();
+//                fetchTransactions();
+//            }
+//        });
     }
 
     @Override

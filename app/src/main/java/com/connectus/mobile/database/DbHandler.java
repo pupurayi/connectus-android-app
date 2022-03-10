@@ -107,7 +107,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public List<ProductDto> getProducts() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String[] columns = new String[]{ProductContract.ProductEntry.getProductId(), ProductContract.ProductEntry.getUserId(), ProductContract.ProductEntry.getNAME(), ProductContract.ProductEntry.getDESCRIPTION(), ProductContract.ProductEntry.getPRICE(), ProductContract.ProductEntry.getImageFirst(), ProductContract.ProductEntry.getImageSecond(), ProductContract.ProductEntry.getLAT(), ProductContract.ProductEntry.getLNG(), ProductContract.ProductEntry.getRATING(), ProductContract.ProductEntry.getCREATED(), ProductContract.ProductEntry.getUPDATED()};
+        String[] columns = new String[]{ProductContract.ProductEntry.getProductId(), ProductContract.ProductEntry.getUserId(), ProductContract.ProductEntry.getCATEGORY(), ProductContract.ProductEntry.getNAME(), ProductContract.ProductEntry.getDESCRIPTION(), ProductContract.ProductEntry.getPRICE(), ProductContract.ProductEntry.getImageFirst(), ProductContract.ProductEntry.getImageSecond(), ProductContract.ProductEntry.getLAT(), ProductContract.ProductEntry.getLNG(), ProductContract.ProductEntry.getRATING(), ProductContract.ProductEntry.getCREATED(), ProductContract.ProductEntry.getUPDATED()};
         Cursor cursor = db.query(ProductContract.ProductEntry.getTableName(), columns, null, null, null, null, null);
 
         int productPosId = cursor.getColumnIndex(ProductContract.ProductEntry.getProductId());
