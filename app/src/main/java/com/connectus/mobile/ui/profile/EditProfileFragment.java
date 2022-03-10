@@ -97,7 +97,7 @@ public class EditProfileFragment extends Fragment {
         editTextLastName.setText(lastName);
         editTextEmail.setText(email);
 
-        imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
+        imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
                     .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")

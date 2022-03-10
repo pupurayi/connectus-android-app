@@ -56,7 +56,7 @@
             android:typeface="normal" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/uaf_image_view_profile_avatar"
+            android:id="@+id/circular_image_view_avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"

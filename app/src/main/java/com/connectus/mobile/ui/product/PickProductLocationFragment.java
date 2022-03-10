@@ -23,6 +23,7 @@ import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -30,21 +31,21 @@ import com.squareup.picasso.Picasso;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class PickProductImagesFragment extends Fragment {
+public class PickProductLocationFragment extends Fragment {
 
-    private static final String TAG = PickProductImagesFragment.class.getSimpleName();
+    private static final String TAG = PickProductLocationFragment.class.getSimpleName();
 
     ProgressDialog pd;
     ImageView imageViewBack, imageViewProfileAvatar;
 
-    String name, description;
+    double lng, lat;
+    String name, description, imageFirst, imageSecond;
     double price;
-    String imageFirst, imageSecond;
-    ImageView imageViewFirst, imageViewSecond;
-    Button buttonNext;
+    Button buttonCreate;
 
     FragmentManager fragmentManager;
     private SharedPreferencesManager sharedPreferencesManager;
+    private ProductViewModel productViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,9 +59,12 @@ public class PickProductImagesFragment extends Fragment {
             name = arguments.getString("name");
             description = arguments.getString("description");
             price = arguments.getDouble("price");
+            imageFirst = arguments.getString("imageFirst");
+            imageSecond = arguments.getString("imageSecond");
         } else {
             getActivity().onBackPressed();
         }
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product_pick_images, container, false);
     }
@@ -88,28 +92,23 @@ public class PickProductImagesFragment extends Fragment {
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
-        imageViewFirst = view.findViewById(R.id.image_view_first);
-        imageViewSecond = view.findViewById(R.id.image_view_second);
+        buttonCreate = view.findViewById(R.id.button_next);
+        buttonCreate.setOnClickListener(v -> {
 
-
-        buttonNext = view.findViewById(R.id.button_next);
-        buttonNext.setOnClickListener(v -> {
-
-            if (imageFirst != null && !imageFirst.isEmpty()
-                    && imageSecond != null && !imageSecond.isEmpty()
-            ) {
-                Bundle bundle = new Bundle();
-                bundle.putString("name", name);
-                bundle.putString("description", description);
-                bundle.putDouble("price", price);
-                bundle.putString("imageFirst", imageFirst);
-                bundle.putString("imageSecond", imageSecond);
-                PickProductImagesFragment pickProductImagesFragment = new PickProductImagesFragment();
-                pickProductImagesFragment.setArguments(bundle);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, pickProductImagesFragment, PickProductImagesFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
+            if (name != null && description != null && price > 0 && imageFirst != null && imageSecond != null) {
+                CreateProductDto createProductDto = new CreateProductDto(name, description, price, imageFirst, imageSecond, lat, lng);
+                pd.setMessage("Creating ...");
+                pd.show();
+                productViewModel.hitSaveProductApi(authentication, createProductDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                    pd.dismiss();
+                    switch (responseDTO.getStatus()) {
+                        case "success":
+                        case "failed":
+                        case "error":
+                            Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                    }
+                });
 
             } else {
                 if (imageFirst == null || imageFirst.isEmpty()) {

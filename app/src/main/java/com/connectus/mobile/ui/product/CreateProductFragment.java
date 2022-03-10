@@ -43,7 +43,6 @@ public class CreateProductFragment extends Fragment {
     Button buttonNext;
 
     FragmentManager fragmentManager;
-    private ProductViewModel goodsAndServicesViewModel;
     private SharedPreferencesManager sharedPreferencesManager;
 
     @Override
@@ -53,7 +52,6 @@ public class CreateProductFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        goodsAndServicesViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product_create, container, false);
     }
@@ -73,7 +71,7 @@ public class CreateProductFragment extends Fragment {
         editTextProductDescription = view.findViewById(R.id.edit_text_product_description);
         editTextProductPrice = view.findViewById(R.id.edit_text_product_price);
 
-        imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
+        imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
                     .load(Constants.CORE_BASE_URL + "/api/v1/user/avatar/" + profileDTO.getId() + ".png")
@@ -90,7 +88,10 @@ public class CreateProductFragment extends Fragment {
         buttonNext.setOnClickListener(v -> {
             String name = editTextProductName.getText().toString();
             String description = editTextProductDescription.getText().toString();
-            double price = Double.parseDouble(editTextProductPrice.getText().toString());
+            double price = 0;
+            if (editTextProductPrice.getText() != null && !editTextProductPrice.getText().toString().isEmpty()) {
+                price = Double.parseDouble(editTextProductPrice.getText().toString());
+            }
 
             if (!name.isEmpty() && !description.isEmpty() && price > 0) {
                 Bundle bundle = new Bundle();

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
-    tools:context=".ui.profile.EditAccountFragment">
+    tools:context=".ui.profile.EditProfileFragment">
 
     <LinearLayout
         android:id="@+id/linear_layout_navigation_header"
@@ -56,7 +56,7 @@
             android:typeface="normal" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/uaf_image_view_profile_avatar"
+            android:id="@+id/circular_image_view_avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
