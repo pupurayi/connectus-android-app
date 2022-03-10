@@ -5,9 +5,9 @@ import java.util.UUID;
 public class ProductDto {
     private UUID id;
     private UUID userId;
+    private String category;
     private String name;
     private String description;
-    private String categoty;
     private double price;
     private String imageFirst;
     private String imageSecond;
@@ -17,9 +17,10 @@ public class ProductDto {
     private String created;
     private String updated;
 
-    public ProductDto(UUID id, UUID userId, String name, String description, double price, String imageFirst, String imageSecond, double lat, double lng, int rating, String created, String updated) {
+    public ProductDto(UUID id, UUID userId, String category, String name, String description, double price, String imageFirst, String imageSecond, double lat, double lng, int rating, String created, String updated) {
         this.id = id;
         this.userId = userId;
+        this.category = category;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -46,6 +47,14 @@ public class ProductDto {
 
     public void setUserId(UUID userId) {
         this.userId = userId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {

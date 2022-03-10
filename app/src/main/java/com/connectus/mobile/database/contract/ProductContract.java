@@ -7,6 +7,7 @@ public class ProductContract {
         private static final String TABLE_NAME = "products";
         private static final String PRODUCT_ID = "id";
         private static final String USER_ID = "userId";
+        private static final String CATEGORY = "category";
         private static final String NAME = "name";
         private static final String DESCRIPTION = "description";
         private static final String PRICE = "price";
@@ -28,6 +29,10 @@ public class ProductContract {
 
         public static String getUserId() {
             return USER_ID;
+        }
+
+        public static String getCATEGORY() {
+            return CATEGORY;
         }
 
         public static String getNAME() {
@@ -74,6 +79,7 @@ public class ProductContract {
     public static String SQL_CREATE_ENTRIES = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + " ( " +
             ProductEntry.PRODUCT_ID + " TEXT PRIMARY KEY NOT NULL," +
             ProductEntry.USER_ID + " TEXT," +
+            ProductEntry.CATEGORY + " TEXT," +
             ProductEntry.NAME + " TEXT," +
             ProductEntry.DESCRIPTION + " TEXT," +
             ProductEntry.PRICE + " REAL," +

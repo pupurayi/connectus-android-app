@@ -48,7 +48,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "connectus.db";
     // always update database version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     public DbHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -89,6 +89,7 @@ public class DbHandler extends SQLiteOpenHelper {
         if (productDto.getUserId() != null) {
             cValues.put(ProductContract.ProductEntry.getUserId(), productDto.getUserId().toString());
         }
+        cValues.put(ProductContract.ProductEntry.getCATEGORY(), productDto.getCategory());
         cValues.put(ProductContract.ProductEntry.getNAME(), productDto.getName());
         cValues.put(ProductContract.ProductEntry.getDESCRIPTION(), productDto.getDescription());
         cValues.put(ProductContract.ProductEntry.getPRICE(), productDto.getPrice());
@@ -111,6 +112,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
         int productPosId = cursor.getColumnIndex(ProductContract.ProductEntry.getProductId());
         int userIdPos = cursor.getColumnIndex(ProductContract.ProductEntry.getUserId());
+        int categoryPos = cursor.getColumnIndex(ProductContract.ProductEntry.getCATEGORY());
         int namePos = cursor.getColumnIndex(ProductContract.ProductEntry.getNAME());
         int descriptionPos = cursor.getColumnIndex(ProductContract.ProductEntry.getDESCRIPTION());
         int pricePos = cursor.getColumnIndex(ProductContract.ProductEntry.getPRICE());
@@ -129,6 +131,7 @@ public class DbHandler extends SQLiteOpenHelper {
             if (cursor.getString(userIdPos) != null) {
                 userId = UUID.fromString(cursor.getString(userIdPos));
             }
+            String category = cursor.getString(categoryPos);
             String name = cursor.getString(namePos);
             String description = cursor.getString(descriptionPos);
             double price = cursor.getDouble(pricePos);
@@ -139,7 +142,7 @@ public class DbHandler extends SQLiteOpenHelper {
             int rating = cursor.getInt(ratingPos);
             String created = cursor.getString(createdPos);
             String updated = cursor.getString(updatedPos);
-            products.add(new ProductDto(productId, userId, name, description, price, imageFirst, imageSecond, lat, lng, rating, created, updated));
+            products.add(new ProductDto(productId, userId, category, name, description, price, imageFirst, imageSecond, lat, lng, rating, created, updated));
         }
         cursor.close();
         db.close();
