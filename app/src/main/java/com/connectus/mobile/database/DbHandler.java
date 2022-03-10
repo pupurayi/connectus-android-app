@@ -48,7 +48,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "connectus.db";
     // always update database version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     public DbHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -85,11 +85,17 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cValues = new ContentValues();
         cValues.put(ProductContract.ProductEntry.getProductId(), productDto.getId().toString());
+        cValues.put(ProductContract.ProductEntry.getUserId(), productDto.getUserId().toString());
         if (productDto.getUserId() != null) {
             cValues.put(ProductContract.ProductEntry.getUserId(), productDto.getUserId().toString());
         }
         cValues.put(ProductContract.ProductEntry.getNAME(), productDto.getName());
         cValues.put(ProductContract.ProductEntry.getDESCRIPTION(), productDto.getDescription());
+        cValues.put(ProductContract.ProductEntry.getPRICE(), productDto.getPrice());
+        cValues.put(ProductContract.ProductEntry.getImageFirst(), productDto.getImageFirst());
+        cValues.put(ProductContract.ProductEntry.getImageSecond(), productDto.getImageSecond());
+        cValues.put(ProductContract.ProductEntry.getLAT(), productDto.getLat());
+        cValues.put(ProductContract.ProductEntry.getLNG(), productDto.getLng());
         cValues.put(ProductContract.ProductEntry.getRATING(), productDto.getRating());
         cValues.put(ProductContract.ProductEntry.getCREATED(), productDto.getCreated());
         cValues.put(ProductContract.ProductEntry.getUPDATED(), productDto.getUpdated());
@@ -97,40 +103,50 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<com.connectus.mobile.ui.product.ProductDto> getProducts() {
+    public List<ProductDto> getProducts() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String[] columns = new String[]{ProductContract.ProductEntry.getProductId(), ProductContract.ProductEntry.getUserId(), ProductContract.ProductEntry.getNAME(), ProductContract.ProductEntry.getDESCRIPTION(), ProductContract.ProductEntry.getRATING(), ProductContract.ProductEntry.getCREATED(), ProductContract.ProductEntry.getUPDATED()};
+        String[] columns = new String[]{ProductContract.ProductEntry.getProductId(), ProductContract.ProductEntry.getUserId(), ProductContract.ProductEntry.getNAME(), ProductContract.ProductEntry.getDESCRIPTION(), ProductContract.ProductEntry.getPRICE(), ProductContract.ProductEntry.getImageFirst(), ProductContract.ProductEntry.getImageSecond(), ProductContract.ProductEntry.getLAT(), ProductContract.ProductEntry.getLNG(), ProductContract.ProductEntry.getRATING(), ProductContract.ProductEntry.getCREATED(), ProductContract.ProductEntry.getUPDATED()};
         Cursor cursor = db.query(ProductContract.ProductEntry.getTableName(), columns, null, null, null, null, null);
 
-        int goodsAndServicesPosId = cursor.getColumnIndex(ProductContract.ProductEntry.getProductId());
+        int productPosId = cursor.getColumnIndex(ProductContract.ProductEntry.getProductId());
         int userIdPos = cursor.getColumnIndex(ProductContract.ProductEntry.getUserId());
         int namePos = cursor.getColumnIndex(ProductContract.ProductEntry.getNAME());
         int descriptionPos = cursor.getColumnIndex(ProductContract.ProductEntry.getDESCRIPTION());
+        int pricePos = cursor.getColumnIndex(ProductContract.ProductEntry.getPRICE());
+        int imageFirstPos = cursor.getColumnIndex(ProductContract.ProductEntry.getImageFirst());
+        int imageSecondPos = cursor.getColumnIndex(ProductContract.ProductEntry.getImageSecond());
+        int latPos = cursor.getColumnIndex(ProductContract.ProductEntry.getLAT());
+        int lngPos = cursor.getColumnIndex(ProductContract.ProductEntry.getLNG());
         int ratingPos = cursor.getColumnIndex(ProductContract.ProductEntry.getRATING());
         int createdPos = cursor.getColumnIndex(ProductContract.ProductEntry.getCREATED());
         int updatedPos = cursor.getColumnIndex(ProductContract.ProductEntry.getUPDATED());
 
-        List<com.connectus.mobile.ui.product.ProductDto> goodsAndServices = new LinkedList<>();
+        List<ProductDto> products = new LinkedList<>();
         while (cursor.moveToNext()) {
-            UUID goodsAndServicesId = UUID.fromString(cursor.getString(goodsAndServicesPosId));
+            UUID productId = UUID.fromString(cursor.getString(productPosId));
             UUID userId = null;
             if (cursor.getString(userIdPos) != null) {
                 userId = UUID.fromString(cursor.getString(userIdPos));
             }
             String name = cursor.getString(namePos);
             String description = cursor.getString(descriptionPos);
+            double price = cursor.getDouble(pricePos);
+            String imageFirst = cursor.getString(imageFirstPos);
+            String imageSecond = cursor.getString(imageSecondPos);
+            double lat = cursor.getDouble(latPos);
+            double lng = cursor.getDouble(lngPos);
             int rating = cursor.getInt(ratingPos);
             String created = cursor.getString(createdPos);
             String updated = cursor.getString(updatedPos);
-            goodsAndServices.add(new com.connectus.mobile.ui.product.ProductDto(goodsAndServicesId, userId, name, description, rating, created, updated));
+            products.add(new ProductDto(productId, userId, name, description, price, imageFirst, imageSecond, lat, lng, rating, created, updated));
         }
         cursor.close();
         db.close();
-        return goodsAndServices;
+        return products;
     }
 
-    public void deleteAllGoodsAndServices() {
+    public void deleteAllProducts() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ProductContract.ProductEntry.getTableName(), null, null);
         db.close();

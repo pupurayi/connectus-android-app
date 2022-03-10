@@ -1,6 +1,9 @@
 package com.connectus.mobile.api.dto;
 
+import java.util.UUID;
+
 public class CreateProductDto {
+    private UUID userId;
     private String name;
     private String description;
     private double price;
@@ -9,7 +12,8 @@ public class CreateProductDto {
     private double lat;
     private double lng;
 
-    public CreateProductDto(String name, String description, double price, String imageFirst, String imageSecond, double lat, double lng) {
+    public CreateProductDto(UUID userId, String name, String description, double price, String imageFirst, String imageSecond, double lat, double lng) {
+        this.userId = userId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -17,6 +21,14 @@ public class CreateProductDto {
         this.imageSecond = imageSecond;
         this.lat = lat;
         this.lng = lng;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getName() {

@@ -9,6 +9,11 @@ public class ProductContract {
         private static final String USER_ID = "userId";
         private static final String NAME = "name";
         private static final String DESCRIPTION = "description";
+        private static final String PRICE = "price";
+        private static final String IMAGE_FIRST = "imageFirst";
+        private static final String IMAGE_SECOND = "imageSecond";
+        private static final String LAT = "lat";
+        private static final String LNG = "lng";
         private static final String RATING = "rating";
         private static final String CREATED = "created";
         private static final String UPDATED = "updated";
@@ -33,6 +38,26 @@ public class ProductContract {
             return DESCRIPTION;
         }
 
+        public static String getPRICE() {
+            return PRICE;
+        }
+
+        public static String getImageFirst() {
+            return IMAGE_FIRST;
+        }
+
+        public static String getImageSecond() {
+            return IMAGE_SECOND;
+        }
+
+        public static String getLAT() {
+            return LAT;
+        }
+
+        public static String getLNG() {
+            return LNG;
+        }
+
         public static String getRATING() {
             return RATING;
         }
@@ -51,6 +76,11 @@ public class ProductContract {
             ProductEntry.USER_ID + " TEXT," +
             ProductEntry.NAME + " TEXT," +
             ProductEntry.DESCRIPTION + " TEXT," +
+            ProductEntry.PRICE + " REAL," +
+            ProductEntry.IMAGE_FIRST + " BLOB," +
+            ProductEntry.IMAGE_SECOND + " BLOB," +
+            ProductEntry.LAT + " REAL," +
+            ProductEntry.LNG + " REAL," +
             ProductEntry.RATING + " INTEGER," +
             ProductEntry.UPDATED + " TEXT, " +
             ProductEntry.CREATED + " TEXT)";

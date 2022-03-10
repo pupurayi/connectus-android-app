@@ -64,6 +64,7 @@ public class ProductViewModel extends ViewModel {
                         List<ProductDto> products = response.body();
                         if (products != null) {
                             DbHandler dbHandler = new DbHandler(context);
+                            dbHandler.deleteAllProducts();
                             for (ProductDto new_products : products) {
                                 dbHandler.insertProduct(new_products);
                             }

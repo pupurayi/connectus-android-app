@@ -41,8 +41,8 @@ public class ProductsFragment extends Fragment {
 
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
-    private ProductViewModel goodsAndServicesViewModel;
-    List<ProductDto> goodsAndServices = new LinkedList<>();
+    private ProductViewModel productsViewModel;
+    List<ProductDto> products = new LinkedList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class ProductsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        goodsAndServicesViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        productsViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_products, container, false);
     }
@@ -64,7 +64,7 @@ public class ProductsFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        fetchProducts(getContext(), authentication);
+        getProducts(getContext(), authentication);
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
@@ -80,8 +80,8 @@ public class ProductsFragment extends Fragment {
         }
 
         DbHandler dbHandler = new DbHandler(getContext());
-        goodsAndServices = dbHandler.getProducts();
-        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), goodsAndServices);
+        products = dbHandler.getProducts();
+        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), products);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView recyclerViewProducts = view.findViewById(R.id.recycler_view_products);
@@ -89,12 +89,12 @@ public class ProductsFragment extends Fragment {
         recyclerViewProducts.setLayoutManager(linearLayoutManager);
     }
 
-    private void fetchProducts(Context context, String authentication) {
-        goodsAndServicesViewModel.getProducts(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+    private void getProducts(Context context, String authentication) {
+        productsViewModel.getProducts(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
             switch (responseDTO.getStatus()) {
                 case "success":
                     DbHandler dbHandler = new DbHandler(getContext());
-                    goodsAndServices = dbHandler.getProducts();
+                    products = dbHandler.getProducts();
                     productRecyclerAdapter.notifyDataSetChanged();
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
