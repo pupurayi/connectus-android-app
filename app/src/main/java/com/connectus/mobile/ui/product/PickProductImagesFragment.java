@@ -57,7 +57,7 @@ public class PickProductImagesFragment extends Fragment {
     ProgressDialog pd;
     ImageView imageViewBack, imageViewProfileAvatar;
 
-    String name, description;
+    String category, name, description;
     double price, lat = 0, lng = 0;
     String imageFirst, imageSecond;
     ImageView imageViewFirst, imageViewSecond;
@@ -76,6 +76,7 @@ public class PickProductImagesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle arguments = getArguments();
         if (arguments != null) {
+            category = arguments.getString("category");
             name = arguments.getString("name");
             description = arguments.getString("description");
             price = arguments.getDouble("price");
@@ -124,8 +125,8 @@ public class PickProductImagesFragment extends Fragment {
             if (imageFirst != null && !imageFirst.isEmpty()
                     && imageSecond != null && !imageSecond.isEmpty()
             ) {
-                if (name != null && description != null && price > 0 && imageFirst != null && imageSecond != null && lat != 0 && lng != 0) {
-                    CreateProductDto createProductDto = new CreateProductDto(profileDTO.getId(), name, description, price, imageFirst, imageSecond, lat, lng);
+                if (category != null && name != null && description != null && price > 0 && imageFirst != null && imageSecond != null && lat != 0 && lng != 0) {
+                    CreateProductDto createProductDto = new CreateProductDto(profileDTO.getId(), category, name, description, price, imageFirst, imageSecond, lat, lng);
                     pd.setMessage("Creating ...");
                     pd.show();
                     productViewModel.hitSaveProductApi(authentication, createProductDto).observe(getViewLifecycleOwner(), responseDTO -> {
