@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_add_offering.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_add_product_pictures.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_authorize.xml" value="0.25256673511293637" />
         <entry key="app/src/main/res/layout/fragment_create_offering.xml" value="0.3423913043478261" />
+        <entry key="app/src/main/res/layout/fragment_create_product.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1111111111111111" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_edit_profile_address.xml" value="0.17299898682877407" />
@@ -17,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_my_siba_invites.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_offerings.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_products.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_profile_details.xml" value="0.11684782608695653" />
         <entry key="app/src/main/res/layout/fragment_siba_profiles.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.33" />
@@ -24,6 +29,7 @@
         <entry key="app/src/main/res/layout/item_goods_and_services_list.xml" value="0.11684782608695653" />
         <entry key="app/src/main/res/layout/item_notification_list.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/item_offering_list.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/item_product_list.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.16326530612244897" />
       </map>
     </option>

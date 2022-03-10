@@ -1,6 +1,7 @@
 package com.connectus.mobile.api;
 
-import com.connectus.mobile.api.dto.NewGoodsAndServicesDto;
+import com.connectus.mobile.api.dto.CreateProductDto;
+import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
@@ -29,7 +30,7 @@ import com.connectus.mobile.api.dto.siba.CreateSibaProfileDTO;
 import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.api.dto.siba.MySibaInvite;
 import com.connectus.mobile.api.dto.transaction.TransactionDto;
-import com.connectus.mobile.ui.goods_and_services.GoodsAndServicesDto;
+import com.connectus.mobile.ui.product.ProductDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -70,15 +71,15 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @POST("/api/v1/goods-and-services")
-    Call<GoodsAndServicesDto> createOffering(@Header("Authorization") String authentication, @Body NewGoodsAndServicesDto newGoodsAndServicesDto);
+    @POST("/api/v1/product")
+    Call<ProductDto> createProduct(@Header("Authorization") String authentication, @Body CreateProductDto createProductDto);
 
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/goods-and-services")
-    Call<List<GoodsAndServicesDto>> getOfferings(@Header("Authorization") String authentication);
+    @GET("/api/v1/product")
+    Call<List<ProductDto>> getProducts(@Header("Authorization") String authentication);
 
 
     @Headers({

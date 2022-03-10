@@ -1,9 +1,9 @@
-package com.connectus.mobile.ui.goods_and_services;
+package com.connectus.mobile.ui.product;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-public class GoodsAndServicesDto {
+public class ProductDto {
     private UUID id;
     private UUID userId;
     private String name;
@@ -12,7 +12,7 @@ public class GoodsAndServicesDto {
     private String created;
     private String updated;
 
-    public GoodsAndServicesDto(UUID id, UUID userId, String name, String description, int rating, String created, String updated) {
+    public ProductDto(UUID id, UUID userId, String name, String description, int rating, String created, String updated) {
         this.id = id;
         this.userId = userId;
         this.name = name;

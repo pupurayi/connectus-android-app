@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.goods_and_services;
+package com.connectus.mobile.ui.product;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,18 +31,18 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class GoodsAndServicesFragment extends Fragment {
+public class ProductsFragment extends Fragment {
 
     ProgressDialog pd;
     ImageView imageViewBack;
 
     ImageView imageViewProfileAvatar;
-    GoodsAndServicesRecyclerAdapter goodsAndServicesRecyclerAdapter;
+    ProductRecyclerAdapter productRecyclerAdapter;
 
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
-    private GoodsAndServicesViewModel goodsAndServicesViewModel;
-    List<GoodsAndServicesDto> goodsAndServices = new LinkedList<>();
+    private ProductViewModel goodsAndServicesViewModel;
+    List<ProductDto> goodsAndServices = new LinkedList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class GoodsAndServicesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        goodsAndServicesViewModel = new ViewModelProvider(this).get(GoodsAndServicesViewModel.class);
+        goodsAndServicesViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goods_and_services, container, false);
+        return inflater.inflate(R.layout.fragment_products, container, false);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class GoodsAndServicesFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        fetchOfferings(getContext(), authentication);
+        fetchProducts(getContext(), authentication);
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
@@ -80,22 +80,22 @@ public class GoodsAndServicesFragment extends Fragment {
         }
 
         DbHandler dbHandler = new DbHandler(getContext());
-        goodsAndServices = dbHandler.getOfferings();
-        goodsAndServicesRecyclerAdapter = new GoodsAndServicesRecyclerAdapter(getContext(), goodsAndServices);
+        goodsAndServices = dbHandler.getProducts();
+        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), goodsAndServices);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        RecyclerView recyclerViewOfferings = view.findViewById(R.id.recycler_view_new_goods_and_servicess);
-        recyclerViewOfferings.setAdapter(goodsAndServicesRecyclerAdapter);
-        recyclerViewOfferings.setLayoutManager(linearLayoutManager);
+        RecyclerView recyclerViewProducts = view.findViewById(R.id.recycler_view_products);
+        recyclerViewProducts.setAdapter(productRecyclerAdapter);
+        recyclerViewProducts.setLayoutManager(linearLayoutManager);
     }
 
-    private void fetchOfferings(Context context, String authentication) {
-        goodsAndServicesViewModel.getOfferings(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+    private void fetchProducts(Context context, String authentication) {
+        goodsAndServicesViewModel.getProducts(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
             switch (responseDTO.getStatus()) {
                 case "success":
                     DbHandler dbHandler = new DbHandler(getContext());
-                    goodsAndServices = dbHandler.getOfferings();
-                    goodsAndServicesRecyclerAdapter.notifyDataSetChanged();
+                    goodsAndServices = dbHandler.getProducts();
+                    productRecyclerAdapter.notifyDataSetChanged();
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
                 case "failed":

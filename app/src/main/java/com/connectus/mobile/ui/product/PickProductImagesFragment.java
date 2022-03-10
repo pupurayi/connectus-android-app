@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.goods_and_services;
+package com.connectus.mobile.ui.product;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.NewGoodsAndServicesDto;
+import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -29,18 +29,18 @@ import com.squareup.picasso.Picasso;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class AddGoodsAndServicesFragment extends Fragment {
+public class PickProductImagesFragment extends Fragment {
 
-    private static final String TAG = com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment.class.getSimpleName();
+    private static final String TAG = CreateProductFragment.class.getSimpleName();
 
     ProgressDialog pd;
     ImageView imageViewBack, imageViewProfileAvatar;
 
-    EditText editTextOfferingName, editTextOfferingDescription;
-    Button buttonSaveOffering;
+    EditText editTextProductName, editTextProductDescription;
+    Button buttonNext;
 
     FragmentManager fragmentManager;
-    private GoodsAndServicesViewModel goodsAndServicesViewModel;
+    private ProductViewModel goodsAndServicesViewModel;
     private SharedPreferencesManager sharedPreferencesManager;
 
     @Override
@@ -50,9 +50,9 @@ public class AddGoodsAndServicesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        goodsAndServicesViewModel = new ViewModelProvider(this).get(GoodsAndServicesViewModel.class);
+        goodsAndServicesViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_goods_and_services, container, false);
+        return inflater.inflate(R.layout.fragment_product_pick_images, container, false);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -65,9 +65,6 @@ public class AddGoodsAndServicesFragment extends Fragment {
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
-
-        editTextOfferingName = view.findViewById(R.id.edit_text_new_goods_and_services_name);
-        editTextOfferingDescription = view.findViewById(R.id.edit_text_goods_and_services_description);
 
         imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
@@ -82,31 +79,31 @@ public class AddGoodsAndServicesFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
 
-        buttonSaveOffering = view.findViewById(R.id.button_save_new_goods_and_services);
-        buttonSaveOffering.setOnClickListener(v -> {
-            String name = editTextOfferingName.getText().toString();
-            String description = editTextOfferingDescription.getText().toString();
+        buttonNext = view.findViewById(R.id.button_next);
+        buttonNext.setOnClickListener(v -> {
+            String name = editTextProductName.getText().toString();
+            String description = editTextProductDescription.getText().toString();
 
             if (!name.isEmpty() && !description.isEmpty()) {
 
-                NewGoodsAndServicesDto newGoodsAndServicesDto = new NewGoodsAndServicesDto(name, description);
-                pd.setMessage("Updating ...");
-                pd.show();
-                goodsAndServicesViewModel.hitSaveOfferingApi(getActivity(), authentication, newGoodsAndServicesDto).observe(getViewLifecycleOwner(), responseDTO -> {
-                    pd.dismiss();
-                    switch (responseDTO.getStatus()) {
-                        case "success":
-                        case "failed":
-                        case "error":
-                            Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                            break;
-                    }
-                });
+//                CreateProductDto newProductDto = new CreateProductDto(name, description);
+//                pd.setMessage("Updating ...");
+//                pd.show();
+//                goodsAndServicesViewModel.hitSaveProductApi(authentication, newProductDto).observe(getViewLifecycleOwner(), responseDTO -> {
+//                    pd.dismiss();
+//                    switch (responseDTO.getStatus()) {
+//                        case "success":
+//                        case "failed":
+//                        case "error":
+//                            Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+//                            break;
+//                    }
+//                });
             } else {
                 if (name.isEmpty()) {
-                    Snackbar.make(view, "Offering Name cannot be null!", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, "Product Name cannot be null!", Snackbar.LENGTH_LONG).show();
                 } else if (description.isEmpty()) {
-                    Snackbar.make(view, "Offering Description cannot be null!", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, "Product Description cannot be null!", Snackbar.LENGTH_LONG).show();
                 }
             }
         });

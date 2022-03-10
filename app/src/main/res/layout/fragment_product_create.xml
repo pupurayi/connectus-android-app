@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
-    tools:context=".ui.goods_and_services.AddGoodsAndServicesFragment">
+    tools:context=".ui.product.CreateProductFragment">
 
     <LinearLayout
         android:id="@+id/linear_layout_navigation_header"
@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/layout_goods_and_services_details"
+        android:id="@+id/layout_products_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -47,7 +47,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/inter"
             android:gravity="center_vertical"
-            android:text="@string/new_new_goods_and_services"
+            android:text="@string/create_product"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
@@ -74,7 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_goods_and_services_details"
+        app:layout_constraintTop_toBottomOf="@+id/layout_products_details"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
@@ -87,15 +87,15 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/edit_text_new_goods_and_services_name"
+                android:id="@+id/edit_text_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/goods_and_services_name"
+                android:hint="@string/products_name"
                 android:importantForAutofill="yes" />
 
             <EditText
-                android:id="@+id/edit_text_goods_and_services_description"
+                android:id="@+id/edit_text_product_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -106,7 +106,7 @@
                 android:lines="4" />
 
             <EditText
-                android:id="@+id/edit_text_price"
+                android:id="@+id/edit_text_product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -116,33 +116,12 @@
                 android:keepScreenOn="false" />
 
 
-            <EditText
-                android:id="@+id/edit_text_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/location"
-                android:importantForAutofill="no"
-                android:inputType="text|numberDecimal"
-                android:keepScreenOn="false" />
-
-            <EditText
-                android:id="@+id/edit_text_images"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/attachment"
-                android:hint="@string/image"
-                android:importantForAutofill="no"
-                android:inputType="text" />
-
-
             <Button
-                android:id="@+id/button_save_new_goods_and_services"
+                android:id="@+id/button_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/save"
+                android:text="@string/next"
                 app:cornerRadius="20dp" />
 
         </LinearLayout>

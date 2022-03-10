@@ -2,10 +2,10 @@ package com.connectus.mobile.database.contract;
 
 import android.provider.BaseColumns;
 
-public class GoodsAndServicesContract {
-    public static class GoodsAndServicesEntry implements BaseColumns {
-        private static final String TABLE_NAME = "goods_and_services";
-        private static final String OFFERING_ID = "id";
+public class ProductContract {
+    public static class ProductEntry implements BaseColumns {
+        private static final String TABLE_NAME = "products";
+        private static final String PRODUCT_ID = "id";
         private static final String USER_ID = "userId";
         private static final String NAME = "name";
         private static final String DESCRIPTION = "description";
@@ -17,8 +17,8 @@ public class GoodsAndServicesContract {
             return TABLE_NAME;
         }
 
-        public static String getOfferingId() {
-            return OFFERING_ID;
+        public static String getProductId() {
+            return PRODUCT_ID;
         }
 
         public static String getUserId() {
@@ -46,14 +46,14 @@ public class GoodsAndServicesContract {
         }
     }
 
-    public static String SQL_CREATE_ENTRIES = "CREATE TABLE " + GoodsAndServicesContract.GoodsAndServicesEntry.TABLE_NAME + " ( " +
-            GoodsAndServicesEntry.OFFERING_ID + " TEXT PRIMARY KEY NOT NULL," +
-            GoodsAndServicesEntry.USER_ID + " TEXT," +
-            GoodsAndServicesEntry.NAME + " TEXT," +
-            GoodsAndServicesEntry.DESCRIPTION + " TEXT," +
-            GoodsAndServicesEntry.RATING + " INTEGER," +
-            GoodsAndServicesEntry.UPDATED + " TEXT, " +
-            GoodsAndServicesEntry.CREATED + " TEXT)";
+    public static String SQL_CREATE_ENTRIES = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + " ( " +
+            ProductEntry.PRODUCT_ID + " TEXT PRIMARY KEY NOT NULL," +
+            ProductEntry.USER_ID + " TEXT," +
+            ProductEntry.NAME + " TEXT," +
+            ProductEntry.DESCRIPTION + " TEXT," +
+            ProductEntry.RATING + " INTEGER," +
+            ProductEntry.UPDATED + " TEXT, " +
+            ProductEntry.CREATED + " TEXT)";
 
-    public static String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + GoodsAndServicesContract.GoodsAndServicesEntry.TABLE_NAME;
+    public static String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + ProductContract.ProductEntry.TABLE_NAME;
 }

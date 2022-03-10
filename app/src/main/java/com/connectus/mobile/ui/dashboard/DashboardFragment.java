@@ -34,6 +34,8 @@ import com.connectus.mobile.api.dto.Transaction;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.product.CreateProductFragment;
+import com.connectus.mobile.ui.product.ProductsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
@@ -105,7 +107,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         View navHeaderView = navigationView.getHeaderView(0);
 
         Menu navMenu = navigationView.getMenu();
-        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_new_goods_and_services);
+        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_new_products);
 
         if (profileDTO.getPaymate() == null) {
             becomeAnPaymateItem.setVisible(true);
@@ -306,14 +308,14 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             case R.id.nav_profile:
                 showProfileDetailsFragment();
                 break;
-            case R.id.nav_new_goods_and_services:
-                com.connectus.mobile.ui.goods_and_services.GoodsAndServicesFragment new_goods_and_servicessFragment = new com.connectus.mobile.ui.goods_and_services.GoodsAndServicesFragment();
-                transaction.add(R.id.container, new_goods_and_servicessFragment, com.connectus.mobile.ui.goods_and_services.GoodsAndServicesFragment.class.getSimpleName());
+            case R.id.nav_new_products:
+                ProductsFragment productsFragment = new com.connectus.mobile.ui.product.ProductsFragment();
+                transaction.add(R.id.container, productsFragment, com.connectus.mobile.ui.product.ProductsFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
-            case R.id.nav_new_new_goods_and_services:
-                com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment addGoodsAndServicesFragment = new com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment();
-                transaction.add(R.id.container, addGoodsAndServicesFragment, com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment.class.getSimpleName());
+            case R.id.nav_create_product:
+                CreateProductFragment createProductFragment = new CreateProductFragment();
+                transaction.add(R.id.container, createProductFragment, CreateProductFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
             case R.id.nav_settings:
