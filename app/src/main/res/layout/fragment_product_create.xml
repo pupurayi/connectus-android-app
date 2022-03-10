@@ -87,6 +87,15 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/edit_text_product_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/product_category"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
                 android:id="@+id/edit_text_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

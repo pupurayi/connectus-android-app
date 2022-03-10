@@ -205,4 +205,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pick_pictures">Pick Pictures</string>
     <string name="pick_location">Pick Location</string>
+    <string name="product_category">Product Category</string>
+    <string name="categories">Categories</string>
 </resources>

@@ -7,6 +7,7 @@ public class ProductDto {
     private UUID userId;
     private String name;
     private String description;
+    private String categoty;
     private double price;
     private String imageFirst;
     private String imageSecond;
