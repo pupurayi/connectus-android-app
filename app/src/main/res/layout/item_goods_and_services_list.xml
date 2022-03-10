@@ -22,14 +22,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/text_view_offering_title"
+                android:id="@+id/text_view_new_goods_and_services_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/offering"
+                android:text="@string/goods_and_services"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
-                android:id="@+id/text_view_offering_message"
+                android:id="@+id/text_view_new_goods_and_services_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dummy_transaction_status_message" />

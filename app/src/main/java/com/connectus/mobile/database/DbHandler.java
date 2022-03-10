@@ -21,11 +21,11 @@ import com.connectus.mobile.database.contract.BalanceContract;
 import com.connectus.mobile.database.contract.ChatMessageContract;
 import com.connectus.mobile.database.contract.MySibaInviteContract;
 import com.connectus.mobile.database.contract.NotificationContract;
-import com.connectus.mobile.database.contract.OfferingContract;
+import com.connectus.mobile.database.contract.GoodsAndServicesContract;
 import com.connectus.mobile.database.contract.SibaProfileContract;
 import com.connectus.mobile.database.contract.SupportMessageContract;
 import com.connectus.mobile.database.contract.TransactionContract;
-import com.connectus.mobile.ui.offering.OfferingDto;
+import com.connectus.mobile.ui.goods_and_services.GoodsAndServicesDto;
 import com.connectus.mobile.ui.old.notification.NotificationDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,7 +33,6 @@ import com.google.gson.reflect.TypeToken;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -49,7 +48,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "connectus.db";
     // always update database version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     public DbHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,7 +56,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(OfferingContract.SQL_CREATE_ENTRIES);
+        db.execSQL(GoodsAndServicesContract.SQL_CREATE_ENTRIES);
 
         db.execSQL(BalanceContract.SQL_CREATE_ENTRIES);
         db.execSQL(NotificationContract.SQL_CREATE_ENTRIES);
@@ -70,7 +69,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(OfferingContract.SQL_DROP_TABLE);
+        db.execSQL(GoodsAndServicesContract.SQL_DROP_TABLE);
 
         db.execSQL(BalanceContract.SQL_DROP_TABLE);
         db.execSQL(NotificationContract.SQL_DROP_TABLE);
@@ -82,39 +81,39 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertOffering(OfferingDto offeringDto) {
+    public void insertOffering(GoodsAndServicesDto goodsAndServicesDto) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cValues = new ContentValues();
-        cValues.put(OfferingContract.OfferingEntry.getOfferingId(), offeringDto.getId().toString());
-        if (offeringDto.getUserId() != null) {
-            cValues.put(OfferingContract.OfferingEntry.getUserId(), offeringDto.getUserId().toString());
+        cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getOfferingId(), goodsAndServicesDto.getId().toString());
+        if (goodsAndServicesDto.getUserId() != null) {
+            cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getUserId(), goodsAndServicesDto.getUserId().toString());
         }
-        cValues.put(OfferingContract.OfferingEntry.getNAME(), offeringDto.getName());
-        cValues.put(OfferingContract.OfferingEntry.getDESCRIPTION(), offeringDto.getDescription());
-        cValues.put(OfferingContract.OfferingEntry.getRATING(), offeringDto.getRating());
-        cValues.put(OfferingContract.OfferingEntry.getCREATED(), offeringDto.getCreated().toString());
-        cValues.put(OfferingContract.OfferingEntry.getUPDATED(), offeringDto.getUpdated().toString());
-        long newRowId = db.replace(OfferingContract.OfferingEntry.getTableName(), null, cValues);
+        cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getNAME(), goodsAndServicesDto.getName());
+        cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getDESCRIPTION(), goodsAndServicesDto.getDescription());
+        cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getRATING(), goodsAndServicesDto.getRating());
+        cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getCREATED(), goodsAndServicesDto.getCreated());
+        cValues.put(GoodsAndServicesContract.GoodsAndServicesEntry.getUPDATED(), goodsAndServicesDto.getUpdated());
+        long newRowId = db.replace(GoodsAndServicesContract.GoodsAndServicesEntry.getTableName(), null, cValues);
         db.close();
     }
 
-    public List<OfferingDto> getOfferings() {
+    public List<GoodsAndServicesDto> getOfferings() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String[] columns = new String[]{OfferingContract.OfferingEntry.getOfferingId(), OfferingContract.OfferingEntry.getUserId(), OfferingContract.OfferingEntry.getNAME(), OfferingContract.OfferingEntry.getDESCRIPTION(), OfferingContract.OfferingEntry.getRATING(), OfferingContract.OfferingEntry.getCREATED(), OfferingContract.OfferingEntry.getUPDATED()};
-        Cursor cursor = db.query(OfferingContract.OfferingEntry.getTableName(), columns, null, null, null, null, null);
+        String[] columns = new String[]{GoodsAndServicesContract.GoodsAndServicesEntry.getOfferingId(), GoodsAndServicesContract.GoodsAndServicesEntry.getUserId(), GoodsAndServicesContract.GoodsAndServicesEntry.getNAME(), GoodsAndServicesContract.GoodsAndServicesEntry.getDESCRIPTION(), GoodsAndServicesContract.GoodsAndServicesEntry.getRATING(), GoodsAndServicesContract.GoodsAndServicesEntry.getCREATED(), GoodsAndServicesContract.GoodsAndServicesEntry.getUPDATED()};
+        Cursor cursor = db.query(GoodsAndServicesContract.GoodsAndServicesEntry.getTableName(), columns, null, null, null, null, null);
 
-        int offeringIdPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getOfferingId());
-        int userIdPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getUserId());
-        int namePos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getNAME());
-        int descriptionPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getDESCRIPTION());
-        int ratingPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getRATING());
-        int createdPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getCREATED());
-        int updatedPos = cursor.getColumnIndex(OfferingContract.OfferingEntry.getUPDATED());
+        int goodsAndServicesPosId = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getOfferingId());
+        int userIdPos = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getUserId());
+        int namePos = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getNAME());
+        int descriptionPos = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getDESCRIPTION());
+        int ratingPos = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getRATING());
+        int createdPos = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getCREATED());
+        int updatedPos = cursor.getColumnIndex(GoodsAndServicesContract.GoodsAndServicesEntry.getUPDATED());
 
-        List<OfferingDto> offerings = new LinkedList<>();
+        List<GoodsAndServicesDto> goodsAndServices = new LinkedList<>();
         while (cursor.moveToNext()) {
-            UUID offeringId = UUID.fromString(cursor.getString(offeringIdPos));
+            UUID goodsAndServicesId = UUID.fromString(cursor.getString(goodsAndServicesPosId));
             UUID userId = null;
             if (cursor.getString(userIdPos) != null) {
                 userId = UUID.fromString(cursor.getString(userIdPos));
@@ -124,16 +123,16 @@ public class DbHandler extends SQLiteOpenHelper {
             int rating = cursor.getInt(ratingPos);
             String created = cursor.getString(createdPos);
             String updated = cursor.getString(updatedPos);
-            offerings.add(new OfferingDto(offeringId, userId, name, description, rating, created, updated));
+            goodsAndServices.add(new GoodsAndServicesDto(goodsAndServicesId, userId, name, description, rating, created, updated));
         }
         cursor.close();
         db.close();
-        return offerings;
+        return goodsAndServices;
     }
 
-    public void deleteAllOfferings() {
+    public void deleteAllGoodsAndServices() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(OfferingContract.OfferingEntry.getTableName(), null, null);
+        db.delete(GoodsAndServicesContract.GoodsAndServicesEntry.getTableName(), null, null);
         db.close();
     }
 

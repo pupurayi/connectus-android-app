@@ -34,24 +34,16 @@ import com.connectus.mobile.api.dto.Transaction;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.offering.AddOfferingFragment;
-import com.connectus.mobile.ui.offering.OfferingsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
-import com.connectus.mobile.api.dto.TransactionType;
 import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.connectus.mobile.ui.old.check.CheckPaymateFragment;
-import com.connectus.mobile.ui.old.paymate.PaymateApplicationFragment;
 import com.connectus.mobile.ui.qrcode.QRCodeFragment;
-import com.connectus.mobile.ui.old.services.ServicesFragment;
 import com.connectus.mobile.ui.old.settings.SettingsFragment;
-import com.connectus.mobile.ui.old.check.CheckProfileFragment;
 import com.connectus.mobile.ui.old.transaction.TransactionRecyclerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -113,7 +105,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         View navHeaderView = navigationView.getHeaderView(0);
 
         Menu navMenu = navigationView.getMenu();
-        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_offerings);
+        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_new_goods_and_services);
 
         if (profileDTO.getPaymate() == null) {
             becomeAnPaymateItem.setVisible(true);
@@ -314,14 +306,14 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             case R.id.nav_profile:
                 showProfileDetailsFragment();
                 break;
-            case R.id.nav_offerings:
-                OfferingsFragment offeringsFragment = new OfferingsFragment();
-                transaction.add(R.id.container, offeringsFragment, OfferingsFragment.class.getSimpleName());
+            case R.id.nav_new_goods_and_services:
+                com.connectus.mobile.ui.goods_and_services.GoodsAndServicesFragment new_goods_and_servicessFragment = new com.connectus.mobile.ui.goods_and_services.GoodsAndServicesFragment();
+                transaction.add(R.id.container, new_goods_and_servicessFragment, com.connectus.mobile.ui.goods_and_services.GoodsAndServicesFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
-            case R.id.nav_new_offering:
-                AddOfferingFragment addOfferingFragment = new AddOfferingFragment();
-                transaction.add(R.id.container, addOfferingFragment, AddOfferingFragment.class.getSimpleName());
+            case R.id.nav_new_new_goods_and_services:
+                com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment addGoodsAndServicesFragment = new com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment();
+                transaction.add(R.id.container, addGoodsAndServicesFragment, com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
             case R.id.nav_settings:

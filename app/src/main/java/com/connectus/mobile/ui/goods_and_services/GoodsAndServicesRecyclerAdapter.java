@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.offering;
+package com.connectus.mobile.ui.goods_and_services;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,21 +14,19 @@ import com.connectus.mobile.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-public class OfferingsRecyclerAdapter extends RecyclerView.Adapter<OfferingsRecyclerAdapter.ViewHolder> {
+public class GoodsAndServicesRecyclerAdapter extends RecyclerView.Adapter<com.connectus.mobile.ui.goods_and_services.GoodsAndServicesRecyclerAdapter.ViewHolder> {
 
     @SuppressLint("SimpleDateFormat")
     DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
 
 
     private Context context;
-    private final List<OfferingDto> notifications;
+    private final List<GoodsAndServicesDto> notifications;
 
-    public OfferingsRecyclerAdapter(Context context, List<OfferingDto> notifications) {
+    public GoodsAndServicesRecyclerAdapter(Context context, List<GoodsAndServicesDto> notifications) {
         this.context = context;
         Collections.reverse(notifications);
         this.notifications = notifications;
@@ -43,10 +41,10 @@ public class OfferingsRecyclerAdapter extends RecyclerView.Adapter<OfferingsRecy
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        OfferingDto offeringDto = notifications.get(position);
-        holder.textViewNotificationTitle.setText(offeringDto.getName());
-        holder.textViewNotificationMessage.setText(offeringDto.getDescription());
-        holder.textViewSentTime.setText(offeringDto.getCreated());
+        GoodsAndServicesDto new_goods_and_servicesDto = notifications.get(position);
+        holder.textViewNotificationTitle.setText(new_goods_and_servicesDto.getName());
+        holder.textViewNotificationMessage.setText(new_goods_and_servicesDto.getDescription());
+        holder.textViewSentTime.setText(new_goods_and_servicesDto.getCreated());
     }
 
     @Override

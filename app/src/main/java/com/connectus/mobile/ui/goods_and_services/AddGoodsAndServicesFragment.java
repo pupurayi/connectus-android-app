@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.offering;
+package com.connectus.mobile.ui.goods_and_services;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.NewOfferingDto;
+import com.connectus.mobile.api.dto.NewGoodsAndServicesDto;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -29,9 +29,9 @@ import com.squareup.picasso.Picasso;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class AddOfferingFragment extends Fragment {
+public class AddGoodsAndServicesFragment extends Fragment {
 
-    private static final String TAG = AddOfferingFragment.class.getSimpleName();
+    private static final String TAG = com.connectus.mobile.ui.goods_and_services.AddGoodsAndServicesFragment.class.getSimpleName();
 
     ProgressDialog pd;
     ImageView imageViewBack, imageViewProfileAvatar;
@@ -40,7 +40,7 @@ public class AddOfferingFragment extends Fragment {
     Button buttonSaveOffering;
 
     FragmentManager fragmentManager;
-    private OfferingViewModel offeringViewModel;
+    private GoodsAndServicesViewModel goodsAndServicesViewModel;
     private SharedPreferencesManager sharedPreferencesManager;
 
     @Override
@@ -50,9 +50,9 @@ public class AddOfferingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        offeringViewModel = new ViewModelProvider(this).get(OfferingViewModel.class);
+        goodsAndServicesViewModel = new ViewModelProvider(this).get(GoodsAndServicesViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_offering, container, false);
+        return inflater.inflate(R.layout.fragment_create_goods_and_services, container, false);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -66,8 +66,8 @@ public class AddOfferingFragment extends Fragment {
 
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
-        editTextOfferingName = view.findViewById(R.id.edit_text_offering_name);
-        editTextOfferingDescription = view.findViewById(R.id.edit_text_offering_description);
+        editTextOfferingName = view.findViewById(R.id.edit_text_new_goods_and_services_name);
+        editTextOfferingDescription = view.findViewById(R.id.edit_text_goods_and_services_description);
 
         imageViewProfileAvatar = view.findViewById(R.id.uaf_image_view_profile_avatar);
         if (profileDTO.isAvatarAvailable()) {
@@ -82,17 +82,17 @@ public class AddOfferingFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
 
-        buttonSaveOffering = view.findViewById(R.id.button_save_offering);
+        buttonSaveOffering = view.findViewById(R.id.button_save_new_goods_and_services);
         buttonSaveOffering.setOnClickListener(v -> {
             String name = editTextOfferingName.getText().toString();
             String description = editTextOfferingDescription.getText().toString();
 
             if (!name.isEmpty() && !description.isEmpty()) {
 
-                NewOfferingDto newOfferingDto = new NewOfferingDto(name, description);
+                NewGoodsAndServicesDto newGoodsAndServicesDto = new NewGoodsAndServicesDto(name, description);
                 pd.setMessage("Updating ...");
                 pd.show();
-                offeringViewModel.hitSaveOfferingApi(getActivity(), authentication, newOfferingDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                goodsAndServicesViewModel.hitSaveOfferingApi(getActivity(), authentication, newGoodsAndServicesDto).observe(getViewLifecycleOwner(), responseDTO -> {
                     pd.dismiss();
                     switch (responseDTO.getStatus()) {
                         case "success":

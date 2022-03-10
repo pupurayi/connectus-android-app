@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
-    tools:context=".ui.offering.OfferingsFragment">
+    tools:context=".ui.goods_and_services.GoodsAndServicesFragment">
 
     <RelativeLayout
         android:id="@+id/linear_layout_navigation_header"
@@ -46,7 +46,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/inter"
             android:gravity="center_vertical"
-            android:text="@string/my_offerings"
+            android:text="@string/my_goods_and_services"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="30sp"
@@ -66,7 +66,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_offerings"
+        android:id="@+id/recycler_view_new_goods_and_servicess"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -78,6 +78,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_profile_details"
-        tools:listitem="@layout/item_offering_list" />
+        tools:listitem="@layout/item_new_goods_and_services_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

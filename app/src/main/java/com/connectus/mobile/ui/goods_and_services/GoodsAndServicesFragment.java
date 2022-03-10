@@ -1,8 +1,7 @@
-package com.connectus.mobile.ui.offering;
+package com.connectus.mobile.ui.goods_and_services;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,23 +10,17 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -38,18 +31,18 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class OfferingsFragment extends Fragment {
+public class GoodsAndServicesFragment extends Fragment {
 
     ProgressDialog pd;
     ImageView imageViewBack;
 
     ImageView imageViewProfileAvatar;
-    OfferingsRecyclerAdapter offeringsRecyclerAdapter;
+    GoodsAndServicesRecyclerAdapter goodsAndServicesRecyclerAdapter;
 
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
-    private OfferingViewModel offeringViewModel;
-    List<OfferingDto> offerings = new LinkedList<>();
+    private GoodsAndServicesViewModel goodsAndServicesViewModel;
+    List<GoodsAndServicesDto> goodsAndServices = new LinkedList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,9 +51,9 @@ public class OfferingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        offeringViewModel = new ViewModelProvider(this).get(OfferingViewModel.class);
+        goodsAndServicesViewModel = new ViewModelProvider(this).get(GoodsAndServicesViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offering, container, false);
+        return inflater.inflate(R.layout.fragment_goods_and_services, container, false);
     }
 
     @Override
@@ -87,22 +80,22 @@ public class OfferingsFragment extends Fragment {
         }
 
         DbHandler dbHandler = new DbHandler(getContext());
-        offerings = dbHandler.getOfferings();
-        offeringsRecyclerAdapter = new OfferingsRecyclerAdapter(getContext(), offerings);
+        goodsAndServices = dbHandler.getOfferings();
+        goodsAndServicesRecyclerAdapter = new GoodsAndServicesRecyclerAdapter(getContext(), goodsAndServices);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        RecyclerView recyclerViewOfferings = view.findViewById(R.id.recycler_view_offerings);
-        recyclerViewOfferings.setAdapter(offeringsRecyclerAdapter);
+        RecyclerView recyclerViewOfferings = view.findViewById(R.id.recycler_view_new_goods_and_servicess);
+        recyclerViewOfferings.setAdapter(goodsAndServicesRecyclerAdapter);
         recyclerViewOfferings.setLayoutManager(linearLayoutManager);
     }
 
     private void fetchOfferings(Context context, String authentication) {
-        offeringViewModel.getOfferings(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+        goodsAndServicesViewModel.getOfferings(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
             switch (responseDTO.getStatus()) {
                 case "success":
                     DbHandler dbHandler = new DbHandler(getContext());
-                    offerings = dbHandler.getOfferings();
-                    offeringsRecyclerAdapter.notifyDataSetChanged();
+                    goodsAndServices = dbHandler.getOfferings();
+                    goodsAndServicesRecyclerAdapter.notifyDataSetChanged();
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
                 case "failed":

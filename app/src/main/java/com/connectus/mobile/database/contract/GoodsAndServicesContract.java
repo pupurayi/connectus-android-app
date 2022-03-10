@@ -2,9 +2,9 @@ package com.connectus.mobile.database.contract;
 
 import android.provider.BaseColumns;
 
-public class OfferingContract {
-    public static class OfferingEntry implements BaseColumns {
-        private static final String TABLE_NAME = "offering";
+public class GoodsAndServicesContract {
+    public static class GoodsAndServicesEntry implements BaseColumns {
+        private static final String TABLE_NAME = "goods_and_services";
         private static final String OFFERING_ID = "id";
         private static final String USER_ID = "userId";
         private static final String NAME = "name";
@@ -46,14 +46,14 @@ public class OfferingContract {
         }
     }
 
-    public static String SQL_CREATE_ENTRIES = "CREATE TABLE " + OfferingContract.OfferingEntry.TABLE_NAME + " ( " +
-            OfferingEntry.OFFERING_ID + " TEXT PRIMARY KEY NOT NULL," +
-            OfferingEntry.USER_ID + " TEXT," +
-            OfferingEntry.NAME + " TEXT," +
-            OfferingEntry.DESCRIPTION + " TEXT," +
-            OfferingEntry.RATING + " INTEGER," +
-            OfferingEntry.UPDATED + " TEXT, " +
-            OfferingEntry.CREATED + " TEXT)";
+    public static String SQL_CREATE_ENTRIES = "CREATE TABLE " + GoodsAndServicesContract.GoodsAndServicesEntry.TABLE_NAME + " ( " +
+            GoodsAndServicesEntry.OFFERING_ID + " TEXT PRIMARY KEY NOT NULL," +
+            GoodsAndServicesEntry.USER_ID + " TEXT," +
+            GoodsAndServicesEntry.NAME + " TEXT," +
+            GoodsAndServicesEntry.DESCRIPTION + " TEXT," +
+            GoodsAndServicesEntry.RATING + " INTEGER," +
+            GoodsAndServicesEntry.UPDATED + " TEXT, " +
+            GoodsAndServicesEntry.CREATED + " TEXT)";
 
-    public static String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + OfferingContract.OfferingEntry.TABLE_NAME;
+    public static String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + GoodsAndServicesContract.GoodsAndServicesEntry.TABLE_NAME;
 }

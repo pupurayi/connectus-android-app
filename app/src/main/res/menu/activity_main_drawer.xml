@@ -13,13 +13,13 @@
             android:icon="@drawable/account_box"
             android:title="@string/profile" />
         <item
-            android:id="@+id/nav_offerings"
+            android:id="@+id/nav_new_goods_and_services"
             android:icon="@drawable/shopping_cart"
-            android:title="@string/menu_my_offerings" />
+            android:title="@string/my_goods_and_services" />
         <item
-            android:id="@+id/nav_new_offering"
+            android:id="@+id/nav_new_new_goods_and_services"
             android:icon="@drawable/ic_plus"
-            android:title="@string/new_offering" />
+            android:title="@string/new_new_goods_and_services" />
         <item
             android:id="@+id/nav_service_providers"
             android:icon="@drawable/people"
