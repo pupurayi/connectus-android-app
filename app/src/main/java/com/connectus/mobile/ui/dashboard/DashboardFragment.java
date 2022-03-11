@@ -58,8 +58,8 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
     DrawerLayout drawerLayout;
 
-    TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn, textViewProfileBalance;
-    ImageView imageViewProfileAvatar, imageViewNavHeaderAvatar, imageViewMenu, imageViewRefresh, imageViewQRCode;
+    TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn;
+    ImageView imageViewProfileAvatar, imageViewNavHeaderAvatar, imageViewMenu;
     RecyclerView recyclerViewProducts;
     ProgressDialog pd;
 
@@ -130,7 +130,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         recommendedProducts = sortRecommendedProducts(recommendedProducts);
         productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), recommendedProducts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerViewProducts = getView().findViewById(R.id.recycler_view_products);
+        recyclerViewProducts = getView().findViewById(R.id.recycler_view_recommended_products);
         recyclerViewProducts.setAdapter(productRecyclerAdapter);
         recyclerViewProducts.setLayoutManager(linearLayoutManager);
 

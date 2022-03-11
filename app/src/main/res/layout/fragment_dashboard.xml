@@ -326,10 +326,10 @@
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_transactions"
+                        android:id="@+id/recycler_view_recommended_products"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_transaction_list" />
+                        tools:listitem="@layout/item_recommended_product_list" />
 
                 </LinearLayout>
             </LinearLayout>
