@@ -125,6 +125,11 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:tag="@string/academic_certificate" />
+
 <!--                <androidx.cardview.widget.CardView-->
 <!--                    android:id="@+id/card_view_profile_balance"-->
 <!--                    android:layout_width="match_parent"-->

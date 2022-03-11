@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.imageViewProduct.setImageBitmap(decodedByte);
         holder.productDto = products.get(position);
+        holder.ratingBar.setRating(productDto.getRating());
     }
 
     @Override
@@ -68,6 +70,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewName, textViewDescription, textViewCreated;
         private final ImageView imageViewProduct;
+        private final RatingBar ratingBar;
         private ProductDto productDto;
 
         public ViewHolder(@NonNull View itemView) {
@@ -76,6 +79,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             textViewDescription = itemView.findViewById(R.id.text_view_product_description);
             textViewCreated = itemView.findViewById(R.id.text_view_created);
             imageViewProduct = itemView.findViewById(R.id.image_view_product);
+            ratingBar = itemView.findViewById(R.id.rating_bar);
 
             itemView.setOnClickListener(view -> {
                 DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());

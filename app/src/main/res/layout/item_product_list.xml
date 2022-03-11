@@ -40,6 +40,12 @@
             android:gravity="end"
             android:text="@string/dummy_date_time"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numStars="5" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

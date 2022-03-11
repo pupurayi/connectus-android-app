@@ -33,6 +33,7 @@ import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.shivtechs.maplocationpicker.LocationPickerActivity;
@@ -133,6 +134,8 @@ public class PickProductImagesFragment extends Fragment {
                         pd.dismiss();
                         switch (responseDTO.getStatus()) {
                             case "success":
+                                close();
+                                break;
                             case "failed":
                             case "error":
                                 Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -216,4 +219,13 @@ public class PickProductImagesFragment extends Fragment {
         return encImage;
     }
 
+    private void close() {
+        DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
+        if (dashboardFragment == null) {
+            dashboardFragment = new DashboardFragment();
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+        transaction.commit();
+    }
 }
