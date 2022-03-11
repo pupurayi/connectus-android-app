@@ -136,8 +136,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         recyclerViewProducts.setAdapter(productRecyclerAdapter);
         recyclerViewProducts.setLayoutManager(linearLayoutManager);
 
-        fetchRecommendedProducts();
-
         imageViewMenu = view.findViewById(R.id.image_view_menu);
         imageViewMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
@@ -148,6 +146,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
+        fetchRecommendedProducts();
     }
 
 
@@ -156,7 +155,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         super.onResume();
         Log.d(TAG, "onResume");
         profileDTO = sharedPreferencesManager.getProfile();
-        syncDisplay(profileDTO);
+        fetchRecommendedProducts();
     }
 
     public void showProfileDetailsFragment() {
@@ -254,7 +253,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
                 case "success":
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     profileDTO = sharedPreferencesManager.getProfile();
-                    syncDisplay(profileDTO);
                     break;
                 case "failed":
                 case "error":
@@ -262,18 +260,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
                     break;
             }
         });
-    }
-
-    public void syncDisplay(ProfileDto profileDTO) {
-        String firstName = profileDTO.getFirstName();
-        String fullName = firstName + " " + profileDTO.getLastName();
-        String msisdn = (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) ? "Paymate Code: " + profileDTO.getPaymate().getPaymateCode() : profileDTO.getMsisdn();
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewNavHeaderAvatar, profileDTO.getId());
-        textViewFullName.setText(fullName);
-        textViewNavHeaderFullName.setText(fullName);
-        textViewMsisdn.setText(msisdn);
-        textViewNavHeaderMsisdn.setText(msisdn);
     }
 
     public void logout() {
