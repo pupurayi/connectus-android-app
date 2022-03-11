@@ -94,7 +94,8 @@ public class ProductsFragment extends Fragment {
             switch (responseDTO.getStatus()) {
                 case "success":
                     DbHandler dbHandler = new DbHandler(getContext());
-                    products = dbHandler.getProducts();
+                    products.clear();
+                    products.addAll(dbHandler.getProducts());
                     productRecyclerAdapter.notifyDataSetChanged();
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;

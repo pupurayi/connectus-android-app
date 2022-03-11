@@ -1,21 +1,33 @@
 package com.connectus.mobile.ui.product;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +37,9 @@ import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -38,6 +53,8 @@ import java.util.List;
  */
 public class ProductFragment extends Fragment {
 
+    private static final String TAG = ProductFragment.class.getSimpleName();
+
     ProgressDialog pd;
     ImageView imageViewBack, imageViewProfileAvatar;
 
@@ -47,6 +64,18 @@ public class ProductFragment extends Fragment {
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
     ProductDto product;
+
+
+    Intent intentThatCalled;
+    public double latitude;
+    public double longitude;
+    public LocationManager locationManager;
+    public Criteria criteria;
+    public String bestProvider;
+
+    double currentLat = 0, currentLng = 0;
+
+    Button buttonNavigate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +127,37 @@ public class ProductFragment extends Fragment {
         textViewProductName.setText(product.getName());
         textViewProductDescription.setText(product.getDescription());
         textViewProductPrice.setText(new StringBuilder().append("$").append(product.getPrice()).toString());
+
+        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            // ask permissions here using below code
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    100);
+        }
+
+        buttonNavigate = view.findViewById(R.id.button_navigate);
+        buttonNavigate.setOnClickListener(view1 -> {
+            pd.setMessage("Fetching Location....");
+            pd.show();
+
+
+            Snackbar.make(view, "location: " + currentLat + " " + currentLng, Snackbar.LENGTH_LONG).show();
+
+            Bundle bundle = new Bundle();
+            bundle.putDouble("currentLat", currentLat);
+            bundle.putDouble("currentLng", currentLng);
+            bundle.putDouble("destinationLat", product.getLat());
+            bundle.putDouble("destinationLng", product.getLng());
+            NavigationFragment navigationFragment = new NavigationFragment();
+            navigationFragment.setArguments(bundle);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.container, navigationFragment, NavigationFragment.class.getSimpleName());
+            transaction.addToBackStack(TAG);
+            transaction.commit();
+            pd.dismiss();
+        });
 
     }
 }

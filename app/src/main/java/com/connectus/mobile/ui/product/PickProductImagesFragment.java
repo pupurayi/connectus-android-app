@@ -149,7 +149,6 @@ public class PickProductImagesFragment extends Fragment {
                 if (imageFirst == null || imageFirst.isEmpty()) {
                     Snackbar.make(view, "Please pick first image!", Snackbar.LENGTH_LONG).show();
                 } else if (imageSecond == null || imageSecond.isEmpty()) {
-                    Snackbar.make(view, "Please pick second image!", Snackbar.LENGTH_LONG).show();
                 }
             }
         });

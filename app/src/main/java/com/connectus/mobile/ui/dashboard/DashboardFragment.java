@@ -180,20 +180,17 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public void fetchRecommendedProducts() {
-        dashboardViewModel.hitTransactionHistoryApi(getContext(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
-            @Override
-            public void onChanged(ResponseDTO responseDTO) {
-                switch (responseDTO.getStatus()) {
-                    case "success":
-                        loadRecommendedProductsRecyclerView();
-                        break;
-                    case "failed":
-                    case "error":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                }
-                pd.dismiss();
+        productViewModel.getProducts(getContext(), authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+            switch (responseDTO.getStatus()) {
+                case "success":
+                    loadRecommendedProductsRecyclerView();
+                    break;
+                case "failed":
+                case "error":
+                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    break;
             }
+            pd.dismiss();
         });
     }
 

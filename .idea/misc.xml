@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_mobile_topup.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_mobile_topup_checkout.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_my_siba_invites.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_navigation.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_offerings.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_paymate_application.xml" value="0.21240942028985507" />
@@ -38,6 +39,7 @@
         <entry key="app/src/main/res/layout/fragment_siba_profiles.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_splash_screen.xml" value="0.14814814814814814" />
+        <entry key="app/src/main/res/layout/fragment_web_view.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/item_goods_and_services_list.xml" value="0.11684782608695653" />
         <entry key="app/src/main/res/layout/item_notification_list.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/item_offering_list.xml" value="0.17299898682877407" />
