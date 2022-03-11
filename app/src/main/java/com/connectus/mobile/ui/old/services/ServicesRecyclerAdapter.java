@@ -47,7 +47,6 @@ public class ServicesRecyclerAdapter extends RecyclerView.Adapter<ServicesRecycl
         holder.imageViewServiceIcon.setImageResource(service.getIconResource());
         holder.textViewServiceName.setText(service.getName());
         holder.textViewServiceDescription.setText(service.getDescription());
-        holder.position = position;
         holder.emalyamiService = service;
     }
 
@@ -60,7 +59,6 @@ public class ServicesRecyclerAdapter extends RecyclerView.Adapter<ServicesRecycl
 
         private ImageView imageViewServiceIcon;
         private TextView textViewServiceName, textViewServiceDescription;
-        private int position;
         private EmalyamiService emalyamiService;
 
 

@@ -2,7 +2,10 @@ package com.connectus.mobile.ui.product;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -31,18 +35,16 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class ProductsFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
     ProgressDialog pd;
-    ImageView imageViewBack;
+    ImageView imageViewBack, imageViewProfileAvatar;
 
-    ImageView imageViewProfileAvatar;
-    ProductRecyclerAdapter productRecyclerAdapter;
+    ImageView imageViewProduct;
 
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
-    private ProductViewModel productsViewModel;
-    List<ProductDto> products = new LinkedList<>();
+    ProductDto product;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,13 @@ public class ProductsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        productsViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            String json = arguments.getString("product");
+            product = new Gson().fromJson(json, ProductDto.class);
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false);
+        return inflater.inflate(R.layout.fragment_product, container, false);
     }
 
     @Override
@@ -64,7 +70,6 @@ public class ProductsFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        getProducts(getContext(), authentication);
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
@@ -79,32 +84,9 @@ public class ProductsFragment extends Fragment {
                     .into(imageViewProfileAvatar);
         }
 
-        DbHandler dbHandler = new DbHandler(getContext());
-        products = dbHandler.getProducts();
-        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), products, fragmentManager);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        RecyclerView recyclerViewProducts = view.findViewById(R.id.recycler_view_products);
-        recyclerViewProducts.setAdapter(productRecyclerAdapter);
-        recyclerViewProducts.setLayoutManager(linearLayoutManager);
+        imageViewProduct = view.findViewById(R.id.image_view_product);
+        byte[] decodedString = Base64.decode(product.getImageFirst(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        imageViewProduct.setImageBitmap(decodedByte);
     }
-
-    private void getProducts(Context context, String authentication) {
-        productsViewModel.getProducts(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
-            switch (responseDTO.getStatus()) {
-                case "success":
-                    DbHandler dbHandler = new DbHandler(getContext());
-                    products = dbHandler.getProducts();
-                    productRecyclerAdapter.notifyDataSetChanged();
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                    break;
-                case "failed":
-                case "error":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                    break;
-            }
-            pd.dismiss();
-        });
-    }
-
 }

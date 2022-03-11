@@ -12,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.ui.dashboard.DashboardFragment;
+import com.connectus.mobile.ui.old.siba.SibaProfilesFragment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,17 +32,19 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
     private Context context;
     private final List<ProductDto> products;
+    private FragmentManager fragmentManager;
 
-    public ProductRecyclerAdapter(Context context, List<ProductDto> products) {
+    public ProductRecyclerAdapter(Context context, List<ProductDto> products, FragmentManager fragmentManager) {
         this.context = context;
         Collections.reverse(products);
         this.products = products;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_recommended_product_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,6 +57,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         byte[] decodedString = Base64.decode(productDto.getImageFirst(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.imageViewProduct.setImageBitmap(decodedByte);
+        holder.productDto = products.get(position);
     }
 
     @Override
@@ -59,9 +65,10 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         return products.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewName, textViewDescription, textViewCreated;
         private final ImageView imageViewProduct;
+        private ProductDto productDto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +76,11 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             textViewDescription = itemView.findViewById(R.id.text_view_product_description);
             textViewCreated = itemView.findViewById(R.id.text_view_created);
             imageViewProduct = itemView.findViewById(R.id.image_view_product);
+
+            itemView.setOnClickListener(view -> {
+                DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
+                dashboardFragment.navigateToProvider(productDto);
+            });
         }
     }
 }

@@ -34,6 +34,7 @@ import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.product.CreateProductFragment;
 import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.ui.product.ProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
@@ -43,6 +44,7 @@ import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.old.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.Collections;
 import java.util.Date;
@@ -128,7 +130,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         DbHandler dbHandler = new DbHandler(getContext());
         recommendedProducts = dbHandler.getProducts();
         recommendedProducts = sortRecommendedProducts(recommendedProducts);
-        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), recommendedProducts);
+        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), recommendedProducts, fragmentManager);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewProducts = getView().findViewById(R.id.recycler_view_recommended_products);
         recyclerViewProducts.setAdapter(productRecyclerAdapter);
@@ -161,6 +163,18 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         ProfileDetailsFragment profileDetailsFragment = new ProfileDetailsFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.container, profileDetailsFragment, ProfileDetailsFragment.class.getSimpleName());
+        transaction.addToBackStack(TAG);
+        transaction.commit();
+    }
+
+    public void navigateToProvider(ProductDto product) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("product", new Gson().toJson(product));
+        ProductFragment productFragment = new ProductFragment();
+        productFragment.setArguments(bundle);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.container, productFragment, FragmentTransaction.class.getSimpleName());
         transaction.addToBackStack(TAG);
         transaction.commit();
     }
