@@ -16,7 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_create_offering.xml" value="0.3423913043478261" />
         <entry key="app/src/main/res/layout/fragment_create_product.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_create_siba_profile.xml" value="0.21240942028985507" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1111111111111111" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.75" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_edit_profile_address.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_edit_profile_identification.xml" value="0.17299898682877407" />
@@ -41,6 +41,8 @@
         <entry key="app/src/main/res/layout/item_notification_list.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/item_offering_list.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/item_product_list.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/item_recommended_product_list.xml" value="0.21240942028985507" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.21240942028985507" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.16326530612244897" />
       </map>
     </option>

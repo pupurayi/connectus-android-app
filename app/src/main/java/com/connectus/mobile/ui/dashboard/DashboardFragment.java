@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,18 +29,18 @@ import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.api.dto.BalanceDTO;
 import com.connectus.mobile.api.dto.ResponseDTO;
-import com.connectus.mobile.api.dto.Transaction;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.product.CreateProductFragment;
+import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
+import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.connectus.mobile.ui.qrcode.QRCodeFragment;
 import com.connectus.mobile.ui.old.settings.SettingsFragment;
-import com.connectus.mobile.ui.old.transaction.TransactionRecyclerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -61,22 +60,18 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
     TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn, textViewProfileBalance;
     ImageView imageViewProfileAvatar, imageViewNavHeaderAvatar, imageViewMenu, imageViewRefresh, imageViewQRCode;
-    ImageView imageViewInternalTransfer, imageViewCashWithdraw, imageViewPay;
-    Button buttonMoreServices;
-    RecyclerView recyclerViewTransactions;
+    RecyclerView recyclerViewProducts;
     ProgressDialog pd;
-
-    //Freshchat.showFAQs(getApplicationContext());
-
 
     FragmentManager fragmentManager;
     SharedPreferencesManager sharedPreferencesManager;
     ProfileDto profileDTO;
     String authentication;
     private DashboardViewModel dashboardViewModel;
-    private ProfileDetailsViewModel profileDetailsViewModel;
-    TransactionRecyclerAdapter transactionRecyclerAdapter;
-    List<Transaction> transactions;
+    private ProductViewModel productViewModel;
+
+    ProductRecyclerAdapter productRecyclerAdapter;
+    List<ProductDto> recommendedProducts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +81,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-        profileDetailsViewModel = new ViewModelProvider(this).get(ProfileDetailsViewModel.class);
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
@@ -126,118 +121,25 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
         long lastSync = sharedPreferencesManager.getLastSync();
         long now = new Date().getTime();
-        // 1 Second = 1000 Milliseconds, 300000 = 5 Minutes
         if (now - lastSync >= 300000) {
             syncProfileAndDisplay();
         }
 
         DbHandler dbHandler = new DbHandler(getContext());
-        transactions = dbHandler.getTransactions();
-        transactions = sortTransactions(transactions);
-        transactionRecyclerAdapter = new TransactionRecyclerAdapter(getContext(), transactions);
+        recommendedProducts = dbHandler.getProducts();
+        recommendedProducts = sortRecommendedProducts(recommendedProducts);
+        productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), recommendedProducts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerViewTransactions = getView().findViewById(R.id.recycler_view_transactions);
-        recyclerViewTransactions.setAdapter(transactionRecyclerAdapter);
-        recyclerViewTransactions.setLayoutManager(linearLayoutManager);
+        recyclerViewProducts = getView().findViewById(R.id.recycler_view_products);
+        recyclerViewProducts.setAdapter(productRecyclerAdapter);
+        recyclerViewProducts.setLayoutManager(linearLayoutManager);
 
-        fetchTransactions();
+        fetchRecommendedProducts();
 
         imageViewMenu = view.findViewById(R.id.image_view_menu);
-        imageViewMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        imageViewMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        imageViewProfileAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showProfileDetailsFragment();
-            }
-        });
-
-//        imageViewPay = view.findViewById(R.id.image_view_pay);
-//        imageViewPay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", String.valueOf(TransactionType.GOODS_AND_SERVICES));
-//                bundle.putString("title", "Payment");
-//                CheckPaymateFragment checkPaymateFragment = new CheckPaymateFragment();
-//                checkPaymateFragment.setArguments(bundle);
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.add(R.id.container, checkPaymateFragment, CheckPaymateFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                transaction.commit();
-//            }
-//        });
-//
-//        imageViewCashWithdraw = view.findViewById(R.id.image_view_cash_withdraw);
-//        imageViewCashWithdraw.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", String.valueOf(TransactionType.CASH_WITHDRAWAL));
-//                bundle.putString("title", "Withdraw");
-//                CheckPaymateFragment checkPaymateFragment = new CheckPaymateFragment();
-//                checkPaymateFragment.setArguments(bundle);
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.add(R.id.container, checkPaymateFragment, CheckPaymateFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                transaction.commit();
-//            }
-//        });
-//
-//        imageViewInternalTransfer = view.findViewById(R.id.image_view_internal_transfer);
-//        imageViewInternalTransfer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", String.valueOf(TransactionType.INTERNAL_TRANSFER));
-//                bundle.putString("title", "Transfer");
-//                CheckProfileFragment checkProfileFragment = new CheckProfileFragment();
-//                checkProfileFragment.setArguments(bundle);
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.add(R.id.container, checkProfileFragment, CheckProfileFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                transaction.commit();
-//            }
-//        });
-//
-//        buttonMoreServices = view.findViewById(R.id.button_more_services);
-//        buttonMoreServices.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ServicesFragment servicesFragment = new ServicesFragment();
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.add(R.id.container, servicesFragment, ServicesFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                transaction.commit();
-//            }
-//        });
-//        imageViewQRCode = view.findViewById(R.id.image_view_qr_code_options);
-//        imageViewQRCode.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                QRCodeFragment qrCodeFragment = new QRCodeFragment();
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.add(R.id.container, qrCodeFragment, QRCodeFragment.class.getSimpleName());
-//                transaction.addToBackStack(TAG);
-//                transaction.commit();
-//
-//            }
-//        });
-//
-//
-//        imageViewRefresh = view.findViewById(R.id.image_view_refresh);
-//        imageViewRefresh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                syncProfileAndDisplay();
-//                fetchTransactions();
-//            }
-//        });
+        imageViewProfileAvatar.setOnClickListener(v -> showProfileDetailsFragment());
     }
 
     @Override
@@ -263,13 +165,13 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         transaction.commit();
     }
 
-    public void fetchTransactions() {
+    public void fetchRecommendedProducts() {
         dashboardViewModel.hitTransactionHistoryApi(getContext(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
             @Override
             public void onChanged(ResponseDTO responseDTO) {
                 switch (responseDTO.getStatus()) {
                     case "success":
-                        loadTransactionRecyclerView();
+                        loadRecommendedProductsRecyclerView();
                         break;
                     case "failed":
                     case "error":
@@ -281,19 +183,18 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         });
     }
 
-    public List<Transaction> sortTransactions(List<Transaction> transactions) {
-        Collections.sort(transactions, (t1, t2) -> t2.getCreatedAt().compareTo(t1.getCreatedAt()));
-        return transactions;
+    public List<ProductDto> sortRecommendedProducts(List<ProductDto> recommendedProducts) {
+        Collections.sort(recommendedProducts, (t1, t2) -> t2.getCreated().compareTo(t1.getCreated()));
+        return recommendedProducts;
     }
 
-    public void loadTransactionRecyclerView() {
-        // TODO reload recycler
+    public void loadRecommendedProductsRecyclerView() {
         DbHandler dbHandler = new DbHandler(getContext());
-        List<Transaction> updatedTransactions = dbHandler.getTransactions();
-        List<Transaction> sortedTransactions = sortTransactions(updatedTransactions);
-        transactions.clear();
-        transactions.addAll(sortedTransactions);
-        transactionRecyclerAdapter.notifyDataSetChanged();
+        List<ProductDto> products = dbHandler.getProducts();
+        List<ProductDto> sortedRecommendedProducts = sortRecommendedProducts(products);
+        recommendedProducts.clear();
+        recommendedProducts.addAll(sortedRecommendedProducts);
+        productRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -336,21 +237,18 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Please Wait ...");
         pd.show();
 
-        profileDetailsViewModel.hitGetProfileApi(getActivity(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
-            @Override
-            public void onChanged(ResponseDTO responseDTO) {
-                pd.dismiss();
-                switch (responseDTO.getStatus()) {
-                    case "success":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        profileDTO = sharedPreferencesManager.getProfile();
-                        syncDisplay(profileDTO);
-                        break;
-                    case "failed":
-                    case "error":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                }
+        productViewModel.getProducts(getActivity(), authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+            pd.dismiss();
+            switch (responseDTO.getStatus()) {
+                case "success":
+                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    profileDTO = sharedPreferencesManager.getProfile();
+                    syncDisplay(profileDTO);
+                    break;
+                case "failed":
+                case "error":
+                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    break;
             }
         });
     }
@@ -359,14 +257,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         String firstName = profileDTO.getFirstName();
         String fullName = firstName + " " + profileDTO.getLastName();
         String msisdn = (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) ? "Paymate Code: " + profileDTO.getPaymate().getPaymateCode() : profileDTO.getMsisdn();
-        DbHandler dbHandler = new DbHandler(getContext());
-        Set<BalanceDTO> balances = dbHandler.getBalances();
-        String profileBalance = null;
-        for (BalanceDTO balance : balances) {
-            if (balance.getCurrency().equals("ZAR")) {
-                profileBalance = String.format("%s %.2f", balance.getCurrency(), balance.getAmount());
-            }
-        }
         Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
         Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewNavHeaderAvatar, profileDTO.getId());
         textViewFullName.setText(fullName);

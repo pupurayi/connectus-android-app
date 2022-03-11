@@ -53,7 +53,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/account_circle_gold"
+                    android:src="@drawable/avatar"
                     app:civ_border_color="@color/app_color"
                     app:civ_border_width="2dp" />
 

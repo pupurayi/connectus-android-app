@@ -83,8 +83,8 @@ public class CreateProductFragment extends Fragment {
         if (profileDTO.isAvatarAvailable()) {
             Picasso.get()
                     .load(Constants.CORE_BASE_URL + "/api/v1/user/avatar/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.account_circle_gold)
-                    .error(R.drawable.account_circle_gold)
+                    .placeholder(R.drawable.avatar)
+                    .error(R.drawable.avatar)
                     .into(imageViewProfileAvatar);
         }
 

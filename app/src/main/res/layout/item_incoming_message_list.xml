@@ -27,7 +27,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:scaleType="centerInside"
-        android:src="@drawable/account_circle_gold"
+        android:src="@drawable/avatar"
         app:civ_border_color="@color/app_color"
         app:civ_border_width="2dp"
         app:layout_constraintStart_toStartOf="parent"
