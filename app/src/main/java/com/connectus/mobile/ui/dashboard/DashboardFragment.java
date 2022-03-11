@@ -146,6 +146,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
+        syncDisplay(profileDTO);
         fetchRecommendedProducts();
     }
 
@@ -156,6 +157,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         Log.d(TAG, "onResume");
         profileDTO = sharedPreferencesManager.getProfile();
         fetchRecommendedProducts();
+        syncDisplay(profileDTO);
     }
 
     public void showProfileDetailsFragment() {
@@ -271,6 +273,18 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         transaction.replace(R.id.container, checkFragment, CheckFragment.class.getSimpleName());
         transaction.commit();
         pd.dismiss();
+    }
+
+    public void syncDisplay(ProfileDto profileDTO) {
+        String firstName = profileDTO.getFirstName();
+        String fullName = firstName + " " + profileDTO.getLastName();
+        String msisdn = (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) ? "Paymate Code: " + profileDTO.getPaymate().getPaymateCode() : profileDTO.getMsisdn();
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
+        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewNavHeaderAvatar, profileDTO.getId());
+        textViewFullName.setText(fullName);
+        textViewNavHeaderFullName.setText(fullName);
+        textViewMsisdn.setText(msisdn);
+        textViewNavHeaderMsisdn.setText(msisdn);
     }
 }
     
