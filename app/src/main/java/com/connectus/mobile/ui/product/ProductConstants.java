@@ -7,7 +7,7 @@ public class ProductConstants {
     public static final List<String> categories =
             Arrays.asList(
                     "Chemicals",
-                    "Cosmetics",
+                    "Cosmetics and Beauty",
                     "Lubricant and Fuel",
                     "Pharmaceuticals",
                     "Metals",
