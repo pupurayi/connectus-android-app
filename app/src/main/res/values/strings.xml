@@ -208,4 +208,5 @@
     <string name="product_category">Product Category</string>
     <string name="categories">Categories</string>
     <string name="product">Product</string>
+    <string name="navigate">Navigate</string>
 </resources>

@@ -57,9 +57,6 @@ dependencies {
     // Location Picker
     implementation 'com.github.shivpujan12:LocationPicker:2.0'
 
-    // navigate
-    implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
-
     // QR Code
     implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
     implementation 'com.google.zxing:core:3.3.0'

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +42,7 @@ public class ProductFragment extends Fragment {
     ImageView imageViewBack, imageViewProfileAvatar;
 
     ImageView imageViewProduct;
+    TextView textViewProductName, textViewProductDescription, textViewProductPrice;
 
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
@@ -88,5 +90,14 @@ public class ProductFragment extends Fragment {
         byte[] decodedString = Base64.decode(product.getImageFirst(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         imageViewProduct.setImageBitmap(decodedByte);
+
+        textViewProductName = view.findViewById(R.id.text_view_product_name);
+        textViewProductDescription = view.findViewById(R.id.text_view_product_description);
+        textViewProductPrice = view.findViewById(R.id.text_view_product_price);
+
+        textViewProductName.setText(product.getName());
+        textViewProductDescription.setText(product.getDescription());
+        textViewProductPrice.setText(new StringBuilder().append("$").append(product.getPrice()).toString());
+
     }
 }
