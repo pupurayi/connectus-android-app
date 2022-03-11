@@ -65,16 +65,6 @@ public class ProductFragment extends Fragment {
     FragmentManager fragmentManager;
     ProductDto product;
 
-
-    Intent intentThatCalled;
-    public double latitude;
-    public double longitude;
-    public LocationManager locationManager;
-    public Criteria criteria;
-    public String bestProvider;
-
-    double currentLat = 0, currentLng = 0;
-
     Button buttonNavigate;
 
     @Override
@@ -143,11 +133,7 @@ public class ProductFragment extends Fragment {
             pd.show();
 
 
-            Snackbar.make(view, "location: " + currentLat + " " + currentLng, Snackbar.LENGTH_LONG).show();
-
             Bundle bundle = new Bundle();
-            bundle.putDouble("currentLat", currentLat);
-            bundle.putDouble("currentLng", currentLng);
             bundle.putDouble("destinationLat", product.getLat());
             bundle.putDouble("destinationLng", product.getLng());
             NavigationFragment navigationFragment = new NavigationFragment();

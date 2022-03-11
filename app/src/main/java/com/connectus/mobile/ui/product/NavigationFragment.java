@@ -32,7 +32,7 @@ public class NavigationFragment extends Fragment {
     ProgressDialog pd;
     ImageView imageViewBack;
 
-    double currentLat, currentLng, destinationLat = 0, destinationLng = 0;
+    double currentLat = -17.838721867867875, currentLng = 31.00688344366997, destinationLat = 0, destinationLng = 0;
 
     FragmentManager fragmentManager;
     private SharedPreferencesManager sharedPreferencesManager;
@@ -46,8 +46,6 @@ public class NavigationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle arguments = getArguments();
         if (arguments != null) {
-            currentLat = arguments.getDouble("currentLat");
-            currentLng = arguments.getDouble("currentLng");
             destinationLat = arguments.getDouble("destinationLat");
             destinationLng = arguments.getDouble("destinationLng");
         } else {
