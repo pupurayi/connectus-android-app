@@ -1,6 +1,5 @@
 package com.connectus.mobile.ui.profile;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,8 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.AddressResponse;
-import com.connectus.mobile.api.dto.IdentificationResponse;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -35,7 +32,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -113,11 +109,8 @@ public class ProfileDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 pickImage();
-//                showDialogForProfileImageEdit();
             }
         });
-
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
 
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_value);
@@ -152,29 +145,12 @@ public class ProfileDetailsFragment extends Fragment {
         super.onResume();
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
         populateFields(profileDTO);
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
     }
 
     public void populateFields(ProfileDto profileDTO) {
-        String firstName = profileDTO.getFirstName();
-        String fullName = firstName + " " + profileDTO.getLastName();
+        String fullName = profileDTO.getFirstName() + " " + profileDTO.getLastName();
         String msisdn = profileDTO.getMsisdn();
         String email = profileDTO.getEmail();
-        Date dob = profileDTO.getDob();
-        String sex = (profileDTO.getSex() != null) ? profileDTO.getSex().getTitle() : null;
-        IdentificationResponse identificationResponse = profileDTO.getIdentification();
-        String identificationType = (identificationResponse != null && identificationResponse.getType() != null) ? identificationResponse.getType().getLabel() : "Passport or National ID";
-        String identificationNumber = (identificationResponse != null && identificationResponse.getNumber() != null) ? identificationResponse.getNumber() : null;
-        AddressResponse addressResponse = profileDTO.getAddress();
-        String address = null;
-        if (addressResponse != null) {
-            String addressLine1 = addressResponse.getAddressLine1();
-            String city = addressResponse.getCity();
-            String province = addressResponse.getProvince();
-            String country = addressResponse.getCountryCode();
-            address = addressLine1 + ", " + city + ", " + province + ", " + country;
-        }
-
         textViewFullName.setText(fullName);
         textViewPhoneNumber.setText(msisdn);
         textViewEmail.setText(email);
@@ -220,7 +196,6 @@ public class ProfileDetailsFragment extends Fragment {
                     case "success":
                         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
                         invalidateAvatarCache(profileDTO.getId());
-                        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
                         Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                         break;
                     case "failed":

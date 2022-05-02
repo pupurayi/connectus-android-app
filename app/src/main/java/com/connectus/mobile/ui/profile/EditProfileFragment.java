@@ -1,9 +1,7 @@
 package com.connectus.mobile.ui.profile;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,16 +12,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ResponseDTO;
@@ -31,12 +25,10 @@ import com.connectus.mobile.api.dto.UpdateProfileRequest;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.common.Sex;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -86,8 +78,6 @@ public class EditProfileFragment extends Fragment {
         String firstName = profileDTO.getFirstName();
         String lastName = profileDTO.getLastName();
         String email = profileDTO.getEmail();
-        Date dob = profileDTO.getDob();
-        Sex sex = profileDTO.getSex();
 
         editTextFirstName = view.findViewById(R.id.edit_text_first_name);
         editTextLastName = view.findViewById(R.id.edit_text_last_name);
@@ -98,14 +88,6 @@ public class EditProfileFragment extends Fragment {
         editTextEmail.setText(email);
 
         imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
-        if (profileDTO.isAvatarAvailable()) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageViewProfileAvatar);
-        }
-
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,14 +105,9 @@ public class EditProfileFragment extends Fragment {
                 String lastName = editTextLastName.getText().toString();
                 String email = editTextEmail.getText().toString();
 
-                String oldDate = null;
-                if (profileDTO.getDob() != null) {
-                    oldDate = shortDateFormat.format(profileDTO.getDob());
-                }
 
                 if (firstName.length() > 1 && lastName.length() > 1 && email.length() > 1) {
-                    if (profileDTO != null && firstName.equals(profileDTO.getFirstName()) && lastName.equals(profileDTO.getLastName()) && email.equals(profileDTO.getEmail()) && dob.equals(oldDate)) {
-                        nextPage();
+                    if (profileDTO != null && firstName.equals(profileDTO.getFirstName()) && lastName.equals(profileDTO.getLastName())) {
                     } else {
                         UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(email, firstName, lastName);
                         pd.setMessage("Updating ...");
@@ -141,7 +118,6 @@ public class EditProfileFragment extends Fragment {
                                 pd.dismiss();
                                 switch (responseDTO.getStatus()) {
                                     case "success":
-                                        nextPage();
                                         break;
                                     case "failed":
                                     case "error":
@@ -162,13 +138,5 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
-    }
-
-    public void nextPage() {
-        EditProfileIdentificationFragment editProfileIdentificationFragment = new EditProfileIdentificationFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.container, editProfileIdentificationFragment, EditProfileIdentificationFragment.class.getSimpleName());
-        transaction.addToBackStack(TAG);
-        transaction.commit();
     }
 }

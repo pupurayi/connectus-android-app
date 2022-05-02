@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.old.settings;
+package com.connectus.mobile.ui.settings;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,13 +60,6 @@ public class SettingsFragment extends Fragment {
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
-        if (profileDTO.isAvatarAvailable()) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageViewProfileAvatar);
-        }
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(new View.OnClickListener() {

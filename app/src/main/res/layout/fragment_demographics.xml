@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
-    tools:context=".ui.old.payment.PaymentFragment">
+    tools:context=".ui.initial.demographics.DemographicsFragment">
 
     <LinearLayout
-        android:id="@+id/linear_layout_header"
+        android:id="@+id/linear_layout_navigation_header"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/layout_profile_details"
+        android:id="@+id/d84ed6f9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -37,7 +37,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_header">
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_navigation_header">
 
         <TextView
             android:id="@+id/text_view_title"
@@ -47,15 +47,16 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/inter"
             android:gravity="center_vertical"
-            android:text="@string/payment"
+            android:text="@string/demographics"
             android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
             android:typeface="normal" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/cw_image_view_profile_avatar"
+            android:id="@+id/circular_image_view_avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
@@ -66,81 +67,90 @@
             app:civ_border_width="2dp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linear_layout_transfer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_profile_details">
+        app:layout_constraintTop_toBottomOf="@+id/layout_profile_details"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
-            android:id="@+id/linear_layout_paymate_profile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_view_to"
+            <EditText
+                android:id="@+id/edit_text_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="@string/to"
-                android:textAlignment="center"
-                android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/location_pin"
+                android:hint="@string/physical_address"
+                android:importantForAutofill="yes"
+                android:inputType="textPostalAddress"
+                android:scrollbars="vertical" />
 
-            <TextView
-                android:id="@+id/text_view_paymate_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/paymate_name"
-                android:textAlignment="center"
-                android:textColor="#333333"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/text_view_paymate_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/dummy_paymate_code"
-                android:textAlignment="center"
-                android:textColor="#333333"
-                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/edit_text_transaction_amount"
+                android:id="@+id/edit_text_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/location_city"
+                android:hint="@string/city"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+
+            <EditText
+                android:id="@+id/edit_text_province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/my_location"
+                android:hint="@string/province"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edit_text_proof_of_residence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/attachment"
+                android:hint="@string/proof_of_residence"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp_country_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:hint="@string/placeholder_amount"
-                android:importantForAutofill="no"
-                android:inputType="numberDecimal"
-                android:paddingLeft="10dp"
-                android:paddingTop="20dp"
-                android:paddingRight="10dp"
-                android:textAlignment="center"
-                android:textSize="36sp" />
+                android:layout_marginTop="20dp"
+                app:ccpDialog_keyboardAutoPopup="false"
+                app:ccp_showArrow="true"
+                app:ccp_showFullName="true"
+                app:ccp_showNameCode="true"
+                app:ccp_showPhoneCode="false"
+                app:ccp_useFlagEmoji="false" />
 
             <Button
-                android:id="@+id/button_pay"
+                android:id="@+id/button_save"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/pay"
+                android:text="@string/save"
                 app:cornerRadius="20dp" />
+
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

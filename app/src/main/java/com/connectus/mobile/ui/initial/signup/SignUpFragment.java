@@ -29,10 +29,8 @@ import com.connectus.mobile.api.dto.SignUpRequest;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.profile.EditProfileAddressFragment;
+import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -162,10 +160,9 @@ public class SignUpFragment extends Fragment {
                 pd.dismiss();
                 switch (responseDTO.getStatus()) {
                     case "success":
-                        Common.subscribeToTopic(Constants.GENERAL_TOPIC);
-                        EditProfileAddressFragment editProfileAddressFragment = new EditProfileAddressFragment();
+                        DemographicsFragment demographicsFragment = new DemographicsFragment();
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, editProfileAddressFragment, EditProfileAddressFragment.class.getSimpleName());
+                        transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
                         transaction.commit();
                         break;
                     case "failed":

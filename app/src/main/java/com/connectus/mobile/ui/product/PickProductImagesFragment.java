@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Base64;
@@ -27,10 +26,7 @@ import android.widget.Toast;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CreateProductDto;
-import com.connectus.mobile.api.dto.PaymateApplication;
-import com.connectus.mobile.api.dto.PaymateBusinessLocation;
 import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
@@ -101,13 +97,6 @@ public class PickProductImagesFragment extends Fragment {
         ProfileDto profileDTO = sharedPreferencesManager.getProfile();
 
         imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
-        if (profileDTO.isAvatarAvailable()) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/avatar/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageViewProfileAvatar);
-        }
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

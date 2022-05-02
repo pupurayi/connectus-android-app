@@ -1,35 +1,20 @@
 package com.connectus.mobile.common;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 
 import com.auth0.android.jwt.JWT;
-import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.siba.SibaProfile;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
-import com.google.zxing.BarcodeFormat;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,67 +39,6 @@ public class Common {
         }
     }
 
-    public static void subscribeToTopic(String topic) {
-        FirebaseMessaging.getInstance().subscribeToTopic(topic)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (!task.isSuccessful()) {
-                            Log.d(TAG, String.format("failed to subscribe to %s topic", topic));
-                        }
-                        Log.d(TAG, String.format("successfully subscribed to %s topic", topic));
-                    }
-                });
-    }
-
-    public static void unsubscribeTopic(String topic) {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
-    }
-
-    public static Bitmap generateQRCode(String contents) {
-        try {
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            return barcodeEncoder.encodeBitmap(contents, BarcodeFormat.QR_CODE, 400, 400);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public static void loadAvatar(boolean isAvatarAvailable, ImageView imageView, UUID userId) {
-        if (isAvatarAvailable) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageView);
-        }
-    }
-
-    public void loadAvatar(boolean avatarAvailable, UUID userId, ImageView imageView) {
-        if (avatarAvailable) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageView);
-        }
-    }
-
-    public static void showCameraPermissionRationale(Activity activity, int requestCode) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Camera Permission Explanation")
-                .setMessage("eMalyami requires the camera permission to allow you to capture Profile Pictures, KYC Documents and scan QR Codes.")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(activity,
-                                new String[]{Manifest.permission.CAMERA}, requestCode
-                        );
-                    }
-                })
-                .show();
-    }
-
     public static JWT tokenToJWT(String token) {
         return new JWT(token.replace("Bearer ", ""));
     }
@@ -135,13 +59,7 @@ public class Common {
         try {
             sharedPreferencesManager.clearAll();
             DbHandler dbHandler = new DbHandler(context);
-            dbHandler.deleteAllNotifications();
-            dbHandler.deleteAllBalances();
-            dbHandler.deleteAllTransactions();
-            dbHandler.deleteAllSibaProfiles();
-            dbHandler.deleteAllMySibaInvites();
-            dbHandler.deleteAllChatMessages();
-            dbHandler.deleteAllSupportMessages();
+            dbHandler.deleteAllProducts();
         } catch (Exception ignore) {
         }
     }
@@ -178,18 +96,6 @@ public class Common {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat(pattern);
         Date date = new Date(timestamp);
         return dateFormat.format(date);
-    }
-
-
-    public static SibaProfile getSibaProfileById(Context context, String sibaProfileId) {
-        DbHandler dbHandler = new DbHandler(context);
-        List<SibaProfile> sibaProfiles = dbHandler.getSibaProfiles();
-        for (SibaProfile sibaProfile : sibaProfiles) {
-            if (sibaProfile.getId().equals(sibaProfileId)) {
-                return sibaProfile;
-            }
-        }
-        return null;
     }
 
     public static String[] splitCountryCodeFromPhone(String phoneNumber) throws NumberParseException {

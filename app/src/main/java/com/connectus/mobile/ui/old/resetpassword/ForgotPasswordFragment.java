@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Common;
-import com.connectus.mobile.ui.old.otp.OTPFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.hbb20.CountryCodePicker;
 
@@ -103,12 +102,6 @@ public class ForgotPasswordFragment extends Fragment {
                                     bundle.putString("otpTitle", "Reset Password");
                                     bundle.putString("msisdn", msisdn);
 
-                                    OTPFragment otpFragment = new OTPFragment();
-                                    otpFragment.setArguments(bundle);
-                                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                    transaction.add(R.id.container, otpFragment, OTPFragment.class.getSimpleName());
-                                    transaction.addToBackStack(TAG);
-                                    transaction.commit();
                                     break;
                                 case "failed":
                                 case "error":

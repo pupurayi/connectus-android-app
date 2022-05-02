@@ -11,14 +11,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +25,6 @@ import android.widget.TextView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.api.dto.BalanceDTO;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -39,9 +35,8 @@ import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
 import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
-import com.connectus.mobile.ui.profile.ProfileDetailsViewModel;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
-import com.connectus.mobile.ui.old.settings.SettingsFragment;
+import com.connectus.mobile.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -49,7 +44,6 @@ import com.google.gson.Gson;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,15 +97,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
         View navHeaderView = navigationView.getHeaderView(0);
 
-        Menu navMenu = navigationView.getMenu();
-        MenuItem becomeAnPaymateItem = navMenu.findItem(R.id.nav_new_products);
-
-        if (profileDTO.getPaymate() == null) {
-            becomeAnPaymateItem.setVisible(true);
-        } else {
-            becomeAnPaymateItem.setVisible(false);
-        }
-
         imageViewNavHeaderAvatar = navHeaderView.findViewById(R.id.image_view_nav_header_avatar);
         textViewNavHeaderFullName = navHeaderView.findViewById(R.id.text_view_nav_header_full_name);
         textViewNavHeaderMsisdn = navHeaderView.findViewById(R.id.text_view_nav_header_msisdn);
@@ -119,7 +104,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewMsisdn = view.findViewById(R.id.text_view_msisdn);
-//        textViewProfileBalance = view.findViewById(R.id.text_view_profile_balance);
 
         long lastSync = sharedPreferencesManager.getLastSync();
         long now = new Date().getTime();
@@ -278,9 +262,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void syncDisplay(ProfileDto profileDTO) {
         String firstName = profileDTO.getFirstName();
         String fullName = firstName + " " + profileDTO.getLastName();
-        String msisdn = (profileDTO.getPaymate() != null && profileDTO.getPaymate().getPaymateStatus().equals("ACTIVE")) ? "Paymate Code: " + profileDTO.getPaymate().getPaymateCode() : profileDTO.getMsisdn();
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewProfileAvatar, profileDTO.getId());
-        Common.loadAvatar(profileDTO.isAvatarAvailable(), imageViewNavHeaderAvatar, profileDTO.getId());
+        String msisdn = profileDTO.getMsisdn();
         textViewFullName.setText(fullName);
         textViewNavHeaderFullName.setText(fullName);
         textViewMsisdn.setText(msisdn);

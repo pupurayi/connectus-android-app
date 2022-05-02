@@ -20,13 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.old.deposit.WireDepositFragment;
-import com.connectus.mobile.ui.old.transaction.TransactionStatusFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -122,13 +119,11 @@ public class NavigationFragment extends Fragment {
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = request.getUrl().toString();
-            handleUrl(view, url, headers);
             return true;
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            handleUrl(view, url, headers);
             return true;
         }
 
@@ -141,34 +136,4 @@ public class NavigationFragment extends Fragment {
         }
     }
 
-    private void handleUrl(WebView webView, String url, Map<String, String> headers) {
-        if (parentFragment.equals(WireDepositFragment.class.getSimpleName())) {
-            if (url.contains("/payfast/response/success")) {
-                Bundle bundle = new Bundle();
-                TransactionStatusFragment transactionStatusFragment = new TransactionStatusFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                bundle.putBoolean("success", true);
-                bundle.putString("transactionStatusTitle", "Deposit Successful");
-                bundle.putString("transactionStatusMessage", "Deposit into profile was successful!");
-                transactionStatusFragment.setArguments(bundle);
-                transaction.replace(R.id.container, transactionStatusFragment, TransactionStatusFragment.class.getSimpleName());
-                transaction.commit();
-            } else if (url.contains("/payfast/response/cancel")) {
-                Bundle bundle = new Bundle();
-                TransactionStatusFragment transactionStatusFragment = new TransactionStatusFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                bundle.putBoolean("success", false);
-                bundle.putString("transactionStatusTitle", "Deposit Failed");
-                bundle.putString("transactionStatusMessage", "Deposit into profile was not successful!");
-                transactionStatusFragment.setArguments(bundle);
-                transaction.replace(R.id.container, transactionStatusFragment, TransactionStatusFragment.class.getSimpleName());
-                transaction.commit();
-            }
-        }
-        if (url.contains("emalyami.com")) {
-            webView.loadUrl(url, headers);
-        } else {
-            webView.loadUrl(url);
-        }
-    }
 }

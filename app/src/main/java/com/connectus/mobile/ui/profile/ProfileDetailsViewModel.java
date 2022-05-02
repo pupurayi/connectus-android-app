@@ -8,9 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
-import com.connectus.mobile.api.dto.BalanceDTO;
-import com.connectus.mobile.api.dto.UpdateAddressRequest;
-import com.connectus.mobile.api.dto.UpdateIdentificationRequest;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.ProfileDto;
@@ -47,13 +44,6 @@ public class ProfileDetailsViewModel extends ViewModel {
                         ProfileDto profileDTO = response.body();
                         sharedPreferencesManager.setProfile(profileDTO);
 
-                        Set<BalanceDTO> balances = profileDTO.getBalances();
-                        if (balances != null) {
-                            DbHandler dbHandler = new DbHandler(context);
-                            for (BalanceDTO balanceDTO : balances) {
-                                dbHandler.insertBalance(balanceDTO);
-                            }
-                        }
                         responseLiveData.setValue(new ResponseDTO("success", "Profile Syncing Complete!", null));
                     } else {
                         String errorMsg;
@@ -122,138 +112,6 @@ public class ProfileDetailsViewModel extends ViewModel {
     public MutableLiveData<ResponseDTO> hitUploadProfilePictureApi(final Context context, String authorization, MultipartBody.Part requestFile) {
         responseLiveData = new MutableLiveData<>();
         Call<ResponseDTO> ul = apiService.uploadProfilePicture(authorization, requestFile);
-        try {
-            ul.enqueue(new Callback<ResponseDTO>() {
-                @Override
-                public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                    if (response.code() == 200) {
-                        ResponseDTO responseDTO = response.body();
-                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        sharedPreferencesManager.setAvatarAvailable(true);
-                        responseLiveData.setValue(new ResponseDTO("success", responseDTO.getMessage(), null));
-                    } else {
-                        String errorMsg;
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
-                        }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                    Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return responseLiveData;
-        }
-    }
-
-    public MutableLiveData<ResponseDTO> hitUpdateProfileAddressApi(final Context context, String authorization, UpdateAddressRequest updateAddressRequest) {
-        responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<ProfileDto>> ul = apiService.updateAddress(authorization, updateAddressRequest);
-        try {
-            ul.enqueue(new Callback<ResponseDTO<ProfileDto>>() {
-                @Override
-                public void onResponse(Call<ResponseDTO<ProfileDto>> call, Response<ResponseDTO<ProfileDto>> response) {
-                    if (response.code() == 200) {
-                        ResponseDTO<ProfileDto> responseDTO = response.body();
-                        ProfileDto profileDTO = responseDTO.getData();
-                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        sharedPreferencesManager.setProfile(profileDTO);
-
-                        Set<BalanceDTO> balances = profileDTO.getBalances();
-                        if (balances != null) {
-                            DbHandler dbHandler = new DbHandler(context);
-                            for (BalanceDTO balanceDTO : balances) {
-                                dbHandler.insertBalance(balanceDTO);
-                            }
-                        }
-                        responseLiveData.setValue(new ResponseDTO("success", responseDTO.getMessage(), null));
-                    } else {
-                        String errorMsg;
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
-                        }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseDTO<ProfileDto>> call, Throwable t) {
-                    Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return responseLiveData;
-        }
-    }
-
-    public MutableLiveData<ResponseDTO> hitUpdateProfileIdentificationApi(final Context context, String authorization, UpdateIdentificationRequest updateIdentificationRequest) {
-        responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO<ProfileDto>> ul = apiService.updateIdentification(authorization, updateIdentificationRequest);
-        try {
-            ul.enqueue(new Callback<ResponseDTO<ProfileDto>>() {
-                @Override
-                public void onResponse(Call<ResponseDTO<ProfileDto>> call, Response<ResponseDTO<ProfileDto>> response) {
-                    if (response.code() == 200) {
-                        ResponseDTO<ProfileDto> responseDTO = response.body();
-                        ProfileDto profileDTO = responseDTO.getData();
-                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        sharedPreferencesManager.setProfile(profileDTO);
-
-                        Set<BalanceDTO> balances = profileDTO.getBalances();
-                        if (balances != null) {
-                            DbHandler dbHandler = new DbHandler(context);
-                            for (BalanceDTO balanceDTO : balances) {
-                                dbHandler.insertBalance(balanceDTO);
-                            }
-                        }
-                        responseLiveData.setValue(new ResponseDTO("success", responseDTO.getMessage(), null));
-                    } else {
-                        String errorMsg;
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
-                        }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseDTO<ProfileDto>> call, Throwable t) {
-                    Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return responseLiveData;
-        }
-    }
-
-    public MutableLiveData<ResponseDTO> hitUploadProfileDocumentApi(final Context context, String authorization, String type, MultipartBody.Part requestFile) {
-        responseLiveData = new MutableLiveData<>();
-        Call<ResponseDTO> ul = apiService.uploadProfileDocuments(authorization, type, requestFile);
         try {
             ul.enqueue(new Callback<ResponseDTO>() {
                 @Override

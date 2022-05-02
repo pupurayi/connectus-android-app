@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.old.settings;
+package com.connectus.mobile.ui.settings;
 
 import android.util.Log;
 

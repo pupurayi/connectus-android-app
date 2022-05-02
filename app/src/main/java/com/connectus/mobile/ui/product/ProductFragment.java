@@ -82,13 +82,6 @@ public class ProductFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
-        if (profileDTO.isAvatarAvailable()) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageViewProfileAvatar);
-        }
 
         imageViewProduct = view.findViewById(R.id.image_view_product);
         byte[] decodedString = Base64.decode(product.getImageFirst(), Base64.DEFAULT);

@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
-import com.connectus.mobile.ui.old.siba.SibaProfilesFragment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -71,13 +71,6 @@ public class ProductsFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
-        if (profileDTO.isAvatarAvailable()) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageViewProfileAvatar);
-        }
 
         DbHandler dbHandler = new DbHandler(getContext());
         products = dbHandler.getProducts();

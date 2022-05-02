@@ -2,7 +2,6 @@ package com.connectus.mobile.ui.product;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,11 +10,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,15 +20,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProfileDto;
 import com.connectus.mobile.common.Constants;
-import com.connectus.mobile.common.IdType;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
-
-import java.math.BigDecimal;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,13 +73,6 @@ public class CreateProductFragment extends Fragment {
         editTextProductPrice = view.findViewById(R.id.edit_text_product_price);
 
         imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
-        if (profileDTO.isAvatarAvailable()) {
-            Picasso.get()
-                    .load(Constants.CORE_BASE_URL + "/api/v1/user/avatar/" + profileDTO.getId() + ".png")
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
-                    .into(imageViewProfileAvatar);
-        }
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
