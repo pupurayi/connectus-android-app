@@ -24,6 +24,7 @@ import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.user.UserViewModel;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsFragment extends Fragment {
@@ -58,6 +59,7 @@ public class SettingsFragment extends Fragment {
         UserDto userDto = sharedPreferencesManager.getUser();
 
         imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

@@ -21,6 +21,7 @@ import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.LinkedList;
@@ -70,6 +71,7 @@ public class ProductsFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
 
         DbHandler dbHandler = new DbHandler(getContext());
         products = dbHandler.getProducts();

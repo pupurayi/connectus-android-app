@@ -17,30 +17,15 @@ public class UserDto {
     private String township;
     private String town;
     private String password;
-    private ZonedDateTime created;
-    private ZonedDateTime deleted;
-    private ZonedDateTime updated;
+    private String created;
+    private String deleted;
+    private String updated;
 
     public UserDto(String msisdn, String email, String firstName, String lastName, String password) {
         this.msisdn = msisdn;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-    }
-
-    public UserDto(String msisdn, String email, String firstName, String lastName, String avatar, String gender, String dob, String ethnicity, String religion, String township, String town, String password) {
-        this.msisdn = msisdn;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.avatar = avatar;
-        this.gender = gender;
-        this.dob = dob;
-        this.ethnicity = ethnicity;
-        this.religion = religion;
-        this.township = township;
-        this.town = town;
         this.password = password;
     }
 
@@ -148,27 +133,27 @@ public class UserDto {
         this.password = password;
     }
 
-    public ZonedDateTime getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(ZonedDateTime created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
-    public ZonedDateTime getDeleted() {
+    public String getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(ZonedDateTime deleted) {
+    public void setDeleted(String deleted) {
         this.deleted = deleted;
     }
 
-    public ZonedDateTime getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdated(ZonedDateTime updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 }

@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.utils.Utils;
 import com.google.gson.Gson;
 
 /**
@@ -77,6 +78,7 @@ public class ProductFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
 
         imageViewProduct = view.findViewById(R.id.image_view_product);
         byte[] decodedString = Base64.decode(product.getImageFirst(), Base64.DEFAULT);

@@ -27,6 +27,7 @@ import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.user.UserViewModel;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
@@ -52,7 +53,6 @@ public class DemographicsFragment extends Fragment {
     private UserViewModel userViewModel;
     private SharedPreferencesManager sharedPreferencesManager;
     UserDto userDto = null;
-    private String authentication;
     private boolean pickingGender = false, pickingDob = false, pickingEthnicity = false, pickingReligion = false, pickingTown = false;
     private Date dob = null;
 
@@ -91,6 +91,7 @@ public class DemographicsFragment extends Fragment {
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
 
         editTextGender = view.findViewById(R.id.edit_text_gender);
         if (userDto.getGender() != null) {
@@ -255,7 +256,7 @@ public class DemographicsFragment extends Fragment {
             String gender = editTextGender.getText().toString().trim();
             String mDob = editTextDob.getText().toString().trim();
             String ethnicity = editTextEthnicity.getText().toString().trim();
-            String religion = editTextEthnicity.getText().toString().trim();
+            String religion = editTextReligion.getText().toString().trim();
             String township = editTextTownship.getText().toString().trim();
             String town = editTextTown.getText().toString().trim();
 

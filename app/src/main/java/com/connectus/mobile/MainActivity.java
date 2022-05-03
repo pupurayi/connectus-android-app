@@ -12,6 +12,7 @@ import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
+import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
 import com.connectus.mobile.ui.initial.splashscreen.SplashScreenFragment;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressDialog pd;
     SharedPreferencesManager sharedPreferencesManager;
-    UserDto userDto;
+    UserDto user;
 
     // https://developer.android.com/guide/playcore/in-app-updates/kotlin-java
     AppUpdateManager appUpdateManager;
@@ -61,9 +62,14 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferencesManager = new SharedPreferencesManager(this);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (Common.isSessionValid(sharedPreferencesManager)) {
-            userDto = sharedPreferencesManager.getUser();
-            DashboardFragment dashboardFragment = new DashboardFragment();
-            transaction.add(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+            user = sharedPreferencesManager.getUser();
+            if (user.getGender() == null || user.getEthnicity() == null || user.getDob() == null || user.getReligion() == null || user.getTownship() == null || user.getTown() == null) {
+                DemographicsFragment demographicsFragment = new DemographicsFragment();
+                transaction.add(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
+            }else{
+                DashboardFragment dashboardFragment = new DashboardFragment();
+                transaction.add(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+            }
         } else {
             SplashScreenFragment splashScreenFragment = new SplashScreenFragment();
             transaction.add(R.id.container, splashScreenFragment, SplashScreenFragment.class.getSimpleName());

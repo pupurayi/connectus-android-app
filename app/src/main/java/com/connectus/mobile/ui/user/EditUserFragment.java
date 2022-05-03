@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
@@ -87,6 +88,8 @@ public class EditUserFragment extends Fragment {
         }
 
         imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
+
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
@@ -116,7 +119,7 @@ public class EditUserFragment extends Fragment {
             editTextDob.setText(userDto.getDob());
         }
         if (userDto.getEthnicity() != null) {
-            editTextDob.setText(userDto.getEthnicity());
+            editTextEthnicity.setText(userDto.getEthnicity());
         }
         if (userDto.getReligion() != null) {
             editTextReligion.setText(userDto.getReligion());
@@ -269,7 +272,7 @@ public class EditUserFragment extends Fragment {
             String gender = editTextGender.getText().toString().trim();
             String mDob = editTextDob.getText().toString().trim();
             String ethnicity = editTextEthnicity.getText().toString().trim();
-            String religion = editTextEthnicity.getText().toString().trim();
+            String religion = editTextReligion.getText().toString().trim();
             String township = editTextTownship.getText().toString().trim();
             String town = editTextTown.getText().toString().trim();
 

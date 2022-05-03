@@ -29,6 +29,7 @@ import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
+import com.connectus.mobile.utils.Utils;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.shivtechs.maplocationpicker.LocationPickerActivity;
@@ -95,6 +96,7 @@ public class PickProductImagesFragment extends Fragment {
         UserDto userDto = sharedPreferencesManager.getUser();
 
         imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

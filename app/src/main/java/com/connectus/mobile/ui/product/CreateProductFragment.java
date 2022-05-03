@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
@@ -61,8 +62,6 @@ public class CreateProductFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        
-
         UserDto userDto = sharedPreferencesManager.getUser();
 
         editTextProductCategory = view.findViewById(R.id.edit_text_product_category);
@@ -71,6 +70,8 @@ public class CreateProductFragment extends Fragment {
         editTextProductPrice = view.findViewById(R.id.edit_text_product_price);
 
         imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
+
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

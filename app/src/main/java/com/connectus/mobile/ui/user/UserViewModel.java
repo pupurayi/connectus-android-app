@@ -41,7 +41,7 @@ public class UserViewModel extends ViewModel {
                         UserDto userDto = response.body();
                         sharedPreferencesManager.setUser(userDto);
 
-                        responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", null));
+                        responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", userDto));
                     } else {
                         String errorMsg;
                         try {

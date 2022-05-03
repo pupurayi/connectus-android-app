@@ -135,19 +135,16 @@ public class SignInFragment extends Fragment {
         });
 
         textViewChangePhone = getView().findViewById(R.id.text_view_change_phone);
-        textViewChangePhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Common.clearSessionData(sharedPreferencesManager, getContext());
-                fragmentManager.popBackStack();
-                Fragment authorizeFragment = fragmentManager.findFragmentByTag(CheckFragment.class.getSimpleName());
-                if (authorizeFragment == null) {
-                    authorizeFragment = new CheckFragment();
-                }
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, authorizeFragment, CheckFragment.class.getSimpleName());
-                transaction.commit();
+        textViewChangePhone.setOnClickListener(v -> {
+            Common.clearSessionData(sharedPreferencesManager, getContext());
+            fragmentManager.popBackStack();
+            Fragment authorizeFragment = fragmentManager.findFragmentByTag(CheckFragment.class.getSimpleName());
+            if (authorizeFragment == null) {
+                authorizeFragment = new CheckFragment();
             }
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.container, authorizeFragment, CheckFragment.class.getSimpleName());
+            transaction.commit();
         });
     }
 

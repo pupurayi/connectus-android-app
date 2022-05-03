@@ -39,6 +39,7 @@ import com.connectus.mobile.ui.user.UserDetailsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.settings.SettingsFragment;
 import com.connectus.mobile.ui.user.UserViewModel;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -64,7 +65,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     FragmentManager fragmentManager;
     SharedPreferencesManager sharedPreferencesManager;
     UserDto userDto;
-    String authentication;
     private UserViewModel userViewModel;
     private ProductViewModel productViewModel;
 
@@ -165,6 +165,21 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         transaction.commit();
     }
 
+
+    public void getUserDetails() {
+        userViewModel.hitGetUserApi(getContext(), userDto.getId()).observe(getViewLifecycleOwner(), responseDTO -> {
+            switch (responseDTO.getStatus()) {
+                case "success":
+                    userDto = (UserDto) responseDTO.getData();
+                    break;
+                case "failed":
+                case "error":
+                    break;
+            }
+            pd.dismiss();
+        });
+    }
+
     public void fetchRecommendedProducts() {
         productViewModel.getProducts(getContext(), userDto.getId(), ProductType.RECOMMENDED).observe(getViewLifecycleOwner(), responseDTO -> {
             switch (responseDTO.getStatus()) {
@@ -261,12 +276,14 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public void syncDisplay() {
+        getUserDetails();
         String fullName = userDto.getFirstName() + " " + userDto.getLastName();
         String msisdn = userDto.getMsisdn();
         textViewFullName.setText(fullName);
         textViewNavHeaderFullName.setText(fullName);
         textViewMsisdn.setText(msisdn);
         textViewNavHeaderMsisdn.setText(msisdn);
+        Utils.loadAvatar(userDto, imageViewAvatar);
     }
 }
     

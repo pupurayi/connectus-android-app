@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.connectus.mobile.R;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
+import com.connectus.mobile.utils.Utils;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,7 +42,6 @@ public class UserDetailsFragment extends Fragment {
     ProgressDialog pd;
     TextView textViewFullName, textViewPhoneNumber, textViewEmail;
     Button buttonEditUser;
-    String authentication;
     SharedPreferencesManager sharedPreferencesManager;
 
     private UserViewModel userViewModel;
@@ -65,7 +65,7 @@ public class UserDetailsFragment extends Fragment {
 
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         UserDto userDto = sharedPreferencesManager.getUser();
-        
+
 
         long lastSync = sharedPreferencesManager.getLastSync();
         long now = new Date().getTime();
@@ -89,6 +89,8 @@ public class UserDetailsFragment extends Fragment {
         }
 
         imageViewAvatar = view.findViewById(R.id.adf_image_view_profile_avatar);
+        Utils.loadAvatar(userDto, imageViewAvatar);
+
         imageViewPlus = view.findViewById(R.id.adf_image_view_plus);
         imageViewPlus.setOnClickListener(v -> pickImage());
 
