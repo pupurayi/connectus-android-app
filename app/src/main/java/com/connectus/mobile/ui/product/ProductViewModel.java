@@ -13,6 +13,7 @@ import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.database.DbHandler;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,14 +39,20 @@ public class ProductViewModel extends ViewModel {
                         ProductDto new_productsDto = response.body();
                         responseLiveData.setValue(new ResponseDto<>("success", "Successfully added new_products!", new_productsDto));
                     } else {
-                        responseLiveData.setValue(new ResponseDto<>("failed", "Failed to add new_products", null));
+                        String errorMsg = null;
+                        try {
+                            errorMsg = response.errorBody().string();
+                        } catch (IOException e) {
+                            errorMsg = "Something went wrong";
+                        }
+                        responseLiveData.setValue(new ResponseDto<>("failed", errorMsg, null));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ProductDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDto<>("error", "Successfully added new_products!", null));
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
                 }
             });
         } catch (Exception e) {

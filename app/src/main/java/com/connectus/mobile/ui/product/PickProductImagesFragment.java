@@ -127,7 +127,7 @@ public class PickProductImagesFragment extends Fragment {
                                 break;
                             case "failed":
                             case "error":
-                                Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                                 break;
                         }
                     });

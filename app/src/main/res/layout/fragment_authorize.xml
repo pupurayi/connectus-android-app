@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:ccpDialog_keyboardAutoPopup="false"
-                    app:ccp_clickable="true"
+                    app:ccp_clickable="false"
                     app:ccp_defaultPhoneCode="263"
                     app:ccp_showArrow="false"
                     app:ccp_showNameCode="false" />

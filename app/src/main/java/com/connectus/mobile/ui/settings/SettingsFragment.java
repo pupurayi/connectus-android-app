@@ -54,7 +54,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        
+
 
         UserDto userDto = sharedPreferencesManager.getUser();
 
@@ -85,26 +85,23 @@ public class SettingsFragment extends Fragment {
         });
 
         editTextNewPassword = view.findViewById(R.id.edit_text_new_password);
-        editTextNewPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_RIGHT = 2;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (editTextNewPassword.getRight() - editTextNewPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if (!verifyPasswordShow) {
-                            editTextNewPassword.setTransformationMethod(null);
-                            editTextNewPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility_off, 0);
-                            verifyPasswordShow = true;
-                        } else {
-                            editTextNewPassword.setTransformationMethod(new PasswordTransformationMethod());
-                            editTextNewPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility, 0);
-                            verifyPasswordShow = false;
-                        }
-                        return verifyPasswordShow;
+        editTextNewPassword.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (editTextNewPassword.getRight() - editTextNewPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    if (!verifyPasswordShow) {
+                        editTextNewPassword.setTransformationMethod(null);
+                        editTextNewPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility_off, 0);
+                        verifyPasswordShow = true;
+                    } else {
+                        editTextNewPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        editTextNewPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility, 0);
+                        verifyPasswordShow = false;
                     }
+                    return verifyPasswordShow;
                 }
-                return false;
             }
+            return false;
         });
 
         buttonChangePassword = view.findViewById(R.id.button_change_password);
@@ -117,7 +114,7 @@ public class SettingsFragment extends Fragment {
                 pd.show();
 
                 String currentPassword = userDto.getPassword();
-                if (!mCurrentPassword.equals(currentPassword)) {
+                if (mCurrentPassword.equals(currentPassword)) {
                     userDto.setPassword(newPassword);
                     userViewModel.hitUpdateUser(getContext(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
                         pd.dismiss();
@@ -125,11 +122,7 @@ public class SettingsFragment extends Fragment {
                             case "success":
                                 editTextCurrentPassword.setText(null);
                                 editTextNewPassword.setText(null);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setTitle("ConnectUs Alert")
-                                        .setMessage(responseDTO.getMessage())
-                                        .setPositiveButton(android.R.string.yes, null)
-                                        .show();
+                                Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
                                 break;
                             case "failed":
                             case "error":
@@ -138,6 +131,7 @@ public class SettingsFragment extends Fragment {
                         }
                     });
                 } else {
+                    pd.dismiss();
                     Snackbar.make(view, "Current password is not correct!", Snackbar.LENGTH_LONG).show();
                 }
             } else {

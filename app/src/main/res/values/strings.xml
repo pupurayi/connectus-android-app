@@ -33,15 +33,13 @@
     <string name="next">Next</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="forgot_password">Forgot Password</string>
-    <string name="remembered_password_question">Remembered Password?</string>
     <string name="reset_password">Reset Password</string>
-    <string name="forgot_password_description">Reset your password, receive new password on email</string>
+    <string name="remembered_password_question">Remembered Password?</string>
+    <string name="reset_password_description">Reset your password, receive new password on email</string>
     <string name="amount">Amount</string>
     <string name="description">Description</string>
     <string name="price">Price</string>
     <string name="new_password">New Password</string>
-    <string name="reset_password_description">Enter old and new password</string>
     <string name="settings">Settings</string>
     <string name="change_password">Change Password</string>
     <string name="current_password">Current Password</string>

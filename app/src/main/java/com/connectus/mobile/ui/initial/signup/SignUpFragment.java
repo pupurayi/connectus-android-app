@@ -29,6 +29,7 @@ import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
@@ -154,7 +155,7 @@ public class SignUpFragment extends Fragment {
                     break;
                 case "failed":
                 case "error":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
                     break;
             }
         });

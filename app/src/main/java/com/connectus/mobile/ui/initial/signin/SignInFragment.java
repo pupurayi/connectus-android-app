@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,11 +31,9 @@ import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
-import com.connectus.mobile.ui.resetpassword.ForgotPasswordFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.connectus.mobile.ui.resetpassword.ResetPasswordFragment;
+import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,27 +107,48 @@ public class SignInFragment extends Fragment {
         textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+                ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, forgotPasswordFragment, ForgotPasswordFragment.class.getSimpleName());
+                transaction.add(R.id.container, resetPasswordFragment, ResetPasswordFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 transaction.commit();
             }
         });
 
         buttonSignIn = view.findViewById(R.id.button_sign_in);
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String password = editTextPassword.getText().toString().trim();
-                if (password.length() != 0) {
-                    pd.setMessage("Authenticating ...");
-                    pd.show();
+        buttonSignIn.setOnClickListener(v -> {
+            String password = editTextPassword.getText().toString().trim();
+            if (password.length() != 0) {
+                pd.setMessage("Authenticating ...");
+                pd.show();
 
-                    signIn(view, phoneNumber, password);
-                } else {
-                    Snackbar.make(view, "Enter Password!", Snackbar.LENGTH_LONG).show();
-                }
+                signInViewModel.hitSignInApi(getActivity(), new SignInRequest(phoneNumber, password)).observe(getViewLifecycleOwner(), responseDTO -> {
+                    switch (responseDTO.getStatus()) {
+                        case "success":
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            UserDto user = sharedPreferencesManager.getUser();
+                            if (user.getGender() == null || user.getEthnicity() == null || user.getDob() == null || user.getReligion() == null || user.getTownship() == null || user.getTown() == null) {
+                                DemographicsFragment demographicsFragment = new DemographicsFragment();
+                                transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
+                            } else {
+                                DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
+                                if (dashboardFragment == null) {
+                                    dashboardFragment = new DashboardFragment();
+                                }
+                                transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+                            }
+                            transaction.commit();
+                            break;
+                        case "failed":
+                        case "error":
+                            Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
+                            editTextPassword.setText(null);
+                            break;
+                    }
+                    pd.dismiss();
+                });
+            } else {
+                Snackbar.make(view, "Enter Password!", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -145,36 +163,6 @@ public class SignInFragment extends Fragment {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.container, authorizeFragment, CheckFragment.class.getSimpleName());
             transaction.commit();
-        });
-    }
-
-    public void signIn(View view, String msisdn, String password) {
-        signInViewModel.hitSignInApi(getActivity(), new SignInRequest(msisdn, password)).observe(getViewLifecycleOwner(), new Observer<ResponseDto>() {
-            @Override
-            public void onChanged(ResponseDto responseDTO) {
-                switch (responseDTO.getStatus()) {
-                    case "success":
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        UserDto user = sharedPreferencesManager.getUser();
-                        if (user.getGender() == null || user.getEthnicity() == null || user.getDob() == null || user.getReligion() == null || user.getTownship() == null || user.getTown() == null) {
-                            DemographicsFragment demographicsFragment = new DemographicsFragment();
-                            transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
-                        } else {
-                            DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
-                            if (dashboardFragment == null) {
-                                dashboardFragment = new DashboardFragment();
-                            }
-                            transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
-                        }
-                        transaction.commit();
-                        break;
-                    case "failed":
-                    case "error":
-                        Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                }
-                pd.dismiss();
-            }
         });
     }
 }

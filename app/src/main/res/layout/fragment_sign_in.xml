@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|end"
                 android:layout_marginTop="20dp"
-                android:text="@string/forgot_password"
+                android:text="@string/reset_password"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/hyperlink" />
 

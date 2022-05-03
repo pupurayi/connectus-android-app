@@ -13,9 +13,6 @@ import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.SignInRequest;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -43,13 +40,11 @@ public class SignInViewModel extends ViewModel {
 
                         responseLiveData.setValue(new ResponseDto("success", null, null));
                     } else {
-                        String errorMsg;
+                        String errorMsg = null;
                         try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
+                            errorMsg = response.errorBody().string();
+                        } catch (IOException e) {
+                            errorMsg = "Something went wrong";
                         }
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }

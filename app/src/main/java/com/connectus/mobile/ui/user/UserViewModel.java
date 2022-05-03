@@ -43,13 +43,11 @@ public class UserViewModel extends ViewModel {
 
                         responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", userDto));
                     } else {
-                        String errorMsg;
+                        String errorMsg = null;
                         try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
+                            errorMsg = response.errorBody().string();
+                        } catch (IOException e) {
+                            errorMsg = "Something went wrong";
                         }
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
@@ -81,13 +79,11 @@ public class UserViewModel extends ViewModel {
                         sharedPreferencesManager.setUser(userDto);
                         responseLiveData.setValue(new ResponseDto("success", "Successfully Updated!", null));
                     } else {
-                        String errorMsg;
+                        String errorMsg = null;
                         try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
+                            errorMsg = response.errorBody().string();
+                        } catch (IOException e) {
+                            errorMsg = "Something went wrong";
                         }
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }

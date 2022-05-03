@@ -34,13 +34,11 @@ public class ResetPasswordViewModel extends ViewModel {
                         ResponseDto responseDTO = response.body();
                         responseLiveData.setValue(new ResponseDto("success", responseDTO.getMessage(), null));
                     } else {
-                        String errorMsg;
+                        String errorMsg = null;
                         try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            errorMsg = jObjError.getString("message");
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                            errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
+                            errorMsg = response.errorBody().string();
+                        } catch (IOException e) {
+                            errorMsg = "Something went wrong";
                         }
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
