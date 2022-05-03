@@ -3,15 +3,19 @@ package com.connectus.mobile.api.dto;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-public class ProfileDto {
+public class UserDto {
     private UUID id;
     private String msisdn;
     private String email;
     private String firstName;
     private String lastName;
+    private String avatar;
+    private String gender;
+    private String dob;
+    private String ethnicity;
+    private String password;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
-
 
 
     public UUID getId() {
@@ -52,6 +56,46 @@ public class ProfileDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getEthnicity() {
+        return ethnicity;
+    }
+
+    public void setEthnicity(String ethnicity) {
+        this.ethnicity = ethnicity;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public ZonedDateTime getCreatedAt() {

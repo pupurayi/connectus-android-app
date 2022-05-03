@@ -68,14 +68,13 @@
     </RelativeLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_profile_details"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/d84ed6f9">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,59 +86,34 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/edit_text_address"
+                android:id="@+id/edit_text_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/location_pin"
-                android:hint="@string/physical_address"
-                android:importantForAutofill="yes"
-                android:inputType="textPostalAddress"
+                android:hint="@string/gender"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:scrollbars="vertical" />
 
 
             <EditText
-                android:id="@+id/edit_text_city"
+                android:id="@+id/edit_text_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/location_city"
-                android:hint="@string/city"
+                android:hint="@string/date_of_birth"
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
 
             <EditText
-                android:id="@+id/edit_text_province"
+                android:id="@+id/edit_text_ethnicity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/my_location"
-                android:hint="@string/province"
+                android:hint="@string/ethnicity"
                 android:importantForAutofill="no"
                 android:inputType="text" />
-
-            <EditText
-                android:id="@+id/edit_text_proof_of_residence"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/attachment"
-                android:hint="@string/proof_of_residence"
-                android:importantForAutofill="no"
-                android:inputType="text" />
-
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/ccp_country_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:ccpDialog_keyboardAutoPopup="false"
-                app:ccp_showArrow="true"
-                app:ccp_showFullName="true"
-                app:ccp_showNameCode="true"
-                app:ccp_showPhoneCode="false"
-                app:ccp_useFlagEmoji="false" />
 
             <Button
                 android:id="@+id/button_save"

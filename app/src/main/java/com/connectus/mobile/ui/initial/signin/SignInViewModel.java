@@ -10,7 +10,7 @@ import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.JWT;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.SignInRequest;
@@ -44,8 +44,8 @@ public class SignInViewModel extends ViewModel {
                         JWT jwt = authResponseDto.getJwt();
                         sharedPreferencesManager.setJWT(jwt);
 
-                        ProfileDto profileDTO = authResponseDto.getProfile();
-                        sharedPreferencesManager.setProfile(profileDTO);
+                        UserDto userDTO = authResponseDto.getProfile();
+                        sharedPreferencesManager.setUser(userDTO);
 
                         responseLiveData.setValue(new ResponseDTO("success", null, null));
                     } else {

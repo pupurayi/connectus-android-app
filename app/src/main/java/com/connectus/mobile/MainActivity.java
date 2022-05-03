@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressDialog pd;
     SharedPreferencesManager sharedPreferencesManager;
-    ProfileDto profileDTO;
+    UserDto userDTO;
 
     // https://developer.android.com/guide/playcore/in-app-updates/kotlin-java
     AppUpdateManager appUpdateManager;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferencesManager = new SharedPreferencesManager(this);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (Common.isSessionValid(sharedPreferencesManager)) {
-            profileDTO = sharedPreferencesManager.getProfile();
+            userDTO = sharedPreferencesManager.getUser();
             DashboardFragment dashboardFragment = new DashboardFragment();
             transaction.add(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
         } else {

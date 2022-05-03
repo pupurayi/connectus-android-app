@@ -33,13 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ConnectUs"
         android:usesCleartextTraffic="true">
-        <service
-            android:name="com.connectus.mobile.service.FirebaseMessageReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
 
         <activity
             android:name="com.connectus.mobile.MainActivity"
@@ -57,18 +51,6 @@
             android:resource="@array/preloaded_fonts" />
         <!-- Set custom default icon. This is used when no icon is set for incoming new_productsDto messages.
         See README(https://goo.gl/l4GJaQ) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_launcher_foreground" />
-        <!-- Set color used with incoming new_productsDto messages. This is used when no color is set for the incoming
-             new_productsDto message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/blue" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_api_key" />
     </application>
 
 </manifest>

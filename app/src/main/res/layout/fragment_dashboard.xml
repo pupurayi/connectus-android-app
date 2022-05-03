@@ -33,30 +33,6 @@
                 android:contentDescription="@string/menu"
                 android:scaleType="centerInside"
                 android:src="@drawable/menu" />
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/image_view_qr_code_options"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:contentDescription="@string/transact_with_qr_code"-->
-<!--                    android:scaleType="centerInside"-->
-<!--                    android:src="@drawable/qr_code" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/image_view_refresh"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:contentDescription="@string/refresh"-->
-<!--                    android:scaleType="centerInside"-->
-<!--                    android:src="@drawable/refresh" />-->
-<!--            </LinearLayout>-->
         </RelativeLayout>
 
         <ScrollView
@@ -109,7 +85,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
-                            android:text="@string/dummy_full_name"
+                            android:text="@string/full_name"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -120,192 +96,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
-                            android:text="@string/dummy_phone"
+                            android:text="@string/phone_number"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <SearchView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:tag="@string/academic_certificate" />
-
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:id="@+id/card_view_profile_balance"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    app:cardCornerRadius="10dp"-->
-<!--                    app:cardElevation="4dp"-->
-<!--                    app:cardUseCompatPadding="true"-->
-<!--                    app:contentPadding="10dp">-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                            android:id="@+id/profile_balance_layout"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content">-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/text_view_my_balance"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginStart="10dp"-->
-<!--                                android:layout_marginLeft="10dp"-->
-<!--                                android:fontFamily="@font/inter"-->
-<!--                                android:text="@string/my_balance"-->
-<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-<!--                                android:textColor="@color/grey"-->
-<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                                app:layout_constraintEnd_toStartOf="@+id/text_view_profile_balance"-->
-<!--                                app:layout_constraintStart_toStartOf="parent"-->
-<!--                                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/text_view_profile_balance"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:layout_marginRight="10dp"-->
-<!--                                android:fontFamily="@font/inter"-->
-<!--                                android:gravity="end"-->
-<!--                                android:text="@string/dummy_amount"-->
-<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:layout_margin="5dp"-->
-<!--                            android:background="?android:attr/listDivider" />-->
-
-<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                            android:id="@+id/layout_shortcarts"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="5dp"-->
-<!--                            android:layout_marginLeft="5dp"-->
-<!--                            android:layout_marginEnd="5dp"-->
-<!--                            android:layout_marginRight="5dp"-->
-<!--                            android:orientation="horizontal">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:id="@+id/linear_layout_pay"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:orientation="vertical"-->
-<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                                app:layout_constraintEnd_toStartOf="@+id/linear_layout_withdraw"-->
-<!--                                app:layout_constraintStart_toStartOf="parent"-->
-<!--                                app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                                <com.mikhaellopez.circularimageview.CircularImageView-->
-<!--                                    android:id="@+id/image_view_pay"-->
-<!--                                    android:layout_width="60dp"-->
-<!--                                    android:layout_height="60dp"-->
-<!--                                    android:layout_gravity="center_horizontal"-->
-<!--                                    android:scaleType="centerInside"-->
-<!--                                    android:src="@drawable/pay"-->
-<!--                                    app:civ_border_color="@color/blue"-->
-<!--                                    app:civ_border_width="2dp" />-->
-
-<!--                                <TextView-->
-<!--                                    android:id="@+id/text_view_pay"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_marginTop="5dp"-->
-<!--                                    android:gravity="center_horizontal"-->
-<!--                                    android:text="@string/pay"-->
-<!--                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-<!--                                    android:textColor="@color/black" />-->
-
-<!--                            </LinearLayout>-->
-
-<!--                            <LinearLayout-->
-<!--                                android:id="@+id/linear_layout_withdraw"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:orientation="vertical"-->
-<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                                app:layout_constraintEnd_toStartOf="@+id/linear_layout_transfer"-->
-<!--                                app:layout_constraintStart_toEndOf="@+id/linear_layout_pay"-->
-<!--                                app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                                <com.mikhaellopez.circularimageview.CircularImageView-->
-<!--                                    android:id="@+id/image_view_cash_withdraw"-->
-<!--                                    android:layout_width="60dp"-->
-<!--                                    android:layout_height="60dp"-->
-<!--                                    android:layout_gravity="center_horizontal"-->
-<!--                                    android:scaleType="centerInside"-->
-<!--                                    android:src="@drawable/withdraw"-->
-<!--                                    app:civ_border_color="@color/blue"-->
-<!--                                    app:civ_border_width="2dp"-->
-<!--                                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                                    app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                                <TextView-->
-<!--                                    android:id="@+id/text_view_cash_withdraw"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_marginTop="5dp"-->
-<!--                                    android:gravity="center_horizontal"-->
-<!--                                    android:text="@string/withdraw"-->
-<!--                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-<!--                                    android:textColor="@color/black" />-->
-<!--                            </LinearLayout>-->
-
-<!--                            <LinearLayout-->
-<!--                                android:id="@+id/linear_layout_transfer"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:orientation="vertical"-->
-<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                                app:layout_constraintStart_toEndOf="@+id/linear_layout_withdraw"-->
-<!--                                app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                                <com.mikhaellopez.circularimageview.CircularImageView-->
-<!--                                    android:id="@+id/image_view_internal_transfer"-->
-<!--                                    android:layout_width="60dp"-->
-<!--                                    android:layout_height="60dp"-->
-<!--                                    android:layout_gravity="center_horizontal"-->
-<!--                                    android:scaleType="centerInside"-->
-<!--                                    android:src="@drawable/transfer"-->
-<!--                                    app:civ_border_color="@color/blue"-->
-<!--                                    app:civ_border_width="2dp" />-->
-
-<!--                                <TextView-->
-<!--                                    android:id="@+id/text_view_internal_transfer"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_marginTop="5dp"-->
-<!--                                    android:gravity="center_horizontal"-->
-<!--                                    android:text="@string/transfer"-->
-<!--                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-<!--                                    android:textColor="@color/black" />-->
-<!--                            </LinearLayout>-->
-<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
-<!--                    </LinearLayout>-->
-
-<!--                </androidx.cardview.widget.CardView>-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/button_more_services"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_marginBottom="5dp"-->
-<!--                    android:text="@string/more_services"-->
-<!--                    app:cornerRadius="20dp" />-->
 
                 <LinearLayout
                     android:id="@+id/layout_transactions"

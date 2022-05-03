@@ -116,15 +116,7 @@ public class SignUpFragment extends Fragment {
                 if (firstName.length() > 2 && lastName.length() > 2 && email.length() != 0 && password.length() >= 8) {
                     pd.setMessage("Please Wait ...");
                     pd.show();
-                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-                        String fcm_token = null;
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                        } else {
-                            fcm_token = task.getResult();
-                        }
-                        signUp(firstName, lastName, email, phoneNumber, password, fcm_token);
-                    });
+                    signUp(firstName, lastName, email, phoneNumber, password);
                 } else {
                     if (firstName.length() == 0) {
                         Snackbar.make(view, "Enter First Name!", Snackbar.LENGTH_LONG).show();
@@ -153,8 +145,8 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    public void signUp(String firstName, String lastName, String email, String msisdn, String password, String fcm_token) {
-        signUpViewModel.hitSignUpApi(getActivity(), new SignUpRequest(firstName, lastName, email, msisdn, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+    public void signUp(String firstName, String lastName, String email, String msisdn, String password) {
+        signUpViewModel.hitSignUpApi(getActivity(), new SignUpRequest(firstName, lastName, email, msisdn, password)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
             @Override
             public void onChanged(ResponseDTO responseDTO) {
                 pd.dismiss();

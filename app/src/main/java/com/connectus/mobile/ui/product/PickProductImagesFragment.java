@@ -26,15 +26,13 @@ import android.widget.Toast;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CreateProductDto;
-import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.common.Constants;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.shivtechs.maplocationpicker.LocationPickerActivity;
 import com.shivtechs.maplocationpicker.MapUtility;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -94,7 +92,7 @@ public class PickProductImagesFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
 
         imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
 
@@ -116,7 +114,7 @@ public class PickProductImagesFragment extends Fragment {
                     && imageSecond != null && !imageSecond.isEmpty()
             ) {
                 if (category != null && name != null && description != null && price > 0 && imageFirst != null && imageSecond != null && lat != 0 && lng != 0) {
-                    CreateProductDto createProductDto = new CreateProductDto(profileDTO.getId(), category, name, description, price, imageFirst, imageSecond, lat, lng);
+                    CreateProductDto createProductDto = new CreateProductDto(userDTO.getId(), category, name, description, price, imageFirst, imageSecond, lat, lng);
                     pd.setMessage("Creating ...");
                     pd.show();
                     productViewModel.hitSaveProductApi(authentication, createProductDto).observe(getViewLifecycleOwner(), responseDTO -> {

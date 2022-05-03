@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
-    tools:context=".ui.profile.EditProfileFragment">
+    tools:context=".ui.user.EditUserFragment">
 
     <LinearLayout
         android:id="@+id/linear_layout_navigation_header"
@@ -47,7 +47,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/inter"
             android:gravity="center_vertical"
-            android:text="@string/edit_profile_details"
+            android:text="@string/update_profile"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"

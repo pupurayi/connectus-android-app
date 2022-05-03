@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -86,7 +86,7 @@ public class NavigationFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 

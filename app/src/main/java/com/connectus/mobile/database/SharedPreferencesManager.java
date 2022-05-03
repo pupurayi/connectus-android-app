@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.connectus.mobile.api.dto.JWT;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.google.gson.Gson;
 
@@ -70,15 +70,15 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
-    public void setProfile(ProfileDto profileDTO) {
-        editor.putString("profile", new Gson().toJson(profileDTO));
+    public void setUser(UserDto userDTO) {
+        editor.putString("user", new Gson().toJson(userDTO));
         editor.putLong("lastSync", new Date().getTime());
         editor.apply();
     }
 
-    public ProfileDto getProfile() {
+    public UserDto getUser() {
         this.sharedPreferences = getSharedPreferences();
-        return sharedPreferences.get("profile") != null ? new Gson().fromJson(sharedPreferences.get("profile").toString(), ProfileDto.class) : null;
+        return sharedPreferences.get("user") != null ? new Gson().fromJson(sharedPreferences.get("user").toString(), UserDto.class) : null;
     }
 
     public long getLastSync() {

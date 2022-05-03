@@ -1,7 +1,7 @@
 package com.connectus.mobile.api;
 
 import com.connectus.mobile.api.dto.CreateProductDto;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.ChangePasswordRequest;
@@ -88,19 +88,12 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @Multipart
-    @POST("/api/v1/user/profile-picture")
-    Call<ResponseDTO> uploadProfilePicture(@Header("Authorization") String authentication, @Part MultipartBody.Part profilePicture);
-
-    @Headers({
-            "Accept: application/json"
-    })
     @GET("/api/v1/profile")
-    Call<ProfileDto> getProfile(@Header("Authorization") String authentication);
+    Call<UserDto> getProfile(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
     @PUT("/api/v1/profile")
-    Call<ProfileDto> updateProfile(@Header("Authorization") String authentication, @Body UpdateProfileRequest updateProfileRequest);
+    Call<UserDto> updateProfile(@Header("Authorization") String authentication, @Body UpdateProfileRequest updateProfileRequest);
 }

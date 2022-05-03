@@ -32,24 +32,5 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"
             android:title="@string/menu_logout" />
-
-        <!--        <item-->
-        <!--            android:id="@+id/nav_siba_savings"-->
-        <!--            android:icon="@drawable/people"-->
-        <!--            android:title="@string/siba_savings" />-->
-        <!--        <item-->
-        <!--            android:id="@+id/nav_notifications"-->
-        <!--            android:icon="@drawable/notifications"-->
-        <!--            android:title="@string/notifications" />-->
-
-        <!--        <item-->
-        <!--            android:id="@+id/nav_faq"-->
-        <!--            android:icon="@drawable/question_answer"-->
-        <!--            android:title="@string/faq" />-->
-        <!--        <item-->
-        <!--            android:id="@+id/nav_talk_to_us"-->
-        <!--            android:icon="@drawable/support_agent"-->
-        <!--            android:title="@string/talk_to_us" />-->
-
     </group>
 </menu>

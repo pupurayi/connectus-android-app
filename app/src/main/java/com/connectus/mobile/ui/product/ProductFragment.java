@@ -1,10 +1,7 @@
 package com.connectus.mobile.ui.product;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,11 +23,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.common.Constants;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +71,7 @@ public class ProductFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

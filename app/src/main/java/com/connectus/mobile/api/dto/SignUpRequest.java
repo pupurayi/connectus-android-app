@@ -25,17 +25,12 @@ public class SignUpRequest {
     @Expose
     private String password;
 
-    @SerializedName("fcmToken")
-    @Expose
-    private String fcmToken;
-
-    public SignUpRequest(String firstName, String lastName, String email, String msisdn, String password, String fcmToken) {
+    public SignUpRequest(String firstName, String lastName, String email, String msisdn, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.msisdn = msisdn;
         this.password = password;
-        this.fcmToken = fcmToken;
     }
 }
 

@@ -31,7 +31,7 @@
             android:id="@+id/text_view_product_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dummy_transaction_status_message" />
+            android:text="@string/message" />
 
         <RatingBar
             android:id="@+id/rating_bar"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="@string/dummy_date_time"
+            android:text="@string/date_time"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
     </LinearLayout>
 

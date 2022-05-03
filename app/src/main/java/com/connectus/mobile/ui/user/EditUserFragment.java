@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.profile;
+package com.connectus.mobile.ui.user;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,22 +21,19 @@ import android.widget.ImageView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.UpdateProfileRequest;
-import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class EditProfileFragment extends Fragment {
+public class EditUserFragment extends Fragment {
 
-    private static final String TAG = EditProfileFragment.class.getSimpleName();
+    private static final String TAG = EditUserFragment.class.getSimpleName();
 
     ProgressDialog pd;
     ImageView imageViewBack, imageViewProfileAvatar;
@@ -50,7 +46,7 @@ public class EditProfileFragment extends Fragment {
     boolean dobPickerActive = false;
 
     FragmentManager fragmentManager;
-    private ProfileDetailsViewModel profileDetailsViewModel;
+    private UserDetailsViewModel userDetailsViewModel;
     private SharedPreferencesManager sharedPreferencesManager;
 
     @Override
@@ -60,9 +56,9 @@ public class EditProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        profileDetailsViewModel = new ViewModelProvider(this).get(ProfileDetailsViewModel.class);
+        userDetailsViewModel = new ViewModelProvider(this).get(UserDetailsViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        return inflater.inflate(R.layout.fragment_edit_user, container, false);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -74,10 +70,10 @@ public class EditProfileFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
-        String firstName = profileDTO.getFirstName();
-        String lastName = profileDTO.getLastName();
-        String email = profileDTO.getEmail();
+        UserDto userDTO = sharedPreferencesManager.getUser();
+        String firstName = userDTO.getFirstName();
+        String lastName = userDTO.getLastName();
+        String email = userDTO.getEmail();
 
         editTextFirstName = view.findViewById(R.id.edit_text_first_name);
         editTextLastName = view.findViewById(R.id.edit_text_last_name);
@@ -107,12 +103,12 @@ public class EditProfileFragment extends Fragment {
 
 
                 if (firstName.length() > 1 && lastName.length() > 1 && email.length() > 1) {
-                    if (profileDTO != null && firstName.equals(profileDTO.getFirstName()) && lastName.equals(profileDTO.getLastName())) {
+                    if (userDTO != null && firstName.equals(userDTO.getFirstName()) && lastName.equals(userDTO.getLastName())) {
                     } else {
                         UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(email, firstName, lastName);
                         pd.setMessage("Updating ...");
                         pd.show();
-                        profileDetailsViewModel.hitUpdateProfileApi(getActivity(), authentication, updateProfileRequest).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+                        userDetailsViewModel.hitUpdateProfileApi(getActivity(), authentication, updateProfileRequest).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
                             @Override
                             public void onChanged(ResponseDTO responseDTO) {
                                 pd.dismiss();

@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.profile;
+package com.connectus.mobile.ui.user;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,10 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.common.Common;
 import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,19 +42,19 @@ import okhttp3.RequestBody;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class ProfileDetailsFragment extends Fragment {
-    private static final String TAG = ProfileDetailsFragment.class.getSimpleName();
+public class UserDetailsFragment extends Fragment {
+    private static final String TAG = UserDetailsFragment.class.getSimpleName();
 
     private static final int IMAGE_PICKER_REQUEST = 100;
 
     ImageView imageViewBack, imageViewPlus, imageViewProfileAvatar;
     ProgressDialog pd;
     TextView textViewFullName, textViewPhoneNumber, textViewEmail;
-    Button buttonEditProfile;
+    Button buttonEditUser;
     String authentication;
     SharedPreferencesManager sharedPreferencesManager;
 
-    private ProfileDetailsViewModel profileDetailsViewModel;
+    private UserDetailsViewModel userDetailsViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +63,9 @@ public class ProfileDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        profileDetailsViewModel = new ViewModelProvider(this).get(ProfileDetailsViewModel.class);
+        userDetailsViewModel = new ViewModelProvider(this).get(UserDetailsViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_details, container, false);
+        return inflater.inflate(R.layout.fragment_user_details, container, false);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class ProfileDetailsFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
 
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
         authentication = sharedPreferencesManager.getAuthenticationToken();
 
         long lastSync = sharedPreferencesManager.getLastSync();
@@ -84,15 +83,15 @@ public class ProfileDetailsFragment extends Fragment {
         if (now - lastSync >= 300000) {
             pd.setMessage("Syncing Profile ...");
             pd.show();
-            profileDetailsViewModel.hitGetProfileApi(getActivity(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+            userDetailsViewModel.hitGetProfileApi(getActivity(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
                 @Override
                 public void onChanged(ResponseDTO responseDTO) {
                     pd.dismiss();
                     switch (responseDTO.getStatus()) {
                         case "success":
                             Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                            ProfileDto profileDTO = sharedPreferencesManager.getProfile();
-                            populateFields(profileDTO);
+                            UserDto userDTO = sharedPreferencesManager.getUser();
+                            populateFields(userDTO);
                             break;
                         case "failed":
                         case "error":
@@ -116,16 +115,16 @@ public class ProfileDetailsFragment extends Fragment {
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_value);
         textViewEmail = view.findViewById(R.id.text_view_email_value);
 
-        populateFields(profileDTO);
+        populateFields(userDTO);
 
-        buttonEditProfile = view.findViewById(R.id.button_edit_profile);
-        buttonEditProfile.setOnClickListener(new View.OnClickListener() {
+        buttonEditUser = view.findViewById(R.id.button_edit_user);
+        buttonEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditProfileFragment editProfileFragment = new EditProfileFragment();
+                EditUserFragment editUserFragment = new EditUserFragment();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, editProfileFragment, EditProfileFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);//pano
+                transaction.replace(R.id.container, editUserFragment, EditUserFragment.class.getSimpleName());
+                transaction.addToBackStack(TAG);
                 transaction.commit();
             }
         });
@@ -143,14 +142,14 @@ public class ProfileDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
-        populateFields(profileDTO);
+        UserDto userDTO = sharedPreferencesManager.getUser();
+        populateFields(userDTO);
     }
 
-    public void populateFields(ProfileDto profileDTO) {
-        String fullName = profileDTO.getFirstName() + " " + profileDTO.getLastName();
-        String msisdn = profileDTO.getMsisdn();
-        String email = profileDTO.getEmail();
+    public void populateFields(UserDto userDTO) {
+        String fullName = userDTO.getFirstName() + " " + userDTO.getLastName();
+        String msisdn = userDTO.getMsisdn();
+        String email = userDTO.getEmail();
         textViewFullName.setText(fullName);
         textViewPhoneNumber.setText(msisdn);
         textViewEmail.setText(email);
@@ -170,7 +169,7 @@ public class ProfileDetailsFragment extends Fragment {
         if (requestCode == IMAGE_PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
             Uri sourceUri = data.getData();
             if (sourceUri != null) {
-                uploadProfilePicture(sourceUri);
+                uploadAvatar(sourceUri);
             } else {
                 Toast.makeText(getContext(), "Error Occurred!", Toast.LENGTH_SHORT).show();
             }
@@ -181,33 +180,9 @@ public class ProfileDetailsFragment extends Fragment {
         }
     }
 
-    public void uploadProfilePicture(Uri uri) {
-        pd.setMessage("Uploading Profile ...");
+    public void uploadAvatar(Uri uri) {
+        pd.setMessage("Uploading Avatar ...");
         pd.show();
-        File file = new File(uri.getPath());
 
-        RequestBody requestBody = RequestBody.create(file, MediaType.parse("image/png"));
-        MultipartBody.Part profilePicture = MultipartBody.Part.createFormData("profilePicture", "avatar.png", requestBody);
-        profileDetailsViewModel.hitUploadProfilePictureApi(getActivity(), authentication, profilePicture).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
-            @Override
-            public void onChanged(ResponseDTO responseDTO) {
-                pd.dismiss();
-                switch (responseDTO.getStatus()) {
-                    case "success":
-                        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
-                        invalidateAvatarCache(profileDTO.getId());
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                    case "failed":
-                    case "error":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                }
-            }
-        });
-    }
-
-    private void invalidateAvatarCache(UUID userId) {
-        Picasso.get().invalidate(Constants.CORE_BASE_URL + "/api/v1/user/profile-picture/" + userId + ".png");
     }
 }

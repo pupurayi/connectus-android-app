@@ -20,11 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.common.Constants;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +63,7 @@ public class CreateProductFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
 
         editTextProductCategory = view.findViewById(R.id.edit_text_product_category);
         editTextProductName = view.findViewById(R.id.edit_text_product_name);

@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -34,7 +34,7 @@ import com.connectus.mobile.ui.product.ProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
-import com.connectus.mobile.ui.profile.ProfileDetailsFragment;
+import com.connectus.mobile.ui.user.UserDetailsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -61,7 +61,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
     FragmentManager fragmentManager;
     SharedPreferencesManager sharedPreferencesManager;
-    ProfileDto profileDTO;
+    UserDto userDTO;
     String authentication;
     private DashboardViewModel dashboardViewModel;
     private ProductViewModel productViewModel;
@@ -90,7 +90,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         authentication = sharedPreferencesManager.getAuthenticationToken();
-        profileDTO = sharedPreferencesManager.getProfile();
+        userDTO = sharedPreferencesManager.getUser();
 
         drawerLayout = view.findViewById(R.id.drawer_layout);
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
@@ -130,7 +130,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
-        syncDisplay(profileDTO);
+        syncDisplay(userDTO);
         fetchRecommendedProducts();
     }
 
@@ -139,15 +139,15 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        profileDTO = sharedPreferencesManager.getProfile();
+        userDTO = sharedPreferencesManager.getUser();
         fetchRecommendedProducts();
-        syncDisplay(profileDTO);
+        syncDisplay(userDTO);
     }
 
     public void showProfileDetailsFragment() {
-        ProfileDetailsFragment profileDetailsFragment = new ProfileDetailsFragment();
+        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.container, profileDetailsFragment, ProfileDetailsFragment.class.getSimpleName());
+        transaction.add(R.id.container, userDetailsFragment, UserDetailsFragment.class.getSimpleName());
         transaction.addToBackStack(TAG);
         transaction.commit();
     }
@@ -238,7 +238,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             switch (responseDTO.getStatus()) {
                 case "success":
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                    profileDTO = sharedPreferencesManager.getProfile();
+                    userDTO = sharedPreferencesManager.getUser();
                     break;
                 case "failed":
                 case "error":
@@ -259,10 +259,10 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.dismiss();
     }
 
-    public void syncDisplay(ProfileDto profileDTO) {
-        String firstName = profileDTO.getFirstName();
-        String fullName = firstName + " " + profileDTO.getLastName();
-        String msisdn = profileDTO.getMsisdn();
+    public void syncDisplay(UserDto userDTO) {
+        String firstName = userDTO.getFirstName();
+        String fullName = firstName + " " + userDTO.getLastName();
+        String msisdn = userDTO.getMsisdn();
         textViewFullName.setText(fullName);
         textViewNavHeaderFullName.setText(fullName);
         textViewMsisdn.setText(msisdn);

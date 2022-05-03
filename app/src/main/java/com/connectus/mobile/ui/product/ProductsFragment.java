@@ -17,12 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDto;
-import com.connectus.mobile.common.Constants;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +63,7 @@ public class ProductsFragment extends Fragment {
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
         getProducts(getContext(), authentication);
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

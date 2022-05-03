@@ -21,12 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ProfileDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ChangePasswordRequest;
-import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
 public class SettingsFragment extends Fragment {
 
@@ -57,7 +55,7 @@ public class SettingsFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        ProfileDto profileDTO = sharedPreferencesManager.getProfile();
+        UserDto userDTO = sharedPreferencesManager.getUser();
 
         imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
 
