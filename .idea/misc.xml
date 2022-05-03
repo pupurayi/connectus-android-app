@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_edit_profile_address.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_edit_profile_identification.xml" value="0.17299898682877407" />
+        <entry key="app/src/main/res/layout/fragment_edit_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_goods_and_services.xml" value="0.11684782608695653" />
         <entry key="app/src/main/res/layout/fragment_invite_siba_member.xml" value="0.21240942028985507" />

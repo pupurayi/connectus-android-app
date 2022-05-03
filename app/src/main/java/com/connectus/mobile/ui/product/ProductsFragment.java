@@ -34,7 +34,7 @@ public class ProductsFragment extends Fragment {
     ProgressDialog pd;
     ImageView imageViewBack;
 
-    ImageView imageViewProfileAvatar;
+    ImageView imageViewAvatar;
     ProductRecyclerAdapter productRecyclerAdapter;
 
     SharedPreferencesManager sharedPreferencesManager;
@@ -68,7 +68,7 @@ public class ProductsFragment extends Fragment {
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
-        imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
+        imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
 
         DbHandler dbHandler = new DbHandler(getContext());
         products = dbHandler.getProducts();

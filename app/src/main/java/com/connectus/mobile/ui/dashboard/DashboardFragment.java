@@ -55,13 +55,13 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     DrawerLayout drawerLayout;
 
     TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn;
-    ImageView imageViewProfileAvatar, imageViewNavHeaderAvatar, imageViewMenu;
+    ImageView imageViewAvatar, imageViewNavHeaderAvatar, imageViewMenu;
     RecyclerView recyclerViewProducts;
     ProgressDialog pd;
 
     FragmentManager fragmentManager;
     SharedPreferencesManager sharedPreferencesManager;
-    UserDto userDTO;
+    UserDto userDto;
     String authentication;
     private DashboardViewModel dashboardViewModel;
     private ProductViewModel productViewModel;
@@ -90,7 +90,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         authentication = sharedPreferencesManager.getAuthenticationToken();
-        userDTO = sharedPreferencesManager.getUser();
+        userDto = sharedPreferencesManager.getUser();
 
         drawerLayout = view.findViewById(R.id.drawer_layout);
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
@@ -101,7 +101,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         textViewNavHeaderFullName = navHeaderView.findViewById(R.id.text_view_nav_header_full_name);
         textViewNavHeaderMsisdn = navHeaderView.findViewById(R.id.text_view_nav_header_msisdn);
 
-        imageViewProfileAvatar = view.findViewById(R.id.image_view_profile_avatar);
+        imageViewAvatar = view.findViewById(R.id.image_view_profile_avatar);
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewMsisdn = view.findViewById(R.id.text_view_msisdn);
 
@@ -123,14 +123,14 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         imageViewMenu = view.findViewById(R.id.image_view_menu);
         imageViewMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        imageViewProfileAvatar.setOnClickListener(v -> showProfileDetailsFragment());
+        imageViewAvatar.setOnClickListener(v -> showProfileDetailsFragment());
     }
 
     @Override
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
-        syncDisplay(userDTO);
+        syncDisplay();
         fetchRecommendedProducts();
     }
 
@@ -139,9 +139,9 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        userDTO = sharedPreferencesManager.getUser();
+        userDto = sharedPreferencesManager.getUser();
         fetchRecommendedProducts();
-        syncDisplay(userDTO);
+        syncDisplay();
     }
 
     public void showProfileDetailsFragment() {
@@ -238,7 +238,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             switch (responseDTO.getStatus()) {
                 case "success":
                     Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                    userDTO = sharedPreferencesManager.getUser();
+                    userDto = sharedPreferencesManager.getUser();
                     break;
                 case "failed":
                 case "error":
@@ -259,10 +259,9 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.dismiss();
     }
 
-    public void syncDisplay(UserDto userDTO) {
-        String firstName = userDTO.getFirstName();
-        String fullName = firstName + " " + userDTO.getLastName();
-        String msisdn = userDTO.getMsisdn();
+    public void syncDisplay() {
+        String fullName = userDto.getFirstName() + " " + userDto.getLastName();
+        String msisdn = userDto.getMsisdn();
         textViewFullName.setText(fullName);
         textViewNavHeaderFullName.setText(fullName);
         textViewMsisdn.setText(msisdn);

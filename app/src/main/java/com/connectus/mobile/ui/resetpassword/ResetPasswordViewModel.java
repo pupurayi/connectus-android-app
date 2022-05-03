@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.old.resetpassword;
+package com.connectus.mobile.ui.resetpassword;
 
 import android.content.Context;
 import android.util.Log;

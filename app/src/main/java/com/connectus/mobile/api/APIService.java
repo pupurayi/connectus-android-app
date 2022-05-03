@@ -9,21 +9,17 @@ import com.connectus.mobile.api.dto.ResetPasswordRequest;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.SignInRequest;
 import com.connectus.mobile.api.dto.SignUpRequest;
-import com.connectus.mobile.api.dto.UpdateProfileRequest;
 import com.connectus.mobile.ui.product.ProductDto;
 
 import java.util.List;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface APIService {
@@ -88,12 +84,12 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/profile")
-    Call<UserDto> getProfile(@Header("Authorization") String authentication);
+    @GET("/api/v1/user")
+    Call<UserDto> getUser(@Header("Authorization") String authentication);
 
     @Headers({
             "Accept: application/json"
     })
-    @PUT("/api/v1/profile")
-    Call<UserDto> updateProfile(@Header("Authorization") String authentication, @Body UpdateProfileRequest updateProfileRequest);
+    @PUT("/api/v1/user")
+    Call<UserDto> updateProfile(@Header("Authorization") String authentication, @Body UserDto userDto);
 }

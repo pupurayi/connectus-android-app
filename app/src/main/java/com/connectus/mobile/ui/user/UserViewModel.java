@@ -11,28 +11,26 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
-import com.connectus.mobile.api.dto.UpdateProfileRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserDetailsViewModel extends ViewModel {
+public class UserViewModel extends ViewModel {
 
-    private static final String TAG = UserDetailsViewModel.class.getSimpleName();
+    private static final String TAG = UserViewModel.class.getSimpleName();
 
     private MutableLiveData<ResponseDTO> responseLiveData;
     private final APIService apiService = new RestClients().get();
 
-    public MutableLiveData<ResponseDTO> hitGetProfileApi(final Context context, String authentication) {
+    public MutableLiveData<ResponseDTO> hitGetUserApi(final Context context, String authentication) {
         responseLiveData = new MutableLiveData<>();
-        Call<UserDto> ul = apiService.getProfile(authentication);
+        Call<UserDto> ul = apiService.getUser(authentication);
         try {
             ul.enqueue(new Callback<UserDto>() {
                 @Override
@@ -69,9 +67,9 @@ public class UserDetailsViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<ResponseDTO> hitUpdateProfileApi(final Context context, String authentication, UpdateProfileRequest updateProfileRequest) {
+    public MutableLiveData<ResponseDTO> hitUpdateUser(final Context context, String authentication, UserDto userDto) {
         responseLiveData = new MutableLiveData<>();
-        Call<UserDto> ul = apiService.updateProfile(authentication, updateProfileRequest);
+        Call<UserDto> ul = apiService.updateProfile(authentication, userDto);
         try {
             ul.enqueue(new Callback<UserDto>() {
                 @Override

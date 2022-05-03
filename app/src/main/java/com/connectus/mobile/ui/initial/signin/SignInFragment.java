@@ -26,13 +26,13 @@ import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.api.dto.SignInRequest;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
-import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
-import com.connectus.mobile.ui.dashboard.DashboardFragment;
-import com.connectus.mobile.ui.old.resetpassword.ForgotPasswordFragment;
+import com.connectus.mobile.ui.resetpassword.ForgotPasswordFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -169,16 +169,19 @@ public class SignInFragment extends Fragment {
             public void onChanged(ResponseDTO responseDTO) {
                 switch (responseDTO.getStatus()) {
                     case "success":
-
-                        DemographicsFragment demographicsFragment = new DemographicsFragment();
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
+                        UserDto user = sharedPreferencesManager.getUser();
+                        if (user.getGender() == null || user.getEthnicity() == null || user.getDob() == null || user.getReligion() == null || user.getTownship() == null || user.getTown() == null) {
+                            DemographicsFragment demographicsFragment = new DemographicsFragment();
+                            transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
+                        } else {
+                            DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
+                            if (dashboardFragment == null) {
+                                dashboardFragment = new DashboardFragment();
+                            }
+                            transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+                        }
                         transaction.commit();
-
-//                        DashboardFragment dashboardFragment = new DashboardFragment();
-//                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
-//                        transaction.commit();
                         break;
                     case "failed":
                     case "error":

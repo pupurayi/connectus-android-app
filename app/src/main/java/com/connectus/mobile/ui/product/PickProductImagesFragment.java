@@ -50,7 +50,7 @@ public class PickProductImagesFragment extends Fragment {
             SECOND_IMAGE_PICKER_REQUEST = 200, LOCATION_PICKER_REQUEST = 300;
 
     ProgressDialog pd;
-    ImageView imageViewBack, imageViewProfileAvatar;
+    ImageView imageViewBack, imageViewAvatar;
 
     String category, name, description;
     double price, lat = 0, lng = 0;
@@ -94,7 +94,7 @@ public class PickProductImagesFragment extends Fragment {
 
         UserDto userDTO = sharedPreferencesManager.getUser();
 
-        imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
+        imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

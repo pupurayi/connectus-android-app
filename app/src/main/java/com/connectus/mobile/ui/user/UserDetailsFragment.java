@@ -22,21 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ResponseDTO;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.Date;
-import java.util.UUID;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,14 +39,14 @@ public class UserDetailsFragment extends Fragment {
 
     private static final int IMAGE_PICKER_REQUEST = 100;
 
-    ImageView imageViewBack, imageViewPlus, imageViewProfileAvatar;
+    ImageView imageViewBack, imageViewPlus, imageViewAvatar;
     ProgressDialog pd;
     TextView textViewFullName, textViewPhoneNumber, textViewEmail;
     Button buttonEditUser;
     String authentication;
     SharedPreferencesManager sharedPreferencesManager;
 
-    private UserDetailsViewModel userDetailsViewModel;
+    private UserViewModel userViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +55,7 @@ public class UserDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        userDetailsViewModel = new ViewModelProvider(this).get(UserDetailsViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_details, container, false);
     }
@@ -83,7 +75,7 @@ public class UserDetailsFragment extends Fragment {
         if (now - lastSync >= 300000) {
             pd.setMessage("Syncing Profile ...");
             pd.show();
-            userDetailsViewModel.hitGetProfileApi(getActivity(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+            userViewModel.hitGetUserApi(getActivity(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
                 @Override
                 public void onChanged(ResponseDTO responseDTO) {
                     pd.dismiss();
@@ -102,7 +94,7 @@ public class UserDetailsFragment extends Fragment {
             });
         }
 
-        imageViewProfileAvatar = view.findViewById(R.id.adf_image_view_profile_avatar);
+        imageViewAvatar = view.findViewById(R.id.adf_image_view_profile_avatar);
         imageViewPlus = view.findViewById(R.id.adf_image_view_plus);
         imageViewPlus.setOnClickListener(new View.OnClickListener() {
             @Override

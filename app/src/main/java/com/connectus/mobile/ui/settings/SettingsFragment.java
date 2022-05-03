@@ -30,7 +30,7 @@ public class SettingsFragment extends Fragment {
 
     ProgressDialog pd;
     ImageView imageViewBack;
-    ImageView imageViewProfileAvatar;
+    ImageView imageViewAvatar;
     EditText editTextCurrentPassword, editTextNewPassword;
     Button buttonChangePassword;
 
@@ -57,7 +57,7 @@ public class SettingsFragment extends Fragment {
 
         UserDto userDTO = sharedPreferencesManager.getUser();
 
-        imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
+        imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(new View.OnClickListener() {

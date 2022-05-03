@@ -33,7 +33,7 @@ public class CreateProductFragment extends Fragment {
     private static final String TAG = CreateProductFragment.class.getSimpleName();
 
     ProgressDialog pd;
-    ImageView imageViewBack, imageViewProfileAvatar;
+    ImageView imageViewBack, imageViewAvatar;
 
     EditText editTextProductCategory, editTextProductName, editTextProductDescription, editTextProductPrice;
     Button buttonNext;
@@ -70,7 +70,7 @@ public class CreateProductFragment extends Fragment {
         editTextProductDescription = view.findViewById(R.id.edit_text_product_description);
         editTextProductPrice = view.findViewById(R.id.edit_text_product_price);
 
-        imageViewProfileAvatar = view.findViewById(R.id.circular_image_view_avatar);
+        imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

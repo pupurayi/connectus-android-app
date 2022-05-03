@@ -115,6 +115,34 @@
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
+            <EditText
+                android:id="@+id/edit_text_religion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/religion"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edit_text_township"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/township"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edit_text_town"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/town"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+
             <Button
                 android:id="@+id/button_save"
                 android:layout_width="match_parent"

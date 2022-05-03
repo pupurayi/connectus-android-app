@@ -53,7 +53,8 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:typeface="normal" />
+            android:typeface="normal"
+            tools:ignore="RelativeOverlap" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/circular_image_view_avatar"
@@ -119,8 +120,76 @@
                 android:importantForAutofill="yes"
                 android:inputType="textEmailAddress" />
 
+            <EditText
+                android:id="@+id/edit_text_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/person_pin"
+                android:drawableRight="@drawable/person_pin"
+                android:hint="@string/gender"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edit_text_dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/today"
+                android:drawableRight="@drawable/today"
+                android:hint="@string/date_of_birth"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edit_text_ethnicity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/person_pin"
+                android:drawableRight="@drawable/person_pin"
+                android:hint="@string/ethnicity"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edit_text_religion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/person_pin"
+                android:drawableRight="@drawable/person_pin"
+                android:hint="@string/religion"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+
+            <EditText
+                android:id="@+id/edit_text_township"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/location_pin"
+                android:drawableRight="@drawable/location_pin"
+                android:hint="@string/township"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+
+            <EditText
+                android:id="@+id/edit_text_town"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/location_city"
+                android:drawableRight="@drawable/location_city"
+                android:hint="@string/town"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
             <Button
-                android:id="@+id/button_next"
+                android:id="@+id/button_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

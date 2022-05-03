@@ -36,7 +36,7 @@ public class ProductFragment extends Fragment {
     private static final String TAG = ProductFragment.class.getSimpleName();
 
     ProgressDialog pd;
-    ImageView imageViewBack, imageViewProfileAvatar;
+    ImageView imageViewBack, imageViewAvatar;
 
     ImageView imageViewProduct;
     TextView textViewProductName, textViewProductDescription, textViewProductPrice;
@@ -76,7 +76,7 @@ public class ProductFragment extends Fragment {
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
-        imageViewProfileAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
+        imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
 
         imageViewProduct = view.findViewById(R.id.image_view_product);
         byte[] decodedString = Base64.decode(product.getImageFirst(), Base64.DEFAULT);

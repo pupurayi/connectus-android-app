@@ -13,10 +13,27 @@ public class UserDto {
     private String gender;
     private String dob;
     private String ethnicity;
+    private String religion;
+    private String township;
+    private String town;
     private String password;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 
+    public UserDto(String msisdn, String email, String firstName, String lastName, String avatar, String gender, String dob, String ethnicity, String religion, String township, String town, String password) {
+        this.msisdn = msisdn;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+        this.gender = gender;
+        this.dob = dob;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.township = township;
+        this.town = town;
+        this.password = password;
+    }
 
     public UUID getId() {
         return id;
@@ -88,6 +105,30 @@ public class UserDto {
 
     public void setEthnicity(String ethnicity) {
         this.ethnicity = ethnicity;
+    }
+
+    public String getReligion() {
+        return religion;
+    }
+
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+
+    public String getTownship() {
+        return township;
+    }
+
+    public void setTownship(String township) {
+        this.township = township;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
     }
 
     public String getPassword() {

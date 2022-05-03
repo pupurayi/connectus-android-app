@@ -55,4 +55,7 @@
     <string name="profile">Profile</string>
     <string name="home">HOme</string>
     <string name="menu_logout">Logout</string>
+    <string name="town">Town</string>
+    <string name="township">Township</string>
+    <string name="religion">Religion</string>
 </resources>
