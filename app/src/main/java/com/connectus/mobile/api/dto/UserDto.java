@@ -17,8 +17,17 @@ public class UserDto {
     private String township;
     private String town;
     private String password;
-    private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
+    private ZonedDateTime created;
+    private ZonedDateTime deleted;
+    private ZonedDateTime updated;
+
+    public UserDto(String msisdn, String email, String firstName, String lastName, String password) {
+        this.msisdn = msisdn;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+    }
 
     public UserDto(String msisdn, String email, String firstName, String lastName, String avatar, String gender, String dob, String ethnicity, String religion, String township, String town, String password) {
         this.msisdn = msisdn;
@@ -139,19 +148,27 @@ public class UserDto {
         this.password = password;
     }
 
-    public ZonedDateTime getCreatedAt() {
-        return createdAt;
+    public ZonedDateTime getCreated() {
+        return created;
     }
 
-    public void setCreatedAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated(ZonedDateTime created) {
+        this.created = created;
     }
 
-    public ZonedDateTime getUpdatedAt() {
-        return updatedAt;
+    public ZonedDateTime getDeleted() {
+        return deleted;
     }
 
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setDeleted(ZonedDateTime deleted) {
+        this.deleted = deleted;
+    }
+
+    public ZonedDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(ZonedDateTime updated) {
+        this.updated = updated;
     }
 }

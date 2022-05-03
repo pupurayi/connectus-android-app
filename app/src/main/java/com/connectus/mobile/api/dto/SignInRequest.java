@@ -14,15 +14,9 @@ public class SignInRequest {
     private String password;
 
 
-    @SerializedName("fcmToken")
-    @Expose
-    private String fcmToken;
-
-
-    public SignInRequest(String msisdn, String password, String fcmToken) {
+    public SignInRequest(String msisdn, String password) {
         this.msisdn = msisdn;
         this.password = password;
-        this.fcmToken = fcmToken;
     }
 }
 

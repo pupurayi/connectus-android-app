@@ -22,8 +22,8 @@ import android.widget.ImageView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.api.dto.ChangePasswordRequest;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.user.UserViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsFragment extends Fragment {
@@ -38,11 +38,11 @@ public class SettingsFragment extends Fragment {
     boolean verifyPasswordShow = false;
 
     SharedPreferencesManager sharedPreferencesManager;
-    private SettingsViewModel settingsViewModel;
+    private UserViewModel userViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
@@ -53,41 +53,33 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        String authentication = sharedPreferencesManager.getAuthenticationToken();
+        
 
-        UserDto userDTO = sharedPreferencesManager.getUser();
+        UserDto userDto = sharedPreferencesManager.getUser();
 
         imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
 
         imageViewBack = view.findViewById(R.id.image_view_back);
-        imageViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         editTextCurrentPassword = view.findViewById(R.id.edit_text_current_password);
-        editTextCurrentPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_RIGHT = 2;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (editTextCurrentPassword.getRight() - editTextCurrentPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if (!passwordShow) {
-                            editTextCurrentPassword.setTransformationMethod(null);
-                            editTextCurrentPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility_off, 0);
-                            passwordShow = true;
-                        } else {
-                            editTextCurrentPassword.setTransformationMethod(new PasswordTransformationMethod());
-                            editTextCurrentPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility, 0);
-                            passwordShow = false;
-                        }
-                        return passwordShow;
+        editTextCurrentPassword.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (editTextCurrentPassword.getRight() - editTextCurrentPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    if (!passwordShow) {
+                        editTextCurrentPassword.setTransformationMethod(null);
+                        editTextCurrentPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility_off, 0);
+                        passwordShow = true;
+                    } else {
+                        editTextCurrentPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        editTextCurrentPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility, 0);
+                        passwordShow = false;
                     }
+                    return passwordShow;
                 }
-                return false;
             }
+            return false;
         });
 
         editTextNewPassword = view.findViewById(R.id.edit_text_new_password);
@@ -114,17 +106,18 @@ public class SettingsFragment extends Fragment {
         });
 
         buttonChangePassword = view.findViewById(R.id.button_change_password);
-        buttonChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonChangePassword.setOnClickListener(v -> {
 
-                String currentPassword = editTextCurrentPassword.getText().toString();
-                String newPassword = editTextNewPassword.getText().toString();
-                if (newPassword.length() >= 8) {
-                    pd.setMessage("Please Wait...");
-                    pd.show();
+            String mCurrentPassword = editTextCurrentPassword.getText().toString().trim();
+            String newPassword = editTextNewPassword.getText().toString().trim();
+            if (newPassword.length() >= 8) {
+                pd.setMessage("Please Wait...");
+                pd.show();
 
-                    settingsViewModel.hitChangePasswordApi(authentication, new ChangePasswordRequest(currentPassword, newPassword)).observe(getViewLifecycleOwner(), responseDTO -> {
+                String currentPassword = userDto.getPassword();
+                if (!mCurrentPassword.equals(currentPassword)) {
+                    userDto.setPassword(newPassword);
+                    userViewModel.hitUpdateUser(getContext(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
                         pd.dismiss();
                         switch (responseDTO.getStatus()) {
                             case "success":
@@ -143,8 +136,10 @@ public class SettingsFragment extends Fragment {
                         }
                     });
                 } else {
-                    Snackbar.make(view, "Password should be longer than 8 characters!", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, "Current password is not correct!", Snackbar.LENGTH_LONG).show();
                 }
+            } else {
+                Snackbar.make(view, "Password should be longer than 8 characters!", Snackbar.LENGTH_LONG).show();
             }
         });
     }

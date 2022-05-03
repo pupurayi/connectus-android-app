@@ -3,7 +3,6 @@ package com.connectus.mobile.ui.initial.demographics;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,29 +11,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ResponseDTO;
-import com.connectus.mobile.api.dto.SignUpRequest;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
-import com.connectus.mobile.ui.product.ProductConstants;
 import com.connectus.mobile.ui.user.UserViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -87,7 +78,6 @@ public class DemographicsFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        this.authentication = sharedPreferencesManager.getAuthenticationToken();
         this.userDto = sharedPreferencesManager.getUser();
         if (userDto.getDob() != null) {
             try {
@@ -277,7 +267,7 @@ public class DemographicsFragment extends Fragment {
                 userDto.setTownship(township);
                 userDto.setTown(town);
 
-                userViewModel.hitUpdateUser(getActivity(), authentication, userDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
                     pd.dismiss();
                     switch (responseDTO.getStatus()) {
                         case "success":

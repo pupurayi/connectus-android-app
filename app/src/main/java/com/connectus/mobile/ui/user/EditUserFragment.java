@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.InputType;
@@ -23,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.google.android.material.snackbar.Snackbar;
@@ -78,7 +76,6 @@ public class EditUserFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        String authentication = sharedPreferencesManager.getAuthenticationToken();
 
         userDto = sharedPreferencesManager.getUser();
         if (userDto.getDob() != null) {
@@ -290,7 +287,7 @@ public class EditUserFragment extends Fragment {
 
                 pd.setMessage("Updating ...");
                 pd.show();
-                userViewModel.hitUpdateUser(getActivity(), authentication, userDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
                     pd.dismiss();
                     switch (responseDTO.getStatus()) {
                         case "success":

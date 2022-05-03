@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressDialog pd;
     SharedPreferencesManager sharedPreferencesManager;
-    UserDto userDTO;
+    UserDto userDto;
 
     // https://developer.android.com/guide/playcore/in-app-updates/kotlin-java
     AppUpdateManager appUpdateManager;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferencesManager = new SharedPreferencesManager(this);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (Common.isSessionValid(sharedPreferencesManager)) {
-            userDTO = sharedPreferencesManager.getUser();
+            userDto = sharedPreferencesManager.getUser();
             DashboardFragment dashboardFragment = new DashboardFragment();
             transaction.add(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
         } else {

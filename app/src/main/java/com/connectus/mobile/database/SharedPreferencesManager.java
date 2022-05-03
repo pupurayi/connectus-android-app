@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.connectus.mobile.api.dto.JWT;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.google.gson.Gson;
@@ -46,32 +45,13 @@ public class SharedPreferencesManager {
         return sharedPreferences.get("authorization") != null ? new Gson().fromJson(sharedPreferences.get("authorization").toString(), CheckResponseDto.class) : new CheckResponseDto();
     }
 
-    public void setJWT(JWT jwt) {
-        editor.putString("authentication", new Gson().toJson(jwt));
-        editor.apply();
-    }
-
-    public JWT getJWT() {
-        this.sharedPreferences = getSharedPreferences();
-        return sharedPreferences.get("authentication") != null ? new Gson().fromJson(sharedPreferences.get("authentication").toString(), JWT.class) : null;
-    }
-
-    public String getAuthenticationToken() {
-        this.sharedPreferences = getSharedPreferences();
-        JWT jwt = getJWT();
-        if (jwt != null) {
-            return String.format("%s %s", jwt.getTokenType(), jwt.getAccessToken());
-        }
-        return null;
-    }
-
     public void setAvatarAvailable(boolean avatarAvailable) {
         editor.putBoolean("avatarAvailable", avatarAvailable);
         editor.apply();
     }
 
-    public void setUser(UserDto userDTO) {
-        editor.putString("user", new Gson().toJson(userDTO));
+    public void setUser(UserDto userDto) {
+        editor.putString("user", new Gson().toJson(userDto));
         editor.putLong("lastSync", new Date().getTime());
         editor.apply();
     }

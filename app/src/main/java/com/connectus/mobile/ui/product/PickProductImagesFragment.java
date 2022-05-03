@@ -90,9 +90,9 @@ public class PickProductImagesFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        UserDto userDTO = sharedPreferencesManager.getUser();
+
+        UserDto userDto = sharedPreferencesManager.getUser();
 
         imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
 
@@ -114,10 +114,10 @@ public class PickProductImagesFragment extends Fragment {
                     && imageSecond != null && !imageSecond.isEmpty()
             ) {
                 if (category != null && name != null && description != null && price > 0 && imageFirst != null && imageSecond != null && lat != 0 && lng != 0) {
-                    CreateProductDto createProductDto = new CreateProductDto(userDTO.getId(), category, name, description, price, imageFirst, imageSecond, lat, lng);
+                    CreateProductDto createProductDto = new CreateProductDto(userDto.getId(), category, name, description, price, imageFirst, imageSecond, lat, lng);
                     pd.setMessage("Creating ...");
                     pd.show();
-                    productViewModel.hitSaveProductApi(authentication, createProductDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                    productViewModel.hitSaveProductApi(createProductDto).observe(getViewLifecycleOwner(), responseDTO -> {
                         pd.dismiss();
                         switch (responseDTO.getStatus()) {
                             case "success":

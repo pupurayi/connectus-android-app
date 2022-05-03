@@ -10,12 +10,13 @@ import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
+import com.connectus.mobile.api.dto.ResponseDto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,22 +26,22 @@ public class UserViewModel extends ViewModel {
 
     private static final String TAG = UserViewModel.class.getSimpleName();
 
-    private MutableLiveData<ResponseDTO> responseLiveData;
+    private MutableLiveData<ResponseDto> responseLiveData;
     private final APIService apiService = new RestClients().get();
 
-    public MutableLiveData<ResponseDTO> hitGetUserApi(final Context context, String authentication) {
+    public MutableLiveData<ResponseDto> hitGetUserApi(final Context context, UUID userId) {
         responseLiveData = new MutableLiveData<>();
-        Call<UserDto> ul = apiService.getUser(authentication);
+        Call<UserDto> ul = apiService.getUser(userId);
         try {
             ul.enqueue(new Callback<UserDto>() {
                 @Override
                 public void onResponse(Call<UserDto> call, Response<UserDto> response) {
                     if (response.code() == 200) {
                         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        UserDto userDTO = response.body();
-                        sharedPreferencesManager.setUser(userDTO);
+                        UserDto userDto = response.body();
+                        sharedPreferencesManager.setUser(userDto);
 
-                        responseLiveData.setValue(new ResponseDTO("success", "Profile Syncing Complete!", null));
+                        responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", null));
                     } else {
                         String errorMsg;
                         try {
@@ -50,14 +51,14 @@ public class UserViewModel extends ViewModel {
                             e.printStackTrace();
                             errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
                         }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
+                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<UserDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
                 }
             });
         } catch (Exception e) {
@@ -67,18 +68,18 @@ public class UserViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<ResponseDTO> hitUpdateUser(final Context context, String authentication, UserDto userDto) {
+    public MutableLiveData<ResponseDto> hitUpdateUser(final Context context, UserDto userDto) {
         responseLiveData = new MutableLiveData<>();
-        Call<UserDto> ul = apiService.updateProfile(authentication, userDto);
+        Call<UserDto> ul = apiService.updateUser(userDto);
         try {
             ul.enqueue(new Callback<UserDto>() {
                 @Override
                 public void onResponse(Call<UserDto> call, Response<UserDto> response) {
                     if (response.code() == 200) {
-                        UserDto userDTO = response.body();
+                        UserDto userDto = response.body();
                         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        sharedPreferencesManager.setUser(userDTO);
-                        responseLiveData.setValue(new ResponseDTO("success", "Successfully Updated!", null));
+                        sharedPreferencesManager.setUser(userDto);
+                        responseLiveData.setValue(new ResponseDto("success", "Successfully Updated!", null));
                     } else {
                         String errorMsg;
                         try {
@@ -88,14 +89,14 @@ public class UserViewModel extends ViewModel {
                             e.printStackTrace();
                             errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
                         }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
+                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<UserDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
                 }
             });
         } catch (Exception e) {

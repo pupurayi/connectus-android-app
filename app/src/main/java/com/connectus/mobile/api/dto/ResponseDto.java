@@ -1,11 +1,11 @@
 package com.connectus.mobile.api.dto;
 
-public class ResponseDTO<T> {
+public class ResponseDto<T> {
     private String status;
     private String message;
     private T data;
 
-    public ResponseDTO(String status, String message, T data) {
+    public ResponseDto(String status, String message, T data) {
         this.status = status;
         this.message = message;
         this.data = data;

@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,15 +23,13 @@ import android.widget.TextView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CheckResponseDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
-import com.connectus.mobile.api.dto.SignUpRequest;
+import com.connectus.mobile.api.dto.ResponseDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
-import com.connectus.mobile.common.Constants;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -146,22 +143,19 @@ public class SignUpFragment extends Fragment {
     }
 
     public void signUp(String firstName, String lastName, String email, String msisdn, String password) {
-        signUpViewModel.hitSignUpApi(getActivity(), new SignUpRequest(firstName, lastName, email, msisdn, password)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
-            @Override
-            public void onChanged(ResponseDTO responseDTO) {
-                pd.dismiss();
-                switch (responseDTO.getStatus()) {
-                    case "success":
-                        DemographicsFragment demographicsFragment = new DemographicsFragment();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
-                        transaction.commit();
-                        break;
-                    case "failed":
-                    case "error":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                }
+        signUpViewModel.hitSignUpApi(getActivity(), new UserDto(msisdn, email, firstName, lastName, password)).observe(getViewLifecycleOwner(), responseDTO -> {
+            pd.dismiss();
+            switch (responseDTO.getStatus()) {
+                case "success":
+                    DemographicsFragment demographicsFragment = new DemographicsFragment();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
+                    transaction.commit();
+                    break;
+                case "failed":
+                case "error":
+                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    break;
             }
         });
     }

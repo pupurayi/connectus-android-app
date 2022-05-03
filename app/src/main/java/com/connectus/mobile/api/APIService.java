@@ -2,21 +2,17 @@ package com.connectus.mobile.api;
 
 import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.api.dto.AuthResponseDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
-import com.connectus.mobile.api.dto.ChangePasswordRequest;
-import com.connectus.mobile.api.dto.ResetPasswordRequest;
-import com.connectus.mobile.api.dto.ResponseDTO;
+import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.SignInRequest;
-import com.connectus.mobile.api.dto.SignUpRequest;
 import com.connectus.mobile.ui.product.ProductDto;
 
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -34,62 +30,51 @@ public interface APIService {
             "Accept: application/json"
     })
     @POST("/api/v1/user/sign-in")
-    Call<AuthResponseDto> signIn(@Body SignInRequest signInRequest);
+    Call<UserDto> signIn(@Body SignInRequest signInRequest);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/api/v1/user/sign-up")
-    Call<AuthResponseDto> signUp(@Body SignUpRequest signUpRequest);
-
-
-    @Headers({
-            "Accept: application/json"
-    })
-    @POST("/api/v1/product")
-    Call<ProductDto> createProduct(@Header("Authorization") String authentication, @Body CreateProductDto createProductDto);
+    @POST("/api/v1/user")
+    Call<UserDto> createUser(@Body UserDto userDto);
 
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/product")
-    Call<List<ProductDto>> getProducts(@Header("Authorization") String authentication);
+    @POST("/api/v1/product/{userId}")
+    Call<ProductDto> createProduct(@Body CreateProductDto createProductDto);
 
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/api/v1/user/change-password")
-    Call<ResponseDTO> changePassword(@Header("Authorization") String authentication, @Body ChangePasswordRequest changePasswordRequest);
+    @GET("/api/v1/product/user/{userId}")
+    Call<List<ProductDto>> getUserProducts(@Path("userId") UUID userId);
+
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/user/reset-password/{msisdn}")
-    Call<ResponseDTO> resetPassword(@Path("msisdn") String msisdn);
+    @GET("/api/v1/product/recommended/user/{userId}")
+    Call<List<ProductDto>> getRecommendedProducts(@Path("userId") UUID userId);
+
 
     @Headers({
             "Accept: application/json"
     })
-    @GET("/api/v1/user/reset-password/{msisdn}/{otp}")
-    Call<ResponseDTO> resetPassword(@Path("msisdn") String msisdn, @Path("otp") String otp);
+    @POST("/api/v1/user/reset-password/{msisdn}")
+    Call<ResponseDto> resetPassword(@Path("msisdn") String msisdn);
 
     @Headers({
             "Accept: application/json"
     })
-    @POST("/api/v1/user/reset-password")
-    Call<ResponseDTO> resetPassword(@Body ResetPasswordRequest resetPasswordRequest);
-
-    @Headers({
-            "Accept: application/json"
-    })
-    @GET("/api/v1/user")
-    Call<UserDto> getUser(@Header("Authorization") String authentication);
+    @GET("/api/v1/user/{userId}")
+    Call<UserDto> getUser(@Path("userId") UUID userId);
 
     @Headers({
             "Accept: application/json"
     })
     @PUT("/api/v1/user")
-    Call<UserDto> updateProfile(@Header("Authorization") String authentication, @Body UserDto userDto);
+    Call<UserDto> updateUser(@Body UserDto userDto);
 }

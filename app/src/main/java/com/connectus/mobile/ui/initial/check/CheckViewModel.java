@@ -10,7 +10,7 @@ import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.api.dto.ResponseDTO;
+import com.connectus.mobile.api.dto.ResponseDto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +24,10 @@ import retrofit2.Response;
 public class CheckViewModel extends ViewModel {
     private static final String TAG = CheckViewModel.class.getSimpleName();
 
-    private MutableLiveData<ResponseDTO> responseLiveData;
+    private MutableLiveData<ResponseDto> responseLiveData;
     private final APIService apiService = new RestClients().get();
 
-    public MutableLiveData<ResponseDTO> hitCheckApi(final Context context, String phoneNumber) {
+    public MutableLiveData<ResponseDto> hitCheckApi(final Context context, String phoneNumber) {
         responseLiveData = new MutableLiveData<>();
         Call<CheckResponseDto> ul = apiService.check(phoneNumber);
         try {
@@ -41,7 +41,7 @@ public class CheckViewModel extends ViewModel {
                         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
                         sharedPreferencesManager.setAuthorization(checkResponseDto);
 
-                        responseLiveData.setValue(new ResponseDTO("success", null, null));
+                        responseLiveData.setValue(new ResponseDto("success", null, null));
                     } else {
                         String errorMsg;
                         try {
@@ -51,14 +51,14 @@ public class CheckViewModel extends ViewModel {
                             e.printStackTrace();
                             errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
                         }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
+                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<CheckResponseDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!"+t.toString(), null));
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!"+t.toString(), null));
                 }
             });
         } catch (Exception e) {

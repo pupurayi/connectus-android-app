@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -40,6 +41,7 @@ public class ProductsFragment extends Fragment {
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
     private ProductViewModel productsViewModel;
+    UserDto userDto = null;
     List<ProductDto> products = new LinkedList<>();
 
     @Override
@@ -59,12 +61,11 @@ public class ProductsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
+        userDto = sharedPreferencesManager.getUser();
         fragmentManager = getActivity().getSupportFragmentManager();
-        String authentication = sharedPreferencesManager.getAuthenticationToken();
 
-        getProducts(getContext(), authentication);
-        UserDto userDTO = sharedPreferencesManager.getUser();
 
+        getProducts();
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
@@ -80,8 +81,8 @@ public class ProductsFragment extends Fragment {
         recyclerViewProducts.setLayoutManager(linearLayoutManager);
     }
 
-    private void getProducts(Context context, String authentication) {
-        productsViewModel.getProducts(context, authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+    private void getProducts() {
+        productsViewModel.getProducts(getContext(), userDto.getId(), ProductType.USER).observe(getViewLifecycleOwner(), responseDTO -> {
             switch (responseDTO.getStatus()) {
                 case "success":
                     DbHandler dbHandler = new DbHandler(getContext());

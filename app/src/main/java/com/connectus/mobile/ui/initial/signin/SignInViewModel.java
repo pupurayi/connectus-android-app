@@ -8,11 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
-import com.connectus.mobile.api.dto.JWT;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.api.dto.AuthResponseDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
+import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.SignInRequest;
 
 import org.json.JSONException;
@@ -27,27 +25,23 @@ import retrofit2.Response;
 public class SignInViewModel extends ViewModel {
     private static final String TAG = SignInViewModel.class.getSimpleName();
 
-    private MutableLiveData<ResponseDTO> responseLiveData;
+    private MutableLiveData<ResponseDto> responseLiveData;
     private final APIService apiService = new RestClients().get();
 
-    public MutableLiveData<ResponseDTO> hitSignInApi(final Context context, SignInRequest signInRequest) {
+    public MutableLiveData<ResponseDto> hitSignInApi(final Context context, SignInRequest signInRequest) {
         responseLiveData = new MutableLiveData<>();
-        Call<AuthResponseDto> ul = apiService.signIn(signInRequest);
+        Call<UserDto> ul = apiService.signIn(signInRequest);
         try {
-            ul.enqueue(new Callback<AuthResponseDto>() {
+            ul.enqueue(new Callback<UserDto>() {
                 @Override
-                public void onResponse(Call<AuthResponseDto> call, Response<AuthResponseDto> response) {
+                public void onResponse(Call<UserDto> call, Response<UserDto> response) {
                     if (response.code() == 200) {
-                        AuthResponseDto authResponseDto = response.body();
+                        UserDto userDto = response.body();
 
                         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        JWT jwt = authResponseDto.getJwt();
-                        sharedPreferencesManager.setJWT(jwt);
+                        sharedPreferencesManager.setUser(userDto);
 
-                        UserDto userDTO = authResponseDto.getProfile();
-                        sharedPreferencesManager.setUser(userDTO);
-
-                        responseLiveData.setValue(new ResponseDTO("success", null, null));
+                        responseLiveData.setValue(new ResponseDto("success", null, null));
                     } else {
                         String errorMsg;
                         try {
@@ -57,14 +51,14 @@ public class SignInViewModel extends ViewModel {
                             e.printStackTrace();
                             errorMsg = response.code() == 403 ? "Authentication Failed!" : "Error Occurred!";
                         }
-                        responseLiveData.setValue(new ResponseDTO("failed", errorMsg, null));
+                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }
 
                 @Override
-                public void onFailure(Call<AuthResponseDto> call, Throwable t) {
+                public void onFailure(Call<UserDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDTO("error", "Connectivity Issues!", null));
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
                 }
             });
         } catch (Exception e) {

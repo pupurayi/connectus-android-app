@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 import com.connectus.mobile.R;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -66,48 +64,39 @@ public class UserDetailsFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
 
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        UserDto userDTO = sharedPreferencesManager.getUser();
-        authentication = sharedPreferencesManager.getAuthenticationToken();
+        UserDto userDto = sharedPreferencesManager.getUser();
+        
 
         long lastSync = sharedPreferencesManager.getLastSync();
         long now = new Date().getTime();
-        // 1 Second = 1000 Milliseconds, 300000 = 5 Minutes
         if (now - lastSync >= 300000) {
             pd.setMessage("Syncing Profile ...");
             pd.show();
-            userViewModel.hitGetUserApi(getActivity(), authentication).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
-                @Override
-                public void onChanged(ResponseDTO responseDTO) {
-                    pd.dismiss();
-                    switch (responseDTO.getStatus()) {
-                        case "success":
-                            Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                            UserDto userDTO = sharedPreferencesManager.getUser();
-                            populateFields(userDTO);
-                            break;
-                        case "failed":
-                        case "error":
-                            Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                            break;
-                    }
+            userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDTO -> {
+                pd.dismiss();
+                switch (responseDTO.getStatus()) {
+                    case "success":
+                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                        UserDto userDto1 = sharedPreferencesManager.getUser();
+                        populateFields(userDto1);
+                        break;
+                    case "failed":
+                    case "error":
+                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                        break;
                 }
             });
         }
 
         imageViewAvatar = view.findViewById(R.id.adf_image_view_profile_avatar);
         imageViewPlus = view.findViewById(R.id.adf_image_view_plus);
-        imageViewPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickImage();
-            }
-        });
+        imageViewPlus.setOnClickListener(v -> pickImage());
 
         textViewFullName = view.findViewById(R.id.text_view_full_name);
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_value);
         textViewEmail = view.findViewById(R.id.text_view_email_value);
 
-        populateFields(userDTO);
+        populateFields(userDto);
 
         buttonEditUser = view.findViewById(R.id.button_edit_user);
         buttonEditUser.setOnClickListener(new View.OnClickListener() {
@@ -122,26 +111,21 @@ public class UserDetailsFragment extends Fragment {
         });
 
         imageViewBack = view.findViewById(R.id.image_view_back);
-        imageViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        UserDto userDTO = sharedPreferencesManager.getUser();
-        populateFields(userDTO);
+        UserDto userDto = sharedPreferencesManager.getUser();
+        populateFields(userDto);
     }
 
-    public void populateFields(UserDto userDTO) {
-        String fullName = userDTO.getFirstName() + " " + userDTO.getLastName();
-        String msisdn = userDTO.getMsisdn();
-        String email = userDTO.getEmail();
+    public void populateFields(UserDto userDto) {
+        String fullName = userDto.getFirstName() + " " + userDto.getLastName();
+        String msisdn = userDto.getMsisdn();
+        String email = userDto.getEmail();
         textViewFullName.setText(fullName);
         textViewPhoneNumber.setText(msisdn);
         textViewEmail.setText(email);

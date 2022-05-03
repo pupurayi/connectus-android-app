@@ -20,7 +20,7 @@ import android.widget.EditText;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CheckResponseDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
+import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.initial.signin.SignInFragment;
 import com.connectus.mobile.ui.initial.signup.SignUpFragment;
@@ -95,9 +95,9 @@ public class CheckFragment extends Fragment {
                 pd.setMessage("Authorizing ...");
                 pd.show();
 
-                checkViewModel.hitCheckApi(getActivity(), phoneNumber).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+                checkViewModel.hitCheckApi(getActivity(), phoneNumber).observe(getViewLifecycleOwner(), new Observer<ResponseDto>() {
                     @Override
-                    public void onChanged(ResponseDTO responseDTO) {
+                    public void onChanged(ResponseDto responseDTO) {
                         switch (responseDTO.getStatus()) {
                             case "success":
                                 CheckResponseDto checkResponseDto = sharedPreferencesManager.getAuthorization();

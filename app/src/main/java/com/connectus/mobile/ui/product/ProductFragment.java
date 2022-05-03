@@ -69,9 +69,9 @@ public class ProductFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         fragmentManager = getActivity().getSupportFragmentManager();
-        String authentication = sharedPreferencesManager.getAuthenticationToken();
+        
 
-        UserDto userDTO = sharedPreferencesManager.getUser();
+        UserDto userDto = sharedPreferencesManager.getUser();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

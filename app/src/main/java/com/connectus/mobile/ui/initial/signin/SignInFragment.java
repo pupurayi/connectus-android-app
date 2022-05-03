@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CheckResponseDto;
-import com.connectus.mobile.api.dto.ResponseDTO;
+import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.SignInRequest;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
@@ -127,19 +127,7 @@ public class SignInFragment extends Fragment {
                     pd.setMessage("Authenticating ...");
                     pd.show();
 
-                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                        @Override
-                        public void onComplete(@NonNull Task<String> task) {
-                            String fcm_token = null;
-                            if (!task.isSuccessful()) {
-                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                                pd.dismiss();
-                            } else {
-                                fcm_token = task.getResult();
-                            }
-                            signIn(view, phoneNumber, password, fcm_token);
-                        }
-                    });
+                    signIn(view, phoneNumber, password);
                 } else {
                     Snackbar.make(view, "Enter Password!", Snackbar.LENGTH_LONG).show();
                 }
@@ -163,10 +151,10 @@ public class SignInFragment extends Fragment {
         });
     }
 
-    public void signIn(View view, String msisdn, String password, String fcm_token) {
-        signInViewModel.hitSignInApi(getActivity(), new SignInRequest(msisdn, password, fcm_token)).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
+    public void signIn(View view, String msisdn, String password) {
+        signInViewModel.hitSignInApi(getActivity(), new SignInRequest(msisdn, password)).observe(getViewLifecycleOwner(), new Observer<ResponseDto>() {
             @Override
-            public void onChanged(ResponseDTO responseDTO) {
+            public void onChanged(ResponseDto responseDTO) {
                 switch (responseDTO.getStatus()) {
                     case "success":
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
@@ -37,6 +38,7 @@ import com.connectus.mobile.ui.product.ProductsFragment;
 import com.connectus.mobile.ui.user.UserDetailsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.settings.SettingsFragment;
+import com.connectus.mobile.ui.user.UserViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -63,7 +65,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     SharedPreferencesManager sharedPreferencesManager;
     UserDto userDto;
     String authentication;
-    private DashboardViewModel dashboardViewModel;
+    private UserViewModel userViewModel;
     private ProductViewModel productViewModel;
 
     ProductRecyclerAdapter productRecyclerAdapter;
@@ -76,7 +78,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -89,7 +91,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        authentication = sharedPreferencesManager.getAuthenticationToken();
         userDto = sharedPreferencesManager.getUser();
 
         drawerLayout = view.findViewById(R.id.drawer_layout);
@@ -165,7 +166,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public void fetchRecommendedProducts() {
-        productViewModel.getProducts(getContext(), authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+        productViewModel.getProducts(getContext(), userDto.getId(), ProductType.RECOMMENDED).observe(getViewLifecycleOwner(), responseDTO -> {
             switch (responseDTO.getStatus()) {
                 case "success":
                     loadRecommendedProductsRecyclerView();
@@ -233,7 +234,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Please Wait ...");
         pd.show();
 
-        productViewModel.getProducts(getActivity(), authentication).observe(getViewLifecycleOwner(), responseDTO -> {
+        userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDTO -> {
             pd.dismiss();
             switch (responseDTO.getStatus()) {
                 case "success":

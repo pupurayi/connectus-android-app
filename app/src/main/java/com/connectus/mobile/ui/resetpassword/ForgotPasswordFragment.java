@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -19,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.api.dto.ResponseDTO;
 import com.connectus.mobile.common.Common;
 import com.google.android.material.snackbar.Snackbar;
 import com.hbb20.CountryCodePicker;
@@ -88,25 +86,16 @@ public class ForgotPasswordFragment extends Fragment {
                 if (isPhoneNumberValid) {
                     pd.setMessage("Requesting OTP...");
                     pd.show();
-                    resetPasswordViewModel.hitResetPasswordApi(getActivity(), msisdn).observe(getViewLifecycleOwner(), new Observer<ResponseDTO>() {
-                        @Override
-                        public void onChanged(ResponseDTO responseDTO) {
-                            Common.hideSoftKeyboard(getActivity());
-                            pd.dismiss();
-                            switch (responseDTO.getStatus()) {
-                                case "success":
-                                    Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("otpType", "PASSWORD_RESET");
-                                    bundle.putString("otpTitle", "Reset Password");
-                                    bundle.putString("msisdn", msisdn);
-
-                                    break;
-                                case "failed":
-                                case "error":
-                                    Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
-                                    break;
-                            }
+                    resetPasswordViewModel.hitResetPasswordApi(msisdn).observe(getViewLifecycleOwner(), responseDTO -> {
+                        Common.hideSoftKeyboard(getActivity());
+                        pd.dismiss();
+                        switch (responseDTO.getStatus()) {
+                            case "success":
+                                Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                            case "failed":
+                            case "error":
+                                Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                                break;
                         }
                     });
                 } else {
@@ -116,11 +105,6 @@ public class ForgotPasswordFragment extends Fragment {
         });
 
         textViewSignIn = getView().findViewById(R.id.text_view_sign_up_title);
-        textViewSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStack();
-            }
-        });
+        textViewSignIn.setOnClickListener(v -> fragmentManager.popBackStack());
     }
 }

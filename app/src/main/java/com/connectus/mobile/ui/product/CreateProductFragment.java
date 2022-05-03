@@ -61,9 +61,9 @@ public class CreateProductFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        String authentication = sharedPreferencesManager.getAuthenticationToken();
+        
 
-        UserDto userDTO = sharedPreferencesManager.getUser();
+        UserDto userDto = sharedPreferencesManager.getUser();
 
         editTextProductCategory = view.findViewById(R.id.edit_text_product_category);
         editTextProductName = view.findViewById(R.id.edit_text_product_name);

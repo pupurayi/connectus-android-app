@@ -44,14 +44,7 @@ public class Common {
     }
 
     public static boolean isSessionValid(SharedPreferencesManager sharedPreferencesManager) {
-        String authenticationToken = sharedPreferencesManager.getAuthenticationToken();
-        JWT jwt = null;
-        if (authenticationToken != null) {
-            Log.d(TAG, authenticationToken);
-            jwt = tokenToJWT(authenticationToken);
-            return jwt != null && !jwt.isExpired(0);
-        }
-        return false;
+        return sharedPreferencesManager.getUser() != null;
     }
 
 
