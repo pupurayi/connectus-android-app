@@ -181,7 +181,11 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public void fetchRecommendedProducts() {
+        pd.setMessage("Please Wait ...");
+        pd.show();
+
         productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED).observe(getViewLifecycleOwner(), responseDto -> {
+            pd.dismiss();
             switch (responseDto.getStatus()) {
                 case "success":
                     List<ProductDto> products = (List<ProductDto>) responseDto.getData();
