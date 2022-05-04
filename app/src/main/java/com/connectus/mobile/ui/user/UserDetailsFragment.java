@@ -79,17 +79,17 @@ public class UserDetailsFragment extends Fragment {
         if (now - lastSync >= 300000) {
             pd.setMessage("Syncing Profile ...");
             pd.show();
-            userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDTO -> {
+            userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDto -> {
                 pd.dismiss();
-                switch (responseDTO.getStatus()) {
+                switch (responseDto.getStatus()) {
                     case "success":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                         UserDto userDto1 = sharedPreferencesManager.getUser();
                         populateFields(userDto1);
                         break;
                     case "failed":
                     case "error":
-                        Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                         break;
                 }
             });
@@ -181,17 +181,17 @@ public class UserDetailsFragment extends Fragment {
         pd.setMessage("Uploading Avatar ...");
         pd.show();
 
-        userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
+        userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
-            switch (responseDTO.getStatus()) {
+            switch (responseDto.getStatus()) {
                 case "success":
                     this.userDto = sharedPreferencesManager.getUser();
                     Utils.loadAvatar(userDto, imageViewAvatar);
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
                 case "failed":
                 case "error":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
             }
         });

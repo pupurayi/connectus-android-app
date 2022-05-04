@@ -26,10 +26,6 @@ import java.util.List;
 
 public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.ViewHolder> {
 
-    @SuppressLint("SimpleDateFormat")
-    DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
-
-
     private Context context;
     private final List<ProductDto> products;
     private FragmentManager fragmentManager;

@@ -290,13 +290,13 @@ public class EditUserFragment extends Fragment {
 
                 pd.setMessage("Updating ...");
                 pd.show();
-                userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDto -> {
                     pd.dismiss();
-                    switch (responseDTO.getStatus()) {
+                    switch (responseDto.getStatus()) {
                         case "success":
                         case "failed":
                         case "error":
-                            Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                             break;
                     }
                 });

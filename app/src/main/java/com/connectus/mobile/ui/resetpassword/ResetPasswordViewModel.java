@@ -31,8 +31,8 @@ public class ResetPasswordViewModel extends ViewModel {
                 @Override
                 public void onResponse(Call<ResponseDto> call, Response<ResponseDto> response) {
                     if (response.code() == 200) {
-                        ResponseDto responseDTO = response.body();
-                        responseLiveData.setValue(new ResponseDto("success", responseDTO.getMessage(), null));
+                        ResponseDto responseDto = response.body();
+                        responseLiveData.setValue(new ResponseDto("success", responseDto.getMessage(), null));
                     } else {
                         String errorMsg = null;
                         try {

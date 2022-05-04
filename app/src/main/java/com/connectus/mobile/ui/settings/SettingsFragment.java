@@ -116,17 +116,17 @@ public class SettingsFragment extends Fragment {
                 String currentPassword = userDto.getPassword();
                 if (mCurrentPassword.equals(currentPassword)) {
                     userDto.setPassword(newPassword);
-                    userViewModel.hitUpdateUser(getContext(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                    userViewModel.hitUpdateUser(getContext(), userDto).observe(getViewLifecycleOwner(), responseDto -> {
                         pd.dismiss();
-                        switch (responseDTO.getStatus()) {
+                        switch (responseDto.getStatus()) {
                             case "success":
                                 editTextCurrentPassword.setText(null);
                                 editTextNewPassword.setText(null);
-                                Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
+                                Utils.alert(getContext(), "Connect Us", responseDto.getMessage());
                                 break;
                             case "failed":
                             case "error":
-                                Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                                 break;
                         }
                     });

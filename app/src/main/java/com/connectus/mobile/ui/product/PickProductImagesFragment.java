@@ -119,15 +119,15 @@ public class PickProductImagesFragment extends Fragment {
                     CreateProductDto createProductDto = new CreateProductDto(userDto.getId(), category, name, description, price, imageFirst, imageSecond, lat, lng);
                     pd.setMessage("Creating ...");
                     pd.show();
-                    productViewModel.hitSaveProductApi(createProductDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                    productViewModel.hitSaveProductApi(createProductDto).observe(getViewLifecycleOwner(), responseDto -> {
                         pd.dismiss();
-                        switch (responseDTO.getStatus()) {
+                        switch (responseDto.getStatus()) {
                             case "success":
                                 close();
                                 break;
                             case "failed":
                             case "error":
-                                Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                                 break;
                         }
                     });

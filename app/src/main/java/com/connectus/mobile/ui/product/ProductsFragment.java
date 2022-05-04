@@ -66,15 +66,13 @@ public class ProductsFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
 
 
-        getProducts();
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
         imageViewAvatar = view.findViewById(R.id.ctf_image_view_profile_avatar);
         Utils.loadAvatar(userDto, imageViewAvatar);
 
-        DbHandler dbHandler = new DbHandler(getContext());
-        products = dbHandler.getProducts();
+        getProducts();
         productRecyclerAdapter = new ProductRecyclerAdapter(getContext(), products, fragmentManager);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -84,22 +82,24 @@ public class ProductsFragment extends Fragment {
     }
 
     private void getProducts() {
-        productsViewModel.getProducts(getContext(), userDto.getId(), ProductType.USER).observe(getViewLifecycleOwner(), responseDTO -> {
-            switch (responseDTO.getStatus()) {
+        pd.setMessage("Fetching ...");
+        pd.show();
+        productsViewModel.getProducts(userDto.getId(), ProductType.USER).observe(getViewLifecycleOwner(), responseDto -> {
+            switch (responseDto.getStatus()) {
                 case "success":
-                    DbHandler dbHandler = new DbHandler(getContext());
+                    pd.dismiss();
                     products.clear();
-                    products.addAll(dbHandler.getProducts());
+                    List<ProductDto> mProducts = (List<ProductDto>) responseDto.getData();
+                    products.addAll(mProducts);
                     productRecyclerAdapter.notifyDataSetChanged();
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
                 case "failed":
                 case "error":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    pd.dismiss();
+                    Utils.alert(getContext(), "Connect Us", responseDto.getMessage());
                     break;
             }
             pd.dismiss();
         });
     }
-
 }

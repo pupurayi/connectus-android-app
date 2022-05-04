@@ -82,14 +82,14 @@ public class ResetPasswordFragment extends Fragment {
             if (isPhoneNumberValid) {
                 pd.setMessage("Resetting password...");
                 pd.show();
-                resetPasswordViewModel.hitResetPasswordApi(msisdn).observe(getViewLifecycleOwner(), responseDTO -> {
+                resetPasswordViewModel.hitResetPasswordApi(msisdn).observe(getViewLifecycleOwner(), responseDto -> {
                     Common.hideSoftKeyboard(getActivity());
                     pd.dismiss();
-                    switch (responseDTO.getStatus()) {
+                    switch (responseDto.getStatus()) {
                         case "success":
                         case "failed":
                         case "error":
-                            Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
+                            Utils.alert(getContext(), "Connect Us", responseDto.getMessage());
                             break;
                     }
                 });

@@ -167,10 +167,10 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
 
     public void getUserDetails() {
-        userViewModel.hitGetUserApi(getContext(), userDto.getId()).observe(getViewLifecycleOwner(), responseDTO -> {
-            switch (responseDTO.getStatus()) {
+        userViewModel.hitGetUserApi(getContext(), userDto.getId()).observe(getViewLifecycleOwner(), responseDto -> {
+            switch (responseDto.getStatus()) {
                 case "success":
-                    userDto = (UserDto) responseDTO.getData();
+                    userDto = (UserDto) responseDto.getData();
                     break;
                 case "failed":
                 case "error":
@@ -181,14 +181,22 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public void fetchRecommendedProducts() {
-        productViewModel.getProducts(getContext(), userDto.getId(), ProductType.RECOMMENDED).observe(getViewLifecycleOwner(), responseDTO -> {
-            switch (responseDTO.getStatus()) {
+        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED).observe(getViewLifecycleOwner(), responseDto -> {
+            switch (responseDto.getStatus()) {
                 case "success":
+                    List<ProductDto> products = (List<ProductDto>) responseDto.getData();
+                    if (products != null) {
+                        DbHandler dbHandler = new DbHandler(getContext());
+                        dbHandler.deleteAllProducts();
+                        for (ProductDto new_products : products) {
+                            dbHandler.insertProduct(new_products);
+                        }
+                    }
                     loadRecommendedProductsRecyclerView();
                     break;
                 case "failed":
                 case "error":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
             }
             pd.dismiss();
@@ -249,16 +257,16 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Please Wait ...");
         pd.show();
 
-        userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDTO -> {
+        userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
-            switch (responseDTO.getStatus()) {
+            switch (responseDto.getStatus()) {
                 case "success":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                     userDto = sharedPreferencesManager.getUser();
                     break;
                 case "failed":
                 case "error":
-                    Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                     break;
             }
         });

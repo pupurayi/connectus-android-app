@@ -2,5 +2,6 @@ package com.connectus.mobile.api.dto;
 
 public enum ProductType {
     USER,
-    RECOMMENDED
+    RECOMMENDED,
+    USER_RATING
 }

@@ -8,6 +8,7 @@ import com.connectus.mobile.api.dto.SignInRequest;
 import com.connectus.mobile.ui.product.ProductDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -63,6 +64,13 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
+    @GET("/api/v1/product/rating/user/{userId}")
+    Call<List<ProductDto>> getProductsForUserRating(@Path("userId") UUID userId);
+
+
+    @Headers({
+            "Accept: application/json"
+    })
     @POST("/api/v1/user/reset-password/{msisdn}")
     Call<ResponseDto> resetPassword(@Path("msisdn") String msisdn);
 
@@ -77,4 +85,10 @@ public interface APIService {
     })
     @PUT("/api/v1/user")
     Call<UserDto> updateUser(@Body UserDto userDto);
+
+    @Headers({
+            "Accept: application/json"
+    })
+    @POST("/api/v1/user/rate-products/{userId}")
+    Call<String> rateProducts(@Path("userId") UUID userId, @Body Map<UUID, Boolean> ratings);
 }

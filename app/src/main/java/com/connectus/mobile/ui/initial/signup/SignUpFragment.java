@@ -144,9 +144,9 @@ public class SignUpFragment extends Fragment {
     }
 
     public void signUp(String firstName, String lastName, String email, String msisdn, String password) {
-        signUpViewModel.hitSignUpApi(getActivity(), new UserDto(msisdn, email, firstName, lastName, password)).observe(getViewLifecycleOwner(), responseDTO -> {
+        signUpViewModel.hitSignUpApi(getActivity(), new UserDto(msisdn, email, firstName, lastName, password)).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
-            switch (responseDTO.getStatus()) {
+            switch (responseDto.getStatus()) {
                 case "success":
                     DemographicsFragment demographicsFragment = new DemographicsFragment();
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -155,7 +155,7 @@ public class SignUpFragment extends Fragment {
                     break;
                 case "failed":
                 case "error":
-                    Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
+                    Utils.alert(getContext(), "Connect Us", responseDto.getMessage());
                     break;
             }
         });

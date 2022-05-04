@@ -1,6 +1,5 @@
 package com.connectus.mobile.ui.product;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,7 +10,6 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.ResponseDto;
-import com.connectus.mobile.database.DbHandler;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,13 +60,15 @@ public class ProductViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<ResponseDto> getProducts(Context context, UUID userId, ProductType productType) {
+    public MutableLiveData<ResponseDto> getProducts(UUID userId, ProductType productType) {
         responseLiveData = new MutableLiveData<>();
         Call<List<ProductDto>> ul = null;
         if (productType.equals(ProductType.USER)) {
             ul = apiService.getUserProducts(userId);
         } else if (productType.equals(ProductType.RECOMMENDED)) {
             ul = apiService.getRecommendedProducts(userId);
+        } else if (productType.equals(ProductType.USER_RATING)){
+            ul = apiService.getProductsForUserRating(userId);
         }
         try {
             ul.enqueue(new Callback<List<ProductDto>>() {
@@ -76,13 +76,6 @@ public class ProductViewModel extends ViewModel {
                 public void onResponse(Call<List<ProductDto>> call, Response<List<ProductDto>> response) {
                     if (response.code() == 200) {
                         List<ProductDto> products = response.body();
-                        if (products != null) {
-                            DbHandler dbHandler = new DbHandler(context);
-                            dbHandler.deleteAllProducts();
-                            for (ProductDto new_products : products) {
-                                dbHandler.insertProduct(new_products);
-                            }
-                        }
                         responseLiveData.setValue(new ResponseDto<>("success", "Sync Complete", products));
                     } else {
                         responseLiveData.setValue(new ResponseDto<>("failed", "Failed to sync Products", null));

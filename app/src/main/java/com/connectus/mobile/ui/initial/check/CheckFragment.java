@@ -97,8 +97,8 @@ public class CheckFragment extends Fragment {
 
                 checkViewModel.hitCheckApi(getActivity(), phoneNumber).observe(getViewLifecycleOwner(), new Observer<ResponseDto>() {
                     @Override
-                    public void onChanged(ResponseDto responseDTO) {
-                        switch (responseDTO.getStatus()) {
+                    public void onChanged(ResponseDto responseDto) {
+                        switch (responseDto.getStatus()) {
                             case "success":
                                 CheckResponseDto checkResponseDto = sharedPreferencesManager.getAuthorization();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -113,7 +113,7 @@ public class CheckFragment extends Fragment {
                                 break;
                             case "failed":
                             case "error":
-                                Snackbar.make(view, responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                                 break;
                         }
                         pd.dismiss();

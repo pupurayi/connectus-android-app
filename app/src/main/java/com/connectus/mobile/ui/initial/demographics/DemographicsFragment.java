@@ -269,9 +269,9 @@ public class DemographicsFragment extends Fragment {
                 userDto.setTownship(township);
                 userDto.setTown(town);
 
-                userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDTO -> {
+                userViewModel.hitUpdateUser(getActivity(), userDto).observe(getViewLifecycleOwner(), responseDto -> {
                     pd.dismiss();
-                    switch (responseDTO.getStatus()) {
+                    switch (responseDto.getStatus()) {
                         case "success":
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             RatingFragment ratingFragment = new RatingFragment();
@@ -280,7 +280,7 @@ public class DemographicsFragment extends Fragment {
                             break;
                         case "failed":
                         case "error":
-                            Snackbar.make(getView(), responseDTO.getMessage(), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
                             break;
                     }
                 });

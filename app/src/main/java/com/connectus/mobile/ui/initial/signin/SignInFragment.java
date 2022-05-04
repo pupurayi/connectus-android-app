@@ -117,8 +117,8 @@ public class SignInFragment extends Fragment {
                 pd.setMessage("Authenticating ...");
                 pd.show();
 
-                signInViewModel.hitSignInApi(getActivity(), new SignInRequest(phoneNumber, password)).observe(getViewLifecycleOwner(), responseDTO -> {
-                    switch (responseDTO.getStatus()) {
+                signInViewModel.hitSignInApi(getActivity(), new SignInRequest(phoneNumber, password)).observe(getViewLifecycleOwner(), responseDto -> {
+                    switch (responseDto.getStatus()) {
                         case "success":
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             UserDto user = sharedPreferencesManager.getUser();
@@ -133,7 +133,7 @@ public class SignInFragment extends Fragment {
                             break;
                         case "failed":
                         case "error":
-                            Utils.alert(getContext(), "Connect Us", responseDTO.getMessage());
+                            Utils.alert(getContext(), "Connect Us", responseDto.getMessage());
                             editTextPassword.setText(null);
                             break;
                     }
