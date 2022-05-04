@@ -89,6 +89,6 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @POST("/api/v1/user/rate-products/{userId}")
+    @POST("/api/v1/product/rate/{userId}")
     Call<String> rateProducts(@Path("userId") UUID userId, @Body Map<UUID, Boolean> ratings);
 }
