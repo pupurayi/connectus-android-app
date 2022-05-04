@@ -26,6 +26,7 @@ import com.connectus.mobile.R;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
+import com.connectus.mobile.ui.rating.RatingFragment;
 import com.connectus.mobile.ui.user.UserViewModel;
 import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
@@ -272,7 +273,10 @@ public class DemographicsFragment extends Fragment {
                     pd.dismiss();
                     switch (responseDTO.getStatus()) {
                         case "success":
-                            close();
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            RatingFragment ratingFragment = new RatingFragment();
+                            transaction.replace(R.id.container, ratingFragment, RatingFragment.class.getSimpleName());
+                            transaction.commit();
                             break;
                         case "failed":
                         case "error":
@@ -297,15 +301,5 @@ public class DemographicsFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void close() {
-        DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
-        if (dashboardFragment == null) {
-            dashboardFragment = new DashboardFragment();
-        }
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
-        transaction.commit();
     }
 }

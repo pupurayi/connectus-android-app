@@ -31,6 +31,7 @@ import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
+import com.connectus.mobile.ui.rating.RatingFragment;
 import com.connectus.mobile.ui.resetpassword.ResetPasswordFragment;
 import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
@@ -80,39 +81,33 @@ public class SignInFragment extends Fragment {
         textViewPhoneNumber = view.findViewById(R.id.text_view_phone_number);
         textViewPhoneNumber.setText(phoneNumber);
         editTextPassword = view.findViewById(R.id.edit_text_password);
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_RIGHT = 2;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (editTextPassword.getRight() - editTextPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if (!passwordShow) {
-                            editTextPassword.setTransformationMethod(null);
-                            editTextPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility_off, 0);
-                            passwordShow = true;
-                        } else {
-                            editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
-                            editTextPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility, 0);
-                            passwordShow = false;
-                        }
-                        return passwordShow;
+        editTextPassword.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (editTextPassword.getRight() - editTextPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    if (!passwordShow) {
+                        editTextPassword.setTransformationMethod(null);
+                        editTextPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility_off, 0);
+                        passwordShow = true;
+                    } else {
+                        editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        editTextPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.visibility, 0);
+                        passwordShow = false;
                     }
+                    return passwordShow;
                 }
-                return false;
             }
+            return false;
         });
 
 
         textViewForgotPassword = getView().findViewById(R.id.text_view_otp_title);
-        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.container, resetPasswordFragment, ResetPasswordFragment.class.getSimpleName());
-                transaction.addToBackStack(TAG);
-                transaction.commit();
-            }
+        textViewForgotPassword.setOnClickListener(v -> {
+            ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.container, resetPasswordFragment, ResetPasswordFragment.class.getSimpleName());
+            transaction.addToBackStack(TAG);
+            transaction.commit();
         });
 
         buttonSignIn = view.findViewById(R.id.button_sign_in);
@@ -131,11 +126,8 @@ public class SignInFragment extends Fragment {
                                 DemographicsFragment demographicsFragment = new DemographicsFragment();
                                 transaction.replace(R.id.container, demographicsFragment, DemographicsFragment.class.getSimpleName());
                             } else {
-                                DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
-                                if (dashboardFragment == null) {
-                                    dashboardFragment = new DashboardFragment();
-                                }
-                                transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+                                RatingFragment ratingFragment = new RatingFragment();
+                                transaction.replace(R.id.container, ratingFragment, RatingFragment.class.getSimpleName());
                             }
                             transaction.commit();
                             break;

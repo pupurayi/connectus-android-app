@@ -56,4 +56,5 @@
     <string name="town">Town</string>
     <string name="township">Township</string>
     <string name="religion">Religion</string>
+    <string name="product_review">Product Review</string>
 </resources>

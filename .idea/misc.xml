@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.17299898682877407" />
         <entry key="app/src/main/res/layout/fragment_profile_details.xml" value="0.11684782608695653" />
         <entry key="app/src/main/res/layout/fragment_q_r_code.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/layout/fragment_rating.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_reset_password.xml" value="0.17325227963525835" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1598731884057971" />
         <entry key="app/src/main/res/layout/fragment_siba_profiles.xml" value="0.1" />
