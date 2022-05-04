@@ -12,6 +12,7 @@ import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.SignInRequest;
+import com.connectus.mobile.utils.Utils;
 
 import java.io.IOException;
 
@@ -40,12 +41,7 @@ public class SignInViewModel extends ViewModel {
 
                         responseLiveData.setValue(new ResponseDto("success", null, null));
                     } else {
-                        String errorMsg = null;
-                        try {
-                            errorMsg = response.errorBody().string();
-                        } catch (IOException e) {
-                            errorMsg = "Something went wrong";
-                        }
+                        String errorMsg = Utils.handleHttpException(response);
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }

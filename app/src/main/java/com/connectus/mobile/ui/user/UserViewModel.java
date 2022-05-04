@@ -11,6 +11,7 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.ResponseDto;
+import com.connectus.mobile.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,12 +44,7 @@ public class UserViewModel extends ViewModel {
 
                         responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", userDto));
                     } else {
-                        String errorMsg = null;
-                        try {
-                            errorMsg = response.errorBody().string();
-                        } catch (IOException e) {
-                            errorMsg = "Something went wrong";
-                        }
+                        String errorMsg = Utils.handleHttpException(response);
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }
@@ -79,12 +75,7 @@ public class UserViewModel extends ViewModel {
                         sharedPreferencesManager.setUser(userDto);
                         responseLiveData.setValue(new ResponseDto("success", "Successfully Updated!", null));
                     } else {
-                        String errorMsg = null;
-                        try {
-                            errorMsg = response.errorBody().string();
-                        } catch (IOException e) {
-                            errorMsg = "Something went wrong";
-                        }
+                        String errorMsg = Utils.handleHttpException(response);
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }

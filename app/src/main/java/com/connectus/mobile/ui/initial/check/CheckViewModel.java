@@ -11,6 +11,7 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.ResponseDto;
+import com.connectus.mobile.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,12 +44,7 @@ public class CheckViewModel extends ViewModel {
 
                         responseLiveData.setValue(new ResponseDto("success", null, null));
                     } else {
-                        String errorMsg = null;
-                        try {
-                            errorMsg = response.errorBody().string();
-                        } catch (IOException e) {
-                            errorMsg = "Something went wrong";
-                        }
+                        String errorMsg = Utils.handleHttpException(response);
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }
@@ -56,7 +52,7 @@ public class CheckViewModel extends ViewModel {
                 @Override
                 public void onFailure(Call<CheckResponseDto> call, Throwable t) {
                     Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!"+t.toString(), null));
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!" + t.toString(), null));
                 }
             });
         } catch (Exception e) {

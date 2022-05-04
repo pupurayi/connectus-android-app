@@ -11,6 +11,7 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.utils.Utils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -37,12 +38,7 @@ public class RatingViewModel extends ViewModel {
                         String message = response.body();
                         responseLiveData.setValue(new ResponseDto("success", message, null));
                     } else {
-                        String errorMsg = null;
-                        try {
-                            errorMsg = response.errorBody().string();
-                        } catch (IOException e) {
-                            errorMsg = "Something went wrong";
-                        }
+                        String errorMsg =  Utils.handleHttpException(response);
                         responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
                     }
                 }

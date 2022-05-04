@@ -10,6 +10,7 @@ import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.ResponseDto;
+import com.connectus.mobile.utils.Utils;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,12 +38,7 @@ public class ProductViewModel extends ViewModel {
                         ProductDto new_productsDto = response.body();
                         responseLiveData.setValue(new ResponseDto<>("success", "Successfully added new_products!", new_productsDto));
                     } else {
-                        String errorMsg = null;
-                        try {
-                            errorMsg = response.errorBody().string();
-                        } catch (IOException e) {
-                            errorMsg = "Something went wrong";
-                        }
+                        String errorMsg = Utils.handleHttpException(response);
                         responseLiveData.setValue(new ResponseDto<>("failed", errorMsg, null));
                     }
                 }
@@ -67,7 +63,7 @@ public class ProductViewModel extends ViewModel {
             ul = apiService.getUserProducts(userId);
         } else if (productType.equals(ProductType.RECOMMENDED)) {
             ul = apiService.getRecommendedProducts(userId);
-        } else if (productType.equals(ProductType.USER_RATING)){
+        } else if (productType.equals(ProductType.USER_RATING)) {
             ul = apiService.getProductsForUserRating(userId);
         }
         try {
