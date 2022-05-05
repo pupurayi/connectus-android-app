@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.method.PasswordTransformationMethod;
@@ -23,9 +22,7 @@ import android.widget.TextView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.CheckResponseDto;
-import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
@@ -131,7 +128,7 @@ public class SignUpFragment extends Fragment {
 
         textViewChangePhone = view.findViewById(R.id.text_view_change_phone);
         textViewChangePhone.setOnClickListener(v -> {
-            Common.clearSessionData(sharedPreferencesManager, getContext());
+            Utils.clearSessionData(sharedPreferencesManager, getContext());
             fragmentManager.popBackStack();
             Fragment authorizeFragment = fragmentManager.findFragmentByTag(CheckFragment.class.getSimpleName());
             if (authorizeFragment == null) {

@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
-import com.connectus.mobile.common.Common;
 import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 import com.hbb20.CountryCodePicker;
@@ -83,7 +82,7 @@ public class ResetPasswordFragment extends Fragment {
                 pd.setMessage("Resetting password...");
                 pd.show();
                 resetPasswordViewModel.hitResetPasswordApi(msisdn).observe(getViewLifecycleOwner(), responseDto -> {
-                    Common.hideSoftKeyboard(getActivity());
+                    Utils.hideSoftKeyboard(getActivity());
                     pd.dismiss();
                     switch (responseDto.getStatus()) {
                         case "success":

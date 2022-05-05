@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.common.Common;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.product.CreateProductFragment;
@@ -279,7 +278,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void logout() {
         pd.setMessage("Signing Out ...");
         pd.show();
-        Common.clearSessionData(sharedPreferencesManager, getContext());
+        Utils.clearSessionData(sharedPreferencesManager, getContext());
         CheckFragment checkFragment = new CheckFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.container, checkFragment, CheckFragment.class.getSimpleName());

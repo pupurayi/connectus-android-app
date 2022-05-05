@@ -1,14 +1,18 @@
 package com.connectus.mobile.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.connectus.mobile.api.dto.UserDto;
+import com.connectus.mobile.database.DbHandler;
+import com.connectus.mobile.database.SharedPreferencesManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -45,5 +49,27 @@ public class Utils {
             Log.d(TAG, "Exception: ", e);
         }
         return "Something went wrong!";
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        try {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    public static boolean isSessionValid(SharedPreferencesManager sharedPreferencesManager) {
+        return sharedPreferencesManager.getUser() != null;
+    }
+
+    public static void clearSessionData(SharedPreferencesManager sharedPreferencesManager, Context context) {
+        try {
+            sharedPreferencesManager.clearAll();
+            DbHandler dbHandler = new DbHandler(context);
+            dbHandler.deleteAllProducts();
+        } catch (Exception ignore) {
+        }
     }
 }
