@@ -18,6 +18,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class RatingFragment extends Fragment {
     ImageView imageViewAvatar, imageViewProductAvatar;
     TextView textViewProductName;
     ImageButton imageButtonDislike, imageButtonLike;
+    Button buttonSkip;
 
     FragmentManager fragmentManager;
     SharedPreferencesManager sharedPreferencesManager;
@@ -87,9 +89,13 @@ public class RatingFragment extends Fragment {
         textViewProductName = view.findViewById(R.id.text_view_product_name);
         imageButtonDislike = view.findViewById(R.id.image_button_dislike);
         imageButtonLike = view.findViewById(R.id.image_button_like);
+        buttonSkip = view.findViewById(R.id.button_skip);
 
         imageButtonDislike.setOnClickListener(view1 -> rate(false));
         imageButtonLike.setOnClickListener(view1 -> rate(true));
+        buttonSkip.setOnClickListener(v -> {
+            proceedToDashboard();
+        });
 
         getRatingProducts();
     }
