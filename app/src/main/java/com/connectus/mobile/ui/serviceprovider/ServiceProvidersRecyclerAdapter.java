@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.ui.product.ProductsFragment;
 import com.connectus.mobile.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class ServiceProvidersRecyclerAdapter extends RecyclerView.Adapter<ServiceProvidersRecyclerAdapter.ViewHolder> {
 
@@ -53,8 +58,8 @@ public class ServiceProvidersRecyclerAdapter extends RecyclerView.Adapter<Servic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserDto userDto = serviceProviders.get(position);
-        holder.sessionUserDto =
-                holder.userDto = serviceProviders.get(position);
+        holder.sessionUserDto = sessionUserDto;
+        holder.userDto = serviceProviders.get(position);
         if (userDto.getAvatar() != null) {
             byte[] decodedString = Base64.decode(userDto.getAvatar(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -91,7 +96,23 @@ public class ServiceProvidersRecyclerAdapter extends RecyclerView.Adapter<Servic
             buttonProducts = itemView.findViewById(R.id.button_products);
 
             buttonChat.setOnClickListener(view -> Utils.sendWhatsappMessage(activity, userDto.getMsisdn(), "Hello " + userDto.getFirstName() + ", I am " + sessionUserDto.getFirstName() + ", I would like to enquire on your ConnectUs products."));
+            buttonProducts.setOnClickListener(view -> {
+                showProducts(userDto);
+            });
         }
+    }
+
+    public void showProducts(UserDto userDto) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", userDto.getId().toString());
+        bundle.putString("title", userDto.getFirstName() + "'s Products");
+        bundle.putString("productType", ProductType.USER.toString());
+        ProductsFragment productsFragment = new ProductsFragment();
+        productsFragment.setArguments(bundle);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.container, productsFragment, FragmentTransaction.class.getSimpleName());
+        transaction.addToBackStack(ProductsFragment.class.getSimpleName());
+        transaction.commit();
     }
 }
 

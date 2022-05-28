@@ -232,8 +232,13 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
                 showProfileDetailsFragment();
                 break;
             case R.id.nav_new_products:
-                ProductsFragment productsFragment = new com.connectus.mobile.ui.product.ProductsFragment();
-                transaction.add(R.id.container, productsFragment, com.connectus.mobile.ui.product.ProductsFragment.class.getSimpleName());
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", userDto.getId().toString());
+                bundle.putString("title", "My Products");
+                bundle.putString("productType", ProductType.USER.toString());
+                ProductsFragment productsFragment = new ProductsFragment();
+                productsFragment.setArguments(bundle);
+                transaction.add(R.id.container, productsFragment, ProductsFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
             case R.id.nav_create_product:
