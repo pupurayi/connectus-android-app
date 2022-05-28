@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Log.d(TAG, "Syncing location...");
-                                requestLocationPermission(getParent());
-                                getLastLocation();
+                                syncLocation();
                             }
                         },
                         0,
@@ -100,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
         }
         transaction.commit();
     }
+
+    private void syncLocation() {
+        requestLocationPermission(this);
+        getLastLocation();
+    }
+
 
     public void updateApp(AppUpdateInfo appUpdateInfo, int appUpdateType) {
         try {

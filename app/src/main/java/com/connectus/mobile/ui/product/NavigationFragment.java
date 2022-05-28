@@ -7,6 +7,8 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +65,6 @@ public class NavigationFragment extends Fragment {
         if (arguments != null) {
             destinationLat = arguments.getDouble("destinationLat");
             destinationLng = arguments.getDouble("destinationLng");
-            this.link = getLink();
             String headers = arguments.getString("headers");
             if (headers != null) {
                 this.headers = new Gson().fromJson(headers, new TypeToken<HashMap<String, String>>() {
@@ -74,6 +75,11 @@ public class NavigationFragment extends Fragment {
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_navigation, container, false);
+    }
+
+    public void refresh() {
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> webView.loadUrl(getLink()), 60000);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -88,18 +94,15 @@ public class NavigationFragment extends Fragment {
         UserDto userDto = sharedPreferencesManager.getUser();
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
-
         fragmentManager = getActivity().getSupportFragmentManager();
-        if (link == null) {
-            getActivity().onBackPressed();
-        }
 
         webView = getView().findViewById(R.id.web_view);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new MyWebViewClient());
+        this.link = getLink();
         webView.loadUrl(link, headers);
-
+        refresh();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
