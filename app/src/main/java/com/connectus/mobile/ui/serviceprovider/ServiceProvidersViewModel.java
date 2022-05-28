@@ -1,5 +1,6 @@
 package com.connectus.mobile.ui.serviceprovider;
 
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;

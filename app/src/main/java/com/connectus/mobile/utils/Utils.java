@@ -2,7 +2,10 @@ package com.connectus.mobile.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -70,6 +73,30 @@ public class Utils {
             DbHandler dbHandler = new DbHandler(context);
             dbHandler.deleteAllProducts();
         } catch (Exception ignore) {
+        }
+    }
+
+    public static  boolean appInstalled(Activity activity, String url) {
+        PackageManager packageManager = activity.getPackageManager();
+        try {
+            packageManager.getPackageInfo(url, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (Exception ignored) {
+        }
+        return false;
+    }
+
+    public static boolean isWhatsappInstalled(Activity activity) {
+        return Utils.appInstalled(activity, "com.whatsapp");
+    }
+
+    public static void sendWhatsappMessage(Activity activity, String msisdn, String message) {
+        if (isWhatsappInstalled(activity)) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://api.whatsapp.com/send?phone=" + msisdn + "&text=" + message));
+            activity.startActivity(intent);
+        }else{
+            Utils.alert(activity, "Connect Us", "Please install Whatsapp or Whatsapp Web!");
         }
     }
 }

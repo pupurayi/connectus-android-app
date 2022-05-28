@@ -2,6 +2,9 @@ package com.connectus.mobile.ui.serviceprovider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +76,7 @@ public class ServiceProvidersFragment extends Fragment {
         Utils.loadAvatar(userDto, imageViewAvatar);
 
         getServiceProviders();
-        serviceProvidersRecyclerAdapter = new ServiceProvidersRecyclerAdapter(getContext(), serviceProviders, fragmentManager);
+        serviceProvidersRecyclerAdapter = new ServiceProvidersRecyclerAdapter(getActivity(), serviceProviders, userDto, fragmentManager);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView recyclerViewProducts = view.findViewById(R.id.recycler_view_products);

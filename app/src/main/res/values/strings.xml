@@ -63,4 +63,5 @@
     <string name="like_dislike">Do you see yourself at some point buying the product above?</string>
     <string name="location">Location</string>
     <string name="joined">Joined</string>
+    <string name="chat">Chat</string>
 </resources>
