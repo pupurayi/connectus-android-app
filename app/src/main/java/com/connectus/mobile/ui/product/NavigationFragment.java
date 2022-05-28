@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.connectus.mobile.MainActivity;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
@@ -44,10 +45,10 @@ public class NavigationFragment extends Fragment {
 
     FragmentManager fragmentManager;
     WebView webView;
-    private String link, parentFragment;
+    private String link;
     private Map<String, String> headers = new HashMap<>();
 
-    double currentLat = -17.838721867867875, currentLng = 31.00688344366997, destinationLat = 0, destinationLng = 0;
+    double destinationLat, destinationLng;
 
     private SharedPreferencesManager sharedPreferencesManager;
 
@@ -62,9 +63,7 @@ public class NavigationFragment extends Fragment {
         if (arguments != null) {
             destinationLat = arguments.getDouble("destinationLat");
             destinationLng = arguments.getDouble("destinationLng");
-
-            parentFragment = arguments.getString("parentFragment");
-            link = CORE_BASE_URL + "/api/v1/navigation?currentLat=" + currentLat + "&currentLng=" + currentLng + "&destinationLat=" + destinationLat + "&destinationLng=" + destinationLng;
+            this.link = getLink();
             String headers = arguments.getString("headers");
             if (headers != null) {
                 this.headers = new Gson().fromJson(headers, new TypeToken<HashMap<String, String>>() {
@@ -84,7 +83,7 @@ public class NavigationFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        
+
 
         UserDto userDto = sharedPreferencesManager.getUser();
         imageViewBack = view.findViewById(R.id.image_view_back);
@@ -134,6 +133,11 @@ public class NavigationFragment extends Fragment {
                 pd.dismiss();
             }
         }
+    }
+
+    private String getLink() {
+        MainActivity mainActivity = ((MainActivity) getActivity());
+        return CORE_BASE_URL + "/api/v1/navigation?currentLat=" + mainActivity.getCurrentLat() + "&currentLng=" + mainActivity.getCurrentLng() + "&destinationLat=" + destinationLat + "&destinationLng=" + destinationLng;
     }
 
 }

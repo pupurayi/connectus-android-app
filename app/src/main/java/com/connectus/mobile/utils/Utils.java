@@ -1,5 +1,6 @@
 package com.connectus.mobile.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
@@ -97,6 +100,24 @@ public class Utils {
             activity.startActivity(intent);
         }else{
             Utils.alert(activity, "Connect Us", "Please install Whatsapp or Whatsapp Web!");
+        }
+    }
+
+    public static boolean hasLocationPermission(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static void requestLocationPermission(Activity activity) {
+        if (!hasLocationPermission(activity.getApplicationContext())) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    new String[] {
+                            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+                    },
+                    999);
         }
     }
 }

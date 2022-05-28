@@ -1,8 +1,12 @@
 package com.connectus.mobile;
 
+import static com.connectus.mobile.utils.Utils.requestLocationPermission;
+
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.IntentSender;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -14,6 +18,8 @@ import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
 import com.connectus.mobile.ui.initial.splashscreen.SplashScreenFragment;
 import com.connectus.mobile.utils.Utils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -21,13 +27,18 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int DAYS_FOR_FLEXIBLE_UPDATE = 7;
 
-    ProgressDialog pd;
-    SharedPreferencesManager sharedPreferencesManager;
-    UserDto user;
+    private ProgressDialog pd;
+    private SharedPreferencesManager sharedPreferencesManager;
+    private FusedLocationProviderClient fusedLocationClient;
+    private UserDto user;
+    public double currentLat = 0, currentLng = 0;
 
     // https://developer.android.com/guide/playcore/in-app-updates/kotlin-java
     AppUpdateManager appUpdateManager;
@@ -37,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         appUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
         Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
@@ -58,6 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         pd = new ProgressDialog(this);
+        new Timer()
+                .schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, "Syncing location...");
+                                requestLocationPermission(getParent());
+                                getLastLocation();
+                            }
+                        },
+                        0,
+                        60 * 1000);
 
         sharedPreferencesManager = new SharedPreferencesManager(this);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -89,5 +113,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @SuppressLint("MissingPermission")
+    public void getLastLocation() {
+        fusedLocationClient
+                .getLastLocation()
+                .addOnSuccessListener(
+                        location -> {
+                            if (location != null) {
+                                this.currentLat = location.getLatitude();
+                                this.currentLng = location.getLongitude();
+                            }
+                        });
+    }
+
+    public double getCurrentLat() {
+        return currentLat;
+    }
+
+    public void setCurrentLat(double currentLat) {
+        this.currentLat = currentLat;
+    }
+
+    public double getCurrentLng() {
+        return currentLng;
+    }
+
+    public void setCurrentLng(double currentLng) {
+        this.currentLng = currentLng;
     }
 }
