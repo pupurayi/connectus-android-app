@@ -47,6 +47,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         ProductDto productDto = products.get(position);
         holder.textViewName.setText(productDto.getName());
         holder.textViewDescription.setText(productDto.getDescription());
+        holder.textViewPrice.setText(new StringBuilder().append("$").append(productDto.getPrice()).toString());
         byte[] decodedString = Base64.decode(productDto.getImageFirst(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.imageViewProduct.setImageBitmap(decodedByte);
@@ -60,7 +61,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textViewName, textViewDescription;
+        private final TextView textViewName, textViewDescription, textViewPrice;
         private final ImageView imageViewProduct;
         private final RatingBar ratingBar;
         private ProductDto productDto;
@@ -69,6 +70,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             super(itemView);
             textViewName = itemView.findViewById(R.id.text_view_product_name);
             textViewDescription = itemView.findViewById(R.id.text_view_product_description);
+            textViewPrice = itemView.findViewById(R.id.text_view_product_price);
             imageViewProduct = itemView.findViewById(R.id.image_view_product);
             ratingBar = itemView.findViewById(R.id.rating_bar);
 

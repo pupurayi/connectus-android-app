@@ -63,7 +63,7 @@ public interface APIService {
             "Accept: application/json"
     })
     @GET("/api/v1/product/search/{userId}")
-    Call<List<ProductDto>> searchProducts(@Path("userId") UUID userId, @Query("category") String category, @Query("name") String name, @Query("sortBy") String sortBy);
+    Call<List<ProductDto>> searchProducts(@Path("userId") UUID userId, @Query("category") String category, @Query("name") String name, @Query("location") String location, @Query("sortBy") String sortBy);
 
     @Headers({
             "Accept: application/json"

@@ -37,12 +37,12 @@ public class SearchProductsFragment extends Fragment {
     ProgressDialog pd;
     ImageView imageViewBack, imageViewAvatar;
 
-    EditText editTextProductCategory, editTextProductName, editTextSortBy;
+    EditText editTextProductCategory, editTextProductName, editTextLocation, editTextSortBy;
     Button buttonSearch;
 
     FragmentManager fragmentManager;
     private SharedPreferencesManager sharedPreferencesManager;
-    boolean productDialogActive = false, sortByDialog = false;
+    boolean categoryDialog = false, sortByDialog = false;
 
 
     @Override
@@ -67,6 +67,7 @@ public class SearchProductsFragment extends Fragment {
 
         editTextProductCategory = view.findViewById(R.id.edit_text_product_category);
         editTextProductName = view.findViewById(R.id.edit_text_product_name);
+        editTextLocation = view.findViewById(R.id.edit_text_location);
         editTextSortBy = view.findViewById(R.id.edit_text_sort_by);
 
         imageViewAvatar = view.findViewById(R.id.circular_image_view_avatar);
@@ -78,8 +79,8 @@ public class SearchProductsFragment extends Fragment {
 
         editTextProductCategory.setInputType(InputType.TYPE_NULL);
         editTextProductCategory.setOnTouchListener((v, event) -> {
-            if (!productDialogActive) {
-                productDialogActive = true;
+            if (!categoryDialog) {
+                categoryDialog = true;
                 String[] categories = ProductConstants.categories.toArray(new String[0]);
                 CharSequence[] options = new CharSequence[categories.length];
                 for (int i = 0; i < categories.length; i++) {
@@ -88,13 +89,13 @@ public class SearchProductsFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.categories));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    productDialogActive = true;
+                    categoryDialog = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
                     String option = (String) options[item];
                     editTextProductCategory.setText(option);
-                    productDialogActive = false;
+                    categoryDialog = false;
                 });
                 builder.show();
             }
@@ -113,7 +114,7 @@ public class SearchProductsFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.sort_by));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    sortByDialog = true;
+                    sortByDialog = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
@@ -131,6 +132,7 @@ public class SearchProductsFragment extends Fragment {
         buttonSearch.setOnClickListener(v -> {
             String category = editTextProductCategory.getText().toString();
             String name = editTextProductName.getText().toString();
+            String location = editTextLocation.getText().toString();
             String sortBy = editTextSortBy.getText().toString();
 
             if (!name.isEmpty()) {
@@ -140,6 +142,7 @@ public class SearchProductsFragment extends Fragment {
                 bundle.putString("productType", ProductType.SEARCH_QUERY.toString());
                 bundle.putString("category", category);
                 bundle.putString("name", name);
+                bundle.putString("location", location);
                 bundle.putString("sortBy", sortBy);
                 bundle.putBoolean("promptCreateProduct", false);
 

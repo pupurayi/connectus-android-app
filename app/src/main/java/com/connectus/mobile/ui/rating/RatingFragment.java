@@ -135,7 +135,7 @@ public class RatingFragment extends Fragment {
     private void getRatingProducts() {
         pd.setMessage("Loading...");
         pd.show();
-        productViewModel.getProducts(userDto.getId(), ProductType.USER_RATING, null, null, null).observe(getViewLifecycleOwner(), responseDto -> {
+        productViewModel.getProducts(userDto.getId(), ProductType.USER_RATING, null, null, null, null).observe(getViewLifecycleOwner(), responseDto -> {
             switch (responseDto.getStatus()) {
                 case "success":
                     pd.dismiss();

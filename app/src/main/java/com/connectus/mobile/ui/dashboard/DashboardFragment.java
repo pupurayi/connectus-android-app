@@ -184,7 +184,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Please Wait ...");
         pd.show();
 
-        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED, null, null, null).observe(getViewLifecycleOwner(), responseDto -> {
+        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED, null, null, null, null).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
             switch (responseDto.getStatus()) {
                 case "success":
