@@ -34,6 +34,7 @@ import com.connectus.mobile.ui.product.ProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
+import com.connectus.mobile.ui.serviceprovider.ServiceProvidersFragment;
 import com.connectus.mobile.ui.user.UserDetailsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.ui.settings.SettingsFragment;
@@ -238,6 +239,11 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             case R.id.nav_create_product:
                 CreateProductFragment createProductFragment = new CreateProductFragment();
                 transaction.add(R.id.container, createProductFragment, CreateProductFragment.class.getSimpleName());
+                transaction.addToBackStack(TAG);
+                break;
+            case R.id.nav_service_providers:
+                ServiceProvidersFragment serviceProvidersFragment = new ServiceProvidersFragment();
+                transaction.add(R.id.container, serviceProvidersFragment, ServiceProvidersFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
             case R.id.nav_settings:

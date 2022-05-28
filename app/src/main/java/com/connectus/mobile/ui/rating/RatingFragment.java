@@ -107,15 +107,11 @@ public class RatingFragment extends Fragment {
         ProductDto productDto = ratingProducts.get(index);
         ratings.put(productDto.getId(), like);
         if (index == ratingProducts.size() - 1) {
-            pd.setMessage("Submitting Results...");
-            pd.show();
             ratingViewModel.hitSubmitProductsRating(getContext(), userDto.getId(), ratings).observe(getViewLifecycleOwner(), responseDto -> {
-                pd.dismiss();
                 switch (responseDto.getStatus()) {
                     case "success":
                     case "failed":
                     case "error":
-                        pd.dismiss();
                         proceedToDashboard();
                         break;
                 }

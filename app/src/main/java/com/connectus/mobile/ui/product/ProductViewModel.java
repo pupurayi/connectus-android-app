@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class ProductViewModel extends ViewModel {
 
-    private static final String TAG = com.connectus.mobile.ui.product.ProductViewModel.class.getSimpleName();
+    private static final String TAG = ProductViewModel.class.getSimpleName();
 
     private MutableLiveData<ResponseDto> responseLiveData;
     private final APIService apiService = new RestClients().get();

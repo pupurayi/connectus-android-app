@@ -46,13 +46,11 @@ public interface APIService {
     @POST("/api/v1/product/{userId}")
     Call<ProductDto> createProduct(@Body CreateProductDto createProductDto);
 
-
     @Headers({
             "Accept: application/json"
     })
     @GET("/api/v1/product/user/{userId}")
     Call<List<ProductDto>> getUserProducts(@Path("userId") UUID userId);
-
 
     @Headers({
             "Accept: application/json"
@@ -91,4 +89,11 @@ public interface APIService {
     })
     @POST("/api/v1/user/products/rate/{userId}")
     Call<String> rateProducts(@Path("userId") UUID userId, @Body Map<UUID, Boolean> ratings);
+
+
+    @Headers({
+            "Accept: application/json"
+    })
+    @GET("/api/v1/user/service-providers/{userId}")
+    Call<List<UserDto>> getServiceProviders(@Path("userId") UUID userId);
 }

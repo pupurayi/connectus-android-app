@@ -1,6 +1,5 @@
 package com.connectus.mobile.api.dto;
 
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class UserDto {
