@@ -9,18 +9,16 @@ public class CreateProductDto {
     private String description;
     private double price;
     private String imageFirst;
-    private String imageSecond;
     private double lat;
     private double lng;
 
-    public CreateProductDto(UUID userId, String category, String name, String description, double price, String imageFirst, String imageSecond, double lat, double lng) {
+    public CreateProductDto(UUID userId, String category, String name, String description, double price, String imageFirst, double lat, double lng) {
         this.userId = userId;
         this.category = category;
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageFirst = imageFirst;
-        this.imageSecond = imageSecond;
         this.lat = lat;
         this.lng = lng;
     }
@@ -72,14 +70,6 @@ public class CreateProductDto {
 
     public void setImageFirst(String imageFirst) {
         this.imageFirst = imageFirst;
-    }
-
-    public String getImageSecond() {
-        return imageSecond;
-    }
-
-    public void setImageSecond(String imageSecond) {
-        this.imageSecond = imageSecond;
     }
 
     public double getLat() {

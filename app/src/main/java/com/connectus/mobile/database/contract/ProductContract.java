@@ -12,7 +12,6 @@ public class ProductContract {
         private static final String DESCRIPTION = "description";
         private static final String PRICE = "price";
         private static final String IMAGE_FIRST = "imageFirst";
-        private static final String IMAGE_SECOND = "imageSecond";
         private static final String LAT = "lat";
         private static final String LNG = "lng";
         private static final String RATING = "rating";
@@ -51,10 +50,6 @@ public class ProductContract {
             return IMAGE_FIRST;
         }
 
-        public static String getImageSecond() {
-            return IMAGE_SECOND;
-        }
-
         public static String getLAT() {
             return LAT;
         }
@@ -84,7 +79,6 @@ public class ProductContract {
             ProductEntry.DESCRIPTION + " TEXT," +
             ProductEntry.PRICE + " REAL," +
             ProductEntry.IMAGE_FIRST + " BLOB," +
-            ProductEntry.IMAGE_SECOND + " BLOB," +
             ProductEntry.LAT + " REAL," +
             ProductEntry.LNG + " REAL," +
             ProductEntry.RATING + " INTEGER," +

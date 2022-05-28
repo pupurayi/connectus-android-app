@@ -25,7 +25,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "connectus.db";
     // always update database version
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 12;
 
     public DbHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,7 +52,6 @@ public class DbHandler extends SQLiteOpenHelper {
         cValues.put(ProductContract.ProductEntry.getDESCRIPTION(), productDto.getDescription());
         cValues.put(ProductContract.ProductEntry.getPRICE(), productDto.getPrice());
         cValues.put(ProductContract.ProductEntry.getImageFirst(), productDto.getImageFirst());
-        cValues.put(ProductContract.ProductEntry.getImageSecond(), productDto.getImageSecond());
         cValues.put(ProductContract.ProductEntry.getLAT(), productDto.getLat());
         cValues.put(ProductContract.ProductEntry.getLNG(), productDto.getLng());
         cValues.put(ProductContract.ProductEntry.getRATING(), productDto.getRating());
@@ -73,7 +72,6 @@ public class DbHandler extends SQLiteOpenHelper {
                 ProductContract.ProductEntry.getDESCRIPTION(),
                 ProductContract.ProductEntry.getPRICE(),
                 ProductContract.ProductEntry.getImageFirst(),
-                ProductContract.ProductEntry.getImageSecond(),
                 ProductContract.ProductEntry.getLAT(),
                 ProductContract.ProductEntry.getLNG(),
                 ProductContract.ProductEntry.getRATING(),
@@ -89,7 +87,6 @@ public class DbHandler extends SQLiteOpenHelper {
         int descriptionPos = cursor.getColumnIndex(ProductContract.ProductEntry.getDESCRIPTION());
         int pricePos = cursor.getColumnIndex(ProductContract.ProductEntry.getPRICE());
         int imageFirstPos = cursor.getColumnIndex(ProductContract.ProductEntry.getImageFirst());
-        int imageSecondPos = cursor.getColumnIndex(ProductContract.ProductEntry.getImageSecond());
         int latPos = cursor.getColumnIndex(ProductContract.ProductEntry.getLAT());
         int lngPos = cursor.getColumnIndex(ProductContract.ProductEntry.getLNG());
         int ratingPos = cursor.getColumnIndex(ProductContract.ProductEntry.getRATING());
@@ -108,13 +105,12 @@ public class DbHandler extends SQLiteOpenHelper {
             String description = cursor.getString(descriptionPos);
             double price = cursor.getDouble(pricePos);
             String imageFirst = cursor.getString(imageFirstPos);
-            String imageSecond = cursor.getString(imageSecondPos);
             double lat = cursor.getDouble(latPos);
             double lng = cursor.getDouble(lngPos);
             int rating = cursor.getInt(ratingPos);
             String created = cursor.getString(createdPos);
             String updated = cursor.getString(updatedPos);
-            products.add(new ProductDto(productId, userId, category, name, description, price, imageFirst, imageSecond, lat, lng, rating, created, updated));
+            products.add(new ProductDto(productId, userId, category, name, description, price, imageFirst, lat, lng, rating, created, updated));
         }
         cursor.close();
         db.close();

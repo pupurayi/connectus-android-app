@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Base64;
@@ -15,13 +16,18 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.dashboard.DashboardFragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import retrofit2.Response;
@@ -119,5 +125,24 @@ public class Utils {
                     },
                     999);
         }
+    }
+
+    public static String encodeImage(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] b = byteArrayOutputStream.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
+
+    public static void returnToDashboard(FragmentManager fragmentManager) {
+        DashboardFragment dashboardFragment = (DashboardFragment) fragmentManager.findFragmentByTag(DashboardFragment.class.getSimpleName());
+        if (dashboardFragment == null) {
+            dashboardFragment = new DashboardFragment();
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, dashboardFragment, DashboardFragment.class.getSimpleName());
+        transaction.commit();
     }
 }

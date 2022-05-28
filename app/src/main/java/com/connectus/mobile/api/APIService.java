@@ -43,7 +43,7 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
-    @POST("/api/v1/product/{userId}")
+    @POST("/api/v1/product")
     Call<ProductDto> createProduct(@Body CreateProductDto createProductDto);
 
     @Headers({

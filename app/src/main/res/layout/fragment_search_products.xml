@@ -47,7 +47,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/inter"
             android:gravity="center_vertical"
-            android:text="@string/pick_pictures"
+            android:text="@string/search_products"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
@@ -67,70 +67,79 @@
             app:civ_border_width="2dp" />
     </RelativeLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout_main"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_relative">
+        app:layout_constraintTop_toBottomOf="@+id/layout_relative"
+        app:layout_constraintVertical_bias="0.0">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_map"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/product_category">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_product_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/product_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <ImageView
-                android:id="@+id/image_view_first"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/placeholder_upload_image"
-                app:layout_constraintBottom_toTopOf="@+id/image_view_second"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/sort_by">
 
-            <ImageView
-                android:id="@+id/image_view_second"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/placeholder_upload_image"
-                app:layout_constraintBottom_toTopOf="@+id/button_next"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_view_first" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_sort_by"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <Button
-                android:id="@+id/button_next"
-                android:layout_width="0dp"
+                android:id="@+id/button_search"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/next"
-                app:cornerRadius="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_view_second" />
+                android:layout_marginTop="20dp"
+                android:text="@string/search"
+                app:cornerRadius="20dp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

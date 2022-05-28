@@ -10,14 +10,13 @@ public class ProductDto {
     private String description;
     private double price;
     private String imageFirst;
-    private String imageSecond;
     private double lat;
     private double lng;
     private int rating;
     private String created;
     private String updated;
 
-    public ProductDto(UUID id, UUID userId, String category, String name, String description, double price, String imageFirst, String imageSecond, double lat, double lng, int rating, String created, String updated) {
+    public ProductDto(UUID id, UUID userId, String category, String name, String description, double price, String imageFirst, double lat, double lng, int rating, String created, String updated) {
         this.id = id;
         this.userId = userId;
         this.category = category;
@@ -25,7 +24,6 @@ public class ProductDto {
         this.description = description;
         this.price = price;
         this.imageFirst = imageFirst;
-        this.imageSecond = imageSecond;
         this.lat = lat;
         this.lng = lng;
         this.rating = rating;
@@ -87,14 +85,6 @@ public class ProductDto {
 
     public void setImageFirst(String imageFirst) {
         this.imageFirst = imageFirst;
-    }
-
-    public String getImageSecond() {
-        return imageSecond;
-    }
-
-    public void setImageSecond(String imageSecond) {
-        this.imageSecond = imageSecond;
     }
 
     public double getLat() {
