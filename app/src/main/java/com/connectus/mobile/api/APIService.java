@@ -5,7 +5,7 @@ import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.api.dto.CheckResponseDto;
 import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.api.dto.SignInRequest;
-import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.api.dto.ProductDto;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -58,6 +59,11 @@ public interface APIService {
     @GET("/api/v1/product/recommended/user/{userId}")
     Call<List<ProductDto>> getRecommendedProducts(@Path("userId") UUID userId);
 
+    @Headers({
+            "Accept: application/json"
+    })
+    @GET("/api/v1/product/search/{userId}")
+    Call<List<ProductDto>> searchProducts(@Path("userId") UUID userId, @Query("category") String category, @Query("name") String name, @Query("sortBy") String sortBy);
 
     @Headers({
             "Accept: application/json"

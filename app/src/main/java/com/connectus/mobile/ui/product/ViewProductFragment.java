@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.user.UserViewModel;

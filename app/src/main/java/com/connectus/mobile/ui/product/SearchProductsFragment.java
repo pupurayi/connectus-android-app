@@ -42,7 +42,7 @@ public class SearchProductsFragment extends Fragment {
 
     FragmentManager fragmentManager;
     private SharedPreferencesManager sharedPreferencesManager;
-    boolean productDialogActive = false;
+    boolean productDialogActive = false, sortByDialog = false;
 
 
     @Override
@@ -101,6 +101,31 @@ public class SearchProductsFragment extends Fragment {
             return false;
         });
 
+        editTextSortBy.setInputType(InputType.TYPE_NULL);
+        editTextSortBy.setOnTouchListener((v, event) -> {
+            if (!sortByDialog) {
+                sortByDialog = true;
+                String[] strategies = {"Price", "Proximity", "Rating", "Name", "Created"};
+                CharSequence[] options = new CharSequence[strategies.length];
+                for (int i = 0; i < strategies.length; i++) {
+                    options[i] = strategies[i];
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(getString(R.string.sort_by));
+                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
+                    sortByDialog = true;
+                    dialog.dismiss();
+                });
+                builder.setItems(options, (dialog, item) -> {
+                    String option = (String) options[item];
+                    editTextSortBy.setText(option);
+                    sortByDialog = false;
+                });
+                builder.show();
+            }
+            return false;
+        });
+
 
         buttonSearch = view.findViewById(R.id.button_search);
         buttonSearch.setOnClickListener(v -> {
@@ -108,25 +133,25 @@ public class SearchProductsFragment extends Fragment {
             String name = editTextProductName.getText().toString();
             String sortBy = editTextSortBy.getText().toString();
 
-            if (!category.isEmpty() && !name.isEmpty() && !sortBy.isEmpty()) {
+            if (!name.isEmpty()) {
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", userDto.getId().toString());
                 bundle.putString("title", "Search Results");
-                bundle.putString("productType", ProductType.USER.toString());
+                bundle.putString("productType", ProductType.SEARCH_QUERY.toString());
+                bundle.putString("category", category);
+                bundle.putString("name", name);
+                bundle.putString("sortBy", sortBy);
+                bundle.putBoolean("promptCreateProduct", false);
+
                 ProductsFragment productsFragment = new ProductsFragment();
                 productsFragment.setArguments(bundle);
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.add(R.id.container, productsFragment, FragmentTransaction.class.getSimpleName());
                 transaction.addToBackStack(ProductsFragment.class.getSimpleName());
                 transaction.commit();
+
             } else {
-                if (category.isEmpty()) {
-                    Snackbar.make(view, "Product Category cannot be null!", Snackbar.LENGTH_LONG).show();
-                } else if (name.isEmpty()) {
-                    Snackbar.make(view, "Product Name cannot be null!", Snackbar.LENGTH_LONG).show();
-                } else if (sortBy.isEmpty()) {
-                    Snackbar.make(view, "Sort order cannot be null!", Snackbar.LENGTH_LONG).show();
-                }
+                Snackbar.make(view, "Product Name cannot be null!", Snackbar.LENGTH_LONG).show();
             }
         });
     }

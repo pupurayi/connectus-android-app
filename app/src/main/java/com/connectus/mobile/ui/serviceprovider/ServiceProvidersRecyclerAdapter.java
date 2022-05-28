@@ -2,7 +2,6 @@ package com.connectus.mobile.ui.serviceprovider;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,14 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.ui.dashboard.DashboardFragment;
-import com.connectus.mobile.ui.product.ProductDto;
 import com.connectus.mobile.ui.product.ProductsFragment;
 import com.connectus.mobile.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class ServiceProvidersRecyclerAdapter extends RecyclerView.Adapter<ServiceProvidersRecyclerAdapter.ViewHolder> {
 
@@ -107,6 +102,7 @@ public class ServiceProvidersRecyclerAdapter extends RecyclerView.Adapter<Servic
         bundle.putString("userId", userDto.getId().toString());
         bundle.putString("title", userDto.getFirstName() + "'s Products");
         bundle.putString("productType", ProductType.USER.toString());
+        bundle.putBoolean("promptCreateProduct", false);
         ProductsFragment productsFragment = new ProductsFragment();
         productsFragment.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();

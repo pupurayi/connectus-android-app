@@ -1,7 +1,6 @@
 package com.connectus.mobile.ui.product;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.utils.Utils;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,8 +51,9 @@ public class ProductsFragment extends Fragment {
     UserDto userDto = null;
     List<ProductDto> products = new LinkedList<>();
     private UUID userId;
-    private String title;
+    private String title, category, name, sortBy;
     private ProductType productType;
+    private boolean promptCreateProduct;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +67,12 @@ public class ProductsFragment extends Fragment {
             userId = UUID.fromString(arguments.getString("userId"));
             title = arguments.getString("title");
             productType = ProductType.valueOf(arguments.getString("productType"));
+            promptCreateProduct = arguments.getBoolean("promptCreateProduct");
+            if (productType.equals(ProductType.SEARCH_QUERY)) {
+                category = arguments.getString("category");
+                name = arguments.getString("name");
+                sortBy = arguments.getString("sortBy");
+            }
         } else {
             getActivity().onBackPressed();
         }
@@ -86,7 +90,7 @@ public class ProductsFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
 
         buttonCreateProduct = view.findViewById(R.id.button_create_product);
-        if (userId.equals(userDto.getId())) {
+        if (promptCreateProduct) {
             buttonCreateProduct.setVisibility(View.VISIBLE);
         } else {
             buttonCreateProduct.setVisibility(View.GONE);
@@ -118,7 +122,7 @@ public class ProductsFragment extends Fragment {
     private void getProducts() {
         pd.setMessage("Fetching ...");
         pd.show();
-        productsViewModel.getProducts(userId, productType).observe(getViewLifecycleOwner(), responseDto -> {
+        productsViewModel.getProducts(userId, productType, category, name, sortBy).observe(getViewLifecycleOwner(), responseDto -> {
             switch (responseDto.getStatus()) {
                 case "success":
                     pd.dismiss();

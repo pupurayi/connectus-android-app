@@ -1,4 +1,4 @@
-package com.connectus.mobile.ui.product;
+package com.connectus.mobile.api.dto;
 
 import java.util.UUID;
 

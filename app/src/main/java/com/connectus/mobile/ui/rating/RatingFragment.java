@@ -3,11 +3,9 @@ package com.connectus.mobile.ui.rating;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,25 +18,18 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProductType;
-import com.connectus.mobile.api.dto.ResponseDto;
-import com.connectus.mobile.api.dto.SignInRequest;
 import com.connectus.mobile.api.dto.UserDto;
-import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
-import com.connectus.mobile.ui.initial.demographics.DemographicsFragment;
-import com.connectus.mobile.ui.initial.signin.SignInFragment;
-import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.utils.Utils;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -144,7 +135,7 @@ public class RatingFragment extends Fragment {
     private void getRatingProducts() {
         pd.setMessage("Loading...");
         pd.show();
-        productViewModel.getProducts(userDto.getId(), ProductType.USER_RATING).observe(getViewLifecycleOwner(), responseDto -> {
+        productViewModel.getProducts(userDto.getId(), ProductType.USER_RATING, null, null, null).observe(getViewLifecycleOwner(), responseDto -> {
             switch (responseDto.getStatus()) {
                 case "success":
                     pd.dismiss();

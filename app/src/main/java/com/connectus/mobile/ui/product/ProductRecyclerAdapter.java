@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.ui.dashboard.DashboardFragment;
 
 import java.util.Collections;

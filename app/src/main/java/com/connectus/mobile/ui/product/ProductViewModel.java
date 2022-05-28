@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModel;
 import com.connectus.mobile.api.APIService;
 import com.connectus.mobile.api.RestClients;
 import com.connectus.mobile.api.dto.CreateProductDto;
+import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.ResponseDto;
 import com.connectus.mobile.utils.Utils;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,7 +56,7 @@ public class ProductViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<ResponseDto> getProducts(UUID userId, ProductType productType) {
+    public MutableLiveData<ResponseDto> getProducts(UUID userId, ProductType productType, String category, String name, String sortBy) {
         responseLiveData = new MutableLiveData<>();
         Call<List<ProductDto>> ul = null;
         if (productType.equals(ProductType.USER)) {
@@ -65,6 +65,8 @@ public class ProductViewModel extends ViewModel {
             ul = apiService.getRecommendedProducts(userId);
         } else if (productType.equals(ProductType.USER_RATING)) {
             ul = apiService.getProductsForUserRating(userId);
+        } else if (productType.equals(ProductType.SEARCH_QUERY)) {
+            ul = apiService.searchProducts(userId, category, name, sortBy);
         }
         try {
             ul.enqueue(new Callback<List<ProductDto>>() {

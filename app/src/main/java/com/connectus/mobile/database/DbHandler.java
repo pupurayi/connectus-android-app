@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.connectus.mobile.database.contract.ProductContract;
-import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.api.dto.ProductDto;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -28,8 +28,7 @@ import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
-import com.connectus.mobile.ui.product.ProductFragment;
-import com.connectus.mobile.ui.product.ProductDto;
+import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.ui.product.SearchProductsFragment;
 import com.connectus.mobile.ui.product.ViewProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
@@ -185,7 +184,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Please Wait ...");
         pd.show();
 
-        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED).observe(getViewLifecycleOwner(), responseDto -> {
+        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED, null, null, null).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
             switch (responseDto.getStatus()) {
                 case "success":
@@ -237,6 +236,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
                 bundle.putString("userId", userDto.getId().toString());
                 bundle.putString("title", "My Products");
                 bundle.putString("productType", ProductType.USER.toString());
+                bundle.putBoolean("promptCreateProduct", true);
                 ProductsFragment productsFragment = new ProductsFragment();
                 productsFragment.setArguments(bundle);
                 transaction.add(R.id.container, productsFragment, ProductsFragment.class.getSimpleName());
