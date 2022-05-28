@@ -21,20 +21,23 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.user.UserViewModel;
 import com.connectus.mobile.utils.Utils;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class ProductFragment extends Fragment {
+public class ViewProductFragment extends Fragment {
 
-    private static final String TAG = ProductFragment.class.getSimpleName();
+    private static final String TAG = ViewProductFragment.class.getSimpleName();
 
     ProgressDialog pd;
     ImageView imageViewBack, imageViewAvatar;
@@ -45,8 +48,9 @@ public class ProductFragment extends Fragment {
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
     ProductDto product;
+    private UserViewModel userViewModel;
 
-    Button buttonNavigate;
+    Button buttonOrderProduct, buttonNavigate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,8 @@ public class ProductFragment extends Fragment {
             product = new Gson().fromJson(json, ProductDto.class);
         }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product, container, false);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        return inflater.inflate(R.layout.fragment_view_product, container, false);
     }
 
     @Override
@@ -70,7 +75,7 @@ public class ProductFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         fragmentManager = getActivity().getSupportFragmentManager();
-        
+
 
         UserDto userDto = sharedPreferencesManager.getUser();
 
@@ -102,6 +107,24 @@ public class ProductFragment extends Fragment {
                     100);
         }
 
+        buttonOrderProduct = view.findViewById(R.id.button_order_product);
+        buttonOrderProduct.setOnClickListener(view12 -> {
+            pd.setMessage("Please wait...");
+            pd.show();
+            userViewModel.hitGetUserApi(getActivity(), product.getUserId()).observe(getViewLifecycleOwner(), responseDto -> {
+                pd.dismiss();
+                switch (responseDto.getStatus()) {
+                    case "success":
+                        UserDto serviceProvider = sharedPreferencesManager.getUser();
+                        Utils.sendWhatsappMessage(getActivity(), serviceProvider.getMsisdn(), "Hello " + serviceProvider.getFirstName() + ", I would like to order *" + product.getName() + "* product/service priced at $" + product.getPrice() + " kindly share with me more details.");
+                        break;
+                    case "failed":
+                    case "error":
+                        Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
+                        break;
+                }
+            });
+        });
         buttonNavigate = view.findViewById(R.id.button_navigate);
         buttonNavigate.setOnClickListener(view1 -> {
             pd.setMessage("Fetching Location....");

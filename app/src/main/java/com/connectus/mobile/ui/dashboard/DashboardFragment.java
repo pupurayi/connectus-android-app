@@ -30,7 +30,7 @@ import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.ui.product.CreateProductFragment;
 import com.connectus.mobile.ui.product.ProductDto;
-import com.connectus.mobile.ui.product.ProductFragment;
+import com.connectus.mobile.ui.product.ViewProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
@@ -157,10 +157,10 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
 
         Bundle bundle = new Bundle();
         bundle.putString("product", new Gson().toJson(product));
-        ProductFragment productFragment = new ProductFragment();
-        productFragment.setArguments(bundle);
+        ViewProductFragment viewProductFragment = new ViewProductFragment();
+        viewProductFragment.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.container, productFragment, FragmentTransaction.class.getSimpleName());
+        transaction.add(R.id.container, viewProductFragment, FragmentTransaction.class.getSimpleName());
         transaction.addToBackStack(TAG);
         transaction.commit();
     }

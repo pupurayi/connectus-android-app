@@ -64,4 +64,5 @@
     <string name="location">Location</string>
     <string name="joined">Joined</string>
     <string name="chat">Chat</string>
+    <string name="order_product">Order Product</string>
 </resources>
