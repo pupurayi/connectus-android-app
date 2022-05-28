@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
+import com.connectus.mobile.ui.initial.check.CheckFragment;
 import com.connectus.mobile.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -35,12 +38,15 @@ import java.util.UUID;
  */
 public class ProductsFragment extends Fragment {
 
+    private static final String TAG = ProductsFragment.class.getSimpleName();
+
     ProgressDialog pd;
     ImageView imageViewBack;
 
     TextView productsPageTitle;
     ImageView imageViewAvatar;
     ProductRecyclerAdapter productRecyclerAdapter;
+    Button buttonCreateProduct;
 
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
@@ -79,7 +85,19 @@ public class ProductsFragment extends Fragment {
         userDto = sharedPreferencesManager.getUser();
         fragmentManager = getActivity().getSupportFragmentManager();
 
-
+        buttonCreateProduct = view.findViewById(R.id.button_create_product);
+        if (userId.equals(userDto.getId())) {
+            buttonCreateProduct.setVisibility(View.VISIBLE);
+        } else {
+            buttonCreateProduct.setVisibility(View.GONE);
+        }
+        buttonCreateProduct.setOnClickListener(view1 -> {
+            ProductFragment productFragment = new ProductFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.container, productFragment, ProductFragment.class.getSimpleName());
+            transaction.addToBackStack(TAG);
+            transaction.commit();
+        });
         productsPageTitle = view.findViewById(R.id.text_view_products_page_title);
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());

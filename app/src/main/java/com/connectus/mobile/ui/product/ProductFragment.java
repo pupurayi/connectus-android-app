@@ -29,9 +29,9 @@ import com.google.android.material.snackbar.Snackbar;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class CreateProductFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
-    private static final String TAG = CreateProductFragment.class.getSimpleName();
+    private static final String TAG = ProductFragment.class.getSimpleName();
 
     ProgressDialog pd;
     ImageView imageViewBack, imageViewAvatar;
