@@ -87,6 +87,13 @@ public interface APIService {
     @Headers({
             "Accept: application/json"
     })
+    @GET("/api/v1/user/record-product-order/{userId}")
+    Call<UserDto> hitRecordProductOrderApi(@Path("userId") UUID userId, @Query("userId") UUID productId);
+
+
+    @Headers({
+            "Accept: application/json"
+    })
     @PUT("/api/v1/user")
     Call<UserDto> updateUser(@Body UserDto userDto);
 

@@ -112,11 +112,10 @@ public class ViewProductFragment extends Fragment {
         buttonOrderProduct.setOnClickListener(view12 -> {
             pd.setMessage("Please wait...");
             pd.show();
-            userViewModel.hitGetUserApi(getActivity(), product.getUserId()).observe(getViewLifecycleOwner(), responseDto -> {
+            userViewModel.hitRecordProductOrderApi(getActivity(), product.getUserId(), product.getId()).observe(getViewLifecycleOwner(), responseDto -> {
                 pd.dismiss();
                 switch (responseDto.getStatus()) {
                     case "success":
-                        // TODO save action for order
                         UserDto serviceProvider = sharedPreferencesManager.getUser();
                         Utils.sendWhatsappMessage(getActivity(), serviceProvider.getMsisdn(), "Hello " + serviceProvider.getFirstName() + ", I would like to order *" + product.getName() + "* product/service priced at $" + product.getPrice() + " kindly share with me more details.");
                         break;
