@@ -306,6 +306,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         textViewMsisdn.setText(msisdn);
         textViewNavHeaderMsisdn.setText(msisdn);
         Utils.loadAvatar(userDto, imageViewAvatar);
+        Utils.loadAvatar(userDto, imageViewNavHeaderAvatar);
     }
 }
     
