@@ -121,7 +121,7 @@ public class SearchProductsFragment extends Fragment {
         editTextSortBy.setOnTouchListener((v, event) -> {
             if (!sortByDialog) {
                 sortByDialog = true;
-                String[] strategies = {"Price", "Proximity", "Rating", "Name", "Created"};
+                String[] strategies = {"Price", "Rating", "Name", "Created"};
                 CharSequence[] options = new CharSequence[strategies.length];
                 for (int i = 0; i < strategies.length; i++) {
                     options[i] = strategies[i];
