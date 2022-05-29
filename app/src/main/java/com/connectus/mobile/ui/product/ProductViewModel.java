@@ -56,7 +56,7 @@ public class ProductViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<ResponseDto> getProducts(UUID userId, ProductType productType, String category, String name, String location, String sortBy) {
+    public MutableLiveData<ResponseDto> getProducts(UUID userId, ProductType productType, String category, String name, double lat, double lng, String sortBy) {
         responseLiveData = new MutableLiveData<>();
         Call<List<ProductDto>> ul = null;
         if (productType.equals(ProductType.USER)) {
@@ -66,7 +66,7 @@ public class ProductViewModel extends ViewModel {
         } else if (productType.equals(ProductType.USER_RATING)) {
             ul = apiService.getProductsForUserRating(userId);
         } else if (productType.equals(ProductType.SEARCH_QUERY)) {
-            ul = apiService.searchProducts(userId, category, name,location, sortBy);
+            ul = apiService.searchProducts(userId, category, name, lat, lng, sortBy);
         }
         try {
             ul.enqueue(new Callback<List<ProductDto>>() {

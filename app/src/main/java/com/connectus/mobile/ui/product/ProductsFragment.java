@@ -51,9 +51,11 @@ public class ProductsFragment extends Fragment {
     UserDto userDto = null;
     List<ProductDto> products = new LinkedList<>();
     private UUID userId;
-    private String title, category, name, location, sortBy;
+    private String title, category, name, sortBy;
     private ProductType productType;
     private boolean promptCreateProduct;
+    private double lat, lng;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,8 @@ public class ProductsFragment extends Fragment {
             if (productType.equals(ProductType.SEARCH_QUERY)) {
                 category = arguments.getString("category");
                 name = arguments.getString("name");
-                location = arguments.getString("location");
+                lat = arguments.getDouble("lat");
+                lng = arguments.getDouble("lng");
                 sortBy = arguments.getString("sortBy");
             }
         } else {
@@ -123,7 +126,7 @@ public class ProductsFragment extends Fragment {
     private void getProducts() {
         pd.setMessage("Fetching ...");
         pd.show();
-        productsViewModel.getProducts(userId, productType, category, name, location, sortBy).observe(getViewLifecycleOwner(), responseDto -> {
+        productsViewModel.getProducts(userId, productType, category, name, lat, lng, sortBy).observe(getViewLifecycleOwner(), responseDto -> {
             switch (responseDto.getStatus()) {
                 case "success":
                     pd.dismiss();
