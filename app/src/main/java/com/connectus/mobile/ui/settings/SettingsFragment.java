@@ -147,7 +147,7 @@ public class SettingsFragment extends Fragment {
         buttonUpdateGeofenceRange.setOnClickListener(v -> {
 
             Double mGeofenceRange = Double.valueOf(editTextGeofenceRange.getText().toString().trim());
-            if (geofenceRange <= 0) {
+            if (mGeofenceRange > 0) {
                 pd.setMessage("Updating...");
                 pd.show();
                 userDto.setGeofenceRange(mGeofenceRange);
