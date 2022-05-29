@@ -112,7 +112,7 @@ public class ProductFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.categories));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    dialogActive = true;
+                    dialogActive = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {

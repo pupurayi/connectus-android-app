@@ -71,10 +71,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/d84ed6f9">
+        app:layout_constraintTop_toBottomOf="@+id/d84ed6f9"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,63 +87,91 @@
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edit_text_gender"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/gender"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:scrollbars="vertical" />
+                android:layout_height="match_parent"
+                android:hint="@string/gender">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:scrollbars="vertical" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edit_text_dob"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/date_of_birth"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:hint="@string/date_of_birth">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edit_text_ethnicity"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/ethnicity"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:hint="@string/ethnicity">
 
-            <EditText
-                android:id="@+id/edit_text_religion"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_ethnicity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/religion"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:hint="@string/religion">
 
-            <EditText
-                android:id="@+id/edit_text_township"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_religion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/township"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:hint="@string/township">
 
-            <EditText
-                android:id="@+id/edit_text_town"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_township"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/town"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:hint="@string/town">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_town"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/button_save"
@@ -150,7 +180,6 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/save"
                 app:cornerRadius="20dp" />
-
         </LinearLayout>
 
     </ScrollView>

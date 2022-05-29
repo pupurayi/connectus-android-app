@@ -132,7 +132,7 @@ public class DemographicsFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.gender));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    pickingGender = true;
+                    pickingGender = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
@@ -184,7 +184,7 @@ public class DemographicsFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.ethnicity));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    pickingEthnicity = true;
+                    pickingEthnicity = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
@@ -209,7 +209,7 @@ public class DemographicsFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.religion));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    pickingReligion = true;
+                    pickingReligion = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
@@ -239,7 +239,7 @@ public class DemographicsFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.town));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    pickingTown = true;
+                    pickingTown = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
