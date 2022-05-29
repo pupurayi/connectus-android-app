@@ -321,7 +321,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     public void syncProfileAndDisplay() {
         pd.setMessage("Please Wait ...");
         pd.show();
-
         userViewModel.hitGetUserApi(getActivity(), userDto.getId()).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
             switch (responseDto.getStatus()) {
