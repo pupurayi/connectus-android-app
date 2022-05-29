@@ -35,6 +35,7 @@ import com.connectus.mobile.utils.Utils;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
 import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.io.FileNotFoundException;
@@ -52,22 +53,24 @@ public class ProductFragment extends Fragment {
     ImageView imageViewBack;
     CircularImageView circularImageViewProduct, circularImageViewUpload;
 
-    EditText editTextProductCategory, editTextProductName, editTextProductDescription, editTextProductPrice;
+    EditText editTextProductCategory, editTextProductName, editTextProductDescription, editTextProductPrice, editTextProductLocation;
     Button buttonCreateProduct;
 
     FragmentManager fragmentManager;
     private SharedPreferencesManager sharedPreferencesManager;
     private ProductViewModel productViewModel;
 
-    boolean dialogActive = false;
+    boolean productCategoryDialog = false, productLocationDialog = false;
+    private double lat = 0, lng = 0;
 
-    private static final int FIRST_IMAGE_PICKER_REQUEST = 100;
+    private static final int FIRST_IMAGE_PICKER_REQUEST = 100, ADDRESS_PICKER_REQUEST = 450;
     private String imageFirst;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapUtility.apiKey = getResources().getString(R.string.google_maps_api_key);
     }
 
     @Override
@@ -99,11 +102,12 @@ public class ProductFragment extends Fragment {
         editTextProductName = view.findViewById(R.id.edit_text_product_name);
         editTextProductDescription = view.findViewById(R.id.edit_text_product_description);
         editTextProductPrice = view.findViewById(R.id.edit_text_product_price);
+        editTextProductLocation = view.findViewById(R.id.edit_text_product_location);
 
         editTextProductCategory.setInputType(InputType.TYPE_NULL);
         editTextProductCategory.setOnTouchListener((v, event) -> {
-            if (!dialogActive) {
-                dialogActive = true;
+            if (!productCategoryDialog) {
+                productCategoryDialog = true;
                 String[] categories = ProductConstants.categories.toArray(new String[0]);
                 CharSequence[] options = new CharSequence[categories.length];
                 for (int i = 0; i < categories.length; i++) {
@@ -112,15 +116,28 @@ public class ProductFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.categories));
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-                    dialogActive = false;
+                    productCategoryDialog = false;
                     dialog.dismiss();
                 });
                 builder.setItems(options, (dialog, item) -> {
                     String option = (String) options[item];
                     editTextProductCategory.setText(option);
-                    dialogActive = false;
+                    productCategoryDialog = false;
                 });
                 builder.show();
+            }
+            return false;
+        });
+
+        editTextProductLocation.setInputType(InputType.TYPE_NULL);
+        editTextProductLocation.setOnTouchListener((v, event) -> {
+            if (!productLocationDialog) {
+                productLocationDialog = true;
+                Intent intent = new Intent(getContext(), LocationPickerActivity.class);
+                MainActivity mainActivity = ((MainActivity) getActivity());
+                intent.putExtra(MapUtility.LATITUDE, mainActivity.getCurrentLat());
+                intent.putExtra(MapUtility.LONGITUDE, mainActivity.getCurrentLng());
+                startActivityForResult(intent, ADDRESS_PICKER_REQUEST);
             }
             return false;
         });
@@ -136,9 +153,8 @@ public class ProductFragment extends Fragment {
                 price = Double.parseDouble(editTextProductPrice.getText().toString());
             }
 
-            if (!category.isEmpty() && !name.isEmpty() && !description.isEmpty() && price > 0 && imageFirst != null) {
-                MainActivity mainActivity = ((MainActivity) getActivity());
-                CreateProductDto createProductDto = new CreateProductDto(userDto.getId(), category, name, description, price, imageFirst, mainActivity.getCurrentLat(), mainActivity.getCurrentLng());
+            if (!category.isEmpty() && !name.isEmpty() && !description.isEmpty() && price > 0 && imageFirst != null && lat != 0 && lng != 0) {
+                CreateProductDto createProductDto = new CreateProductDto(userDto.getId(), category, name, description, price, imageFirst, lat, lng);
                 pd.setMessage("Creating ...");
                 pd.show();
                 productViewModel.hitSaveProductApi(createProductDto).observe(getViewLifecycleOwner(), responseDto -> {
@@ -166,6 +182,8 @@ public class ProductFragment extends Fragment {
                     Snackbar.make(view, "Product Price must be greater than zero!", Snackbar.LENGTH_LONG).show();
                 } else if (imageFirst == null) {
                     Snackbar.make(view, "Product should have an image!", Snackbar.LENGTH_LONG).show();
+                } else if (lat == 0 || lng == 0) {
+                    Snackbar.make(view, "Please pick product location!", Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -186,12 +204,24 @@ public class ProductFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+        } else if (requestCode == ADDRESS_PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
+            try {
+                if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+                    lat = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                    lng = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+                    editTextProductLocation.setText(new StringBuilder().append(lat).append(",").append(lng).toString());
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            productLocationDialog = false;
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(getContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public void pickImage() {
         ImagePicker.with(this)
