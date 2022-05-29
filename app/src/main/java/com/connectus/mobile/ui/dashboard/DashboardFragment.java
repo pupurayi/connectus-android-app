@@ -2,10 +2,12 @@ package com.connectus.mobile.ui.dashboard;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import com.connectus.mobile.MainActivity;
 import com.connectus.mobile.R;
+import com.connectus.mobile.api.dto.Marker;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
@@ -47,9 +50,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -130,7 +138,10 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         imageViewAvatar.setOnClickListener(v -> showProfileDetailsFragment());
         imageViewRecommendationsMap = view.findViewById(R.id.image_view_recommendations_map);
         imageViewRecommendationsMap.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("markers", getMarkers());
             RecommendationsMapFragment recommendationsMapFragment = new RecommendationsMapFragment();
+            recommendationsMapFragment.setArguments(bundle);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.container, recommendationsMapFragment, RecommendationsMapFragment.class.getSimpleName());
             transaction.addToBackStack(TAG);
@@ -140,6 +151,24 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         imageViewRefreshRecommendedProducts.setOnClickListener(view1 -> {
             fetchRecommendedProducts();
         });
+    }
+
+    private Marker map(ProductDto productDto) {
+        return new Marker(productDto.getName(), productDto.getPrice(), productDto.getLat(), productDto.getLng());
+    }
+
+
+    private String getMarkers() {
+        List<Marker> markers = new LinkedList<>();
+        for (ProductDto productDto : recommendedProducts) {
+            markers.add(map(productDto));
+        }
+        try {
+            return URLEncoder.encode(new Gson().toJson(markers), String.valueOf(StandardCharsets.UTF_8));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

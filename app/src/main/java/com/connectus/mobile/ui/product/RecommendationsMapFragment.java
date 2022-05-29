@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,8 @@ public class RecommendationsMapFragment extends Fragment {
 
     FragmentManager fragmentManager;
     WebView webView;
-    private String link;
+    private String link, markers;
     private Map<String, String> headers = new HashMap<>();
-
-    double destinationLat, destinationLng;
 
     private SharedPreferencesManager sharedPreferencesManager;
 
@@ -62,18 +61,15 @@ public class RecommendationsMapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle arguments = getArguments();
         if (arguments != null) {
-            destinationLat = arguments.getDouble("destinationLat");
-            destinationLng = arguments.getDouble("destinationLng");
+            markers = arguments.getString("markers");
             String headers = arguments.getString("headers");
             if (headers != null) {
                 this.headers = new Gson().fromJson(headers, new TypeToken<HashMap<String, String>>() {
                 }.getType());
             }
-        } else {
-            getActivity().onBackPressed();
         }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_navigation, container, false);
+        return inflater.inflate(R.layout.fragment_recommendations_map, container, false);
     }
 
     public void refresh() {
@@ -139,7 +135,8 @@ public class RecommendationsMapFragment extends Fragment {
 
     private String getLink() {
         MainActivity mainActivity = ((MainActivity) getActivity());
-        return CORE_BASE_URL + "/api/v1/navigation?currentLat=" + mainActivity.getCurrentLat() + "&currentLng=" + mainActivity.getCurrentLng() + "&destinationLat=" + destinationLat + "&destinationLng=" + destinationLng;
+        Log.d(TAG, CORE_BASE_URL + "/api/v1/navigation/recommendations?currentLat=" + mainActivity.getCurrentLat() + "&currentLng=" + mainActivity.getCurrentLng() + "&markers=" + markers);
+        return CORE_BASE_URL + "/api/v1/navigation/recommendations?currentLat=" + mainActivity.getCurrentLat() + "&currentLng=" + mainActivity.getCurrentLng() + "&markers=" + markers;
     }
 
 }
