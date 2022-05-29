@@ -125,11 +125,11 @@ public class ProductViewModel extends ViewModel {
 
     public MutableLiveData<ResponseDto> hitDeleteProductApi(UUID productId) {
         responseLiveData = new MutableLiveData<>();
-        Call<String> ul = apiService.deleteProduct(productId);
+        Call<ResponseDto> ul = apiService.deleteProduct(productId);
         try {
-            ul.enqueue(new Callback<String>() {
+            ul.enqueue(new Callback<ResponseDto>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<ResponseDto> call, Response<ResponseDto> response) {
                     if (response.code() == 200) {
                         responseLiveData.setValue(new ResponseDto("success", "Successfully deleted!", null));
                     } else {
@@ -139,7 +139,7 @@ public class ProductViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<ResponseDto> call, Throwable t) {
                     Log.d("error", t.toString());
                     responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
                 }

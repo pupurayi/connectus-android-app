@@ -60,7 +60,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     DrawerLayout drawerLayout;
 
     TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn;
-    ImageView imageViewAvatar, imageViewNavHeaderAvatar, imageViewMenu, imageViewRecommendationsMap;
+    ImageView imageViewAvatar, imageViewNavHeaderAvatar, imageViewMenu, imageViewRecommendationsMap, imageViewRefreshRecommendedProducts;
     RecyclerView recyclerViewProducts;
     ProgressDialog pd;
 
@@ -135,6 +135,10 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             transaction.addToBackStack(TAG);
             transaction.commit();
         });
+        imageViewRefreshRecommendedProducts = view.findViewById(R.id.image_view_refresh_recommended_products);
+        imageViewRefreshRecommendedProducts.setOnClickListener(view1 -> {
+            fetchRecommendedProducts();
+        });
     }
 
     @Override
@@ -151,7 +155,6 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         super.onResume();
         Log.d(TAG, "onResume");
         userDto = sharedPreferencesManager.getUser();
-        fetchRecommendedProducts();
         syncDisplay();
     }
 

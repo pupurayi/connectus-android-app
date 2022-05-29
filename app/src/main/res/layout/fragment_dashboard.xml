@@ -131,6 +131,15 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey" />
 
+                        <ImageView
+                            android:id="@+id/image_view_refresh_recommended_products"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:contentDescription="@string/refresh"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/refresh" />
+
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView

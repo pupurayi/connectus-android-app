@@ -52,7 +52,7 @@ public interface APIService {
             "Accept: application/json"
     })
     @DELETE("/api/v1/product/{productId}")
-    Call<String> deleteProduct(@Path("productId") UUID productId);
+    Call<ResponseDto> deleteProduct(@Path("productId") UUID productId);
 
     @Headers({
             "Accept: application/json"

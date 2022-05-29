@@ -51,7 +51,8 @@ public class ViewProductFragment extends Fragment {
     ProductDto product;
     private ProductViewModel productViewModel;
 
-    Button buttonOrderOrDelete, buttonNavigate, buttonDelete;
+    Button buttonOrderOrDelete, buttonNavigate;
+    boolean allowDelete = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,16 +109,17 @@ public class ViewProductFragment extends Fragment {
 
         buttonOrderOrDelete = view.findViewById(R.id.button_order_or_delete);
         if (userDto.getId().equals(product.getUserId())) {
+            allowDelete = true;
             buttonOrderOrDelete.setText(R.string.delete_product);
         } else {
+            allowDelete = false;
             buttonOrderOrDelete.setText(R.string.order_product);
-
         }
 
         buttonOrderOrDelete.setOnClickListener(view12 -> {
             pd.setMessage("Please wait...");
             pd.show();
-            if (buttonOrderOrDelete.getText().equals(R.string.order_product)) {
+            if (!allowDelete) {
                 productViewModel.hitRecordProductOrderApi(product.getUserId(), product.getId()).observe(getViewLifecycleOwner(), responseDto -> {
                     pd.dismiss();
                     switch (responseDto.getStatus()) {
