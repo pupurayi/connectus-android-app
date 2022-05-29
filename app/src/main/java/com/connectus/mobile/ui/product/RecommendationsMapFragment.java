@@ -135,8 +135,12 @@ public class RecommendationsMapFragment extends Fragment {
 
     private String getLink() {
         MainActivity mainActivity = ((MainActivity) getActivity());
-        Log.d(TAG, CORE_BASE_URL + "/api/v1/navigation/recommendations?currentLat=" + mainActivity.getCurrentLat() + "&currentLng=" + mainActivity.getCurrentLng() + "&markers=" + markers);
-        return CORE_BASE_URL + "/api/v1/navigation/recommendations?currentLat=" + mainActivity.getCurrentLat() + "&currentLng=" + mainActivity.getCurrentLng() + "&markers=" + markers;
+        double lat = 0, lng = 0;
+        if (mainActivity != null) {
+            lat = mainActivity.getCurrentLat();
+            lng = mainActivity.getCurrentLng();
+        }
+        return CORE_BASE_URL + "/api/v1/navigation/recommendations?currentLat=" + lat + "&currentLng=" + lng + "&markers=" + markers;
     }
 
 }
