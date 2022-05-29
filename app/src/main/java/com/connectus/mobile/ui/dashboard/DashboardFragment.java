@@ -34,6 +34,7 @@ import com.connectus.mobile.ui.product.ViewProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
 import com.connectus.mobile.ui.product.ProductViewModel;
 import com.connectus.mobile.ui.product.ProductsFragment;
+import com.connectus.mobile.ui.rating.RatingFragment;
 import com.connectus.mobile.ui.serviceprovider.ServiceProvidersFragment;
 import com.connectus.mobile.ui.user.UserDetailsFragment;
 import com.connectus.mobile.ui.initial.check.CheckFragment;
@@ -250,6 +251,11 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
             case R.id.nav_search_products:
                 SearchProductsFragment searchProductsFragment = new SearchProductsFragment();
                 transaction.add(R.id.container, searchProductsFragment, SearchProductsFragment.class.getSimpleName());
+                transaction.addToBackStack(TAG);
+                break;
+            case R.id.nav_review:
+                RatingFragment ratingFragment = new RatingFragment();
+                transaction.add(R.id.container, ratingFragment, RatingFragment.class.getSimpleName());
                 transaction.addToBackStack(TAG);
                 break;
             case R.id.nav_settings:
