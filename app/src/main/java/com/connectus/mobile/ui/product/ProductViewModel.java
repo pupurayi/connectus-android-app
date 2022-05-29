@@ -11,6 +11,7 @@ import com.connectus.mobile.api.dto.CreateProductDto;
 import com.connectus.mobile.api.dto.ProductDto;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.ResponseDto;
+import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.utils.Utils;
 
 import java.util.List;
@@ -92,5 +93,64 @@ public class ProductViewModel extends ViewModel {
             return responseLiveData;
         }
     }
+
+    public MutableLiveData<ResponseDto> hitRecordProductOrderApi(UUID userId, UUID productId) {
+        responseLiveData = new MutableLiveData<>();
+        Call<UserDto> ul = apiService.hitRecordProductOrderApi(userId, productId);
+        try {
+            ul.enqueue(new Callback<UserDto>() {
+                @Override
+                public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+                    if (response.code() == 200) {
+                        UserDto userDto = response.body();
+                        responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", userDto));
+                    } else {
+                        String errorMsg = Utils.handleHttpException(response);
+                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserDto> call, Throwable t) {
+                    Log.d("error", t.toString());
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return responseLiveData;
+        }
+    }
+
+    public MutableLiveData<ResponseDto> hitDeleteProductApi(UUID productId) {
+        responseLiveData = new MutableLiveData<>();
+        Call<String> ul = apiService.deleteProduct(productId);
+        try {
+            ul.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.code() == 200) {
+                        responseLiveData.setValue(new ResponseDto("success", "Successfully deleted!", null));
+                    } else {
+                        String errorMsg = Utils.handleHttpException(response);
+                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.d("error", t.toString());
+                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return responseLiveData;
+        }
+    }
+
+
 }
 

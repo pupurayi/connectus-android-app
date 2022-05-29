@@ -49,9 +49,9 @@ public class ViewProductFragment extends Fragment {
     SharedPreferencesManager sharedPreferencesManager;
     FragmentManager fragmentManager;
     ProductDto product;
-    private UserViewModel userViewModel;
+    private ProductViewModel productViewModel;
 
-    Button buttonOrderProduct, buttonNavigate;
+    Button buttonOrderOrDelete, buttonNavigate, buttonDelete;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class ViewProductFragment extends Fragment {
             product = new Gson().fromJson(json, ProductDto.class);
         }
         // Inflate the layout for this fragment
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         return inflater.inflate(R.layout.fragment_view_product, container, false);
     }
 
@@ -76,8 +76,6 @@ public class ViewProductFragment extends Fragment {
         pd = new ProgressDialog(getActivity());
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         fragmentManager = getActivity().getSupportFragmentManager();
-
-
         UserDto userDto = sharedPreferencesManager.getUser();
 
         imageViewBack = view.findViewById(R.id.image_view_back);
@@ -108,30 +106,51 @@ public class ViewProductFragment extends Fragment {
                     100);
         }
 
-        buttonOrderProduct = view.findViewById(R.id.button_order_product);
-        buttonOrderProduct.setOnClickListener(view12 -> {
+        buttonOrderOrDelete = view.findViewById(R.id.button_order_or_delete);
+        if (userDto.getId().equals(product.getUserId())) {
+            buttonOrderOrDelete.setText(R.string.delete_product);
+        } else {
+            buttonOrderOrDelete.setText(R.string.order_product);
+
+        }
+
+        buttonOrderOrDelete.setOnClickListener(view12 -> {
             pd.setMessage("Please wait...");
             pd.show();
-            userViewModel.hitRecordProductOrderApi(getActivity(), product.getUserId(), product.getId()).observe(getViewLifecycleOwner(), responseDto -> {
-                pd.dismiss();
-                switch (responseDto.getStatus()) {
-                    case "success":
-                        UserDto serviceProvider = sharedPreferencesManager.getUser();
-                        Utils.sendWhatsappMessage(getActivity(), serviceProvider.getMsisdn(), "Hello " + serviceProvider.getFirstName() + ", I would like to order *" + product.getName() + "* product/service priced at $" + product.getPrice() + " kindly share with me more details.");
-                        break;
-                    case "failed":
-                    case "error":
-                        Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
-                        break;
-                }
-            });
+            if (buttonOrderOrDelete.getText().equals(R.string.order_product)) {
+                productViewModel.hitRecordProductOrderApi(product.getUserId(), product.getId()).observe(getViewLifecycleOwner(), responseDto -> {
+                    pd.dismiss();
+                    switch (responseDto.getStatus()) {
+                        case "success":
+                            UserDto serviceProvider = (UserDto) responseDto.getData();
+                            Utils.sendWhatsappMessage(getActivity(), serviceProvider.getMsisdn(), "Hello " + serviceProvider.getFirstName() + ", I would like to order *" + product.getName() + "* product/service priced at $" + product.getPrice() + " kindly share with me more details.");
+                            break;
+                        case "failed":
+                        case "error":
+                            Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                    }
+                });
+            } else {
+                productViewModel.hitDeleteProductApi(product.getId()).observe(getViewLifecycleOwner(), responseDto -> {
+                    pd.dismiss();
+                    switch (responseDto.getStatus()) {
+                        case "success":
+                            Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
+                            Utils.returnToDashboard(fragmentManager);
+                            break;
+                        case "failed":
+                        case "error":
+                            Snackbar.make(getView(), responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                    }
+                });
+            }
         });
         buttonNavigate = view.findViewById(R.id.button_navigate);
         buttonNavigate.setOnClickListener(view1 -> {
             pd.setMessage("Fetching Location....");
             pd.show();
-
-
             Bundle bundle = new Bundle();
             bundle.putDouble("destinationLat", product.getLat());
             bundle.putDouble("destinationLng", product.getLng());

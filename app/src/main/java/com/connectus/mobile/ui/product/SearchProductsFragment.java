@@ -51,7 +51,7 @@ public class SearchProductsFragment extends Fragment {
     ImageView imageViewBack, imageViewAvatar;
 
     EditText editTextProductCategory, editTextProductName, editTextLocation, editTextSortBy;
-    Button buttonSearch;
+    Button buttonSearch, buttonClear;
 
     FragmentManager fragmentManager;
     private SharedPreferencesManager sharedPreferencesManager;
@@ -190,6 +190,16 @@ public class SearchProductsFragment extends Fragment {
             } else {
                 Snackbar.make(view, "Please enter category, name or location!", Snackbar.LENGTH_LONG).show();
             }
+        });
+
+        buttonClear = view.findViewById(R.id.button_clear);
+        buttonClear.setOnClickListener(v -> {
+            editTextProductCategory.getText().clear();
+            editTextProductName.getText().clear();
+            editTextLocation.getText().clear();
+            editTextSortBy.getText().clear();
+            lat = 0;
+            lng = 0;
         });
     }
 

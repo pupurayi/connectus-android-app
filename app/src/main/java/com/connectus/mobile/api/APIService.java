@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -46,6 +47,12 @@ public interface APIService {
     })
     @POST("/api/v1/product")
     Call<ProductDto> createProduct(@Body CreateProductDto createProductDto);
+
+    @Headers({
+            "Accept: application/json"
+    })
+    @DELETE("/api/v1/product/{productId}")
+    Call<String> deleteProduct(@Path("productId") UUID productId);
 
     @Headers({
             "Accept: application/json"
@@ -88,7 +95,7 @@ public interface APIService {
             "Accept: application/json"
     })
     @GET("/api/v1/user/record-product-order/{userId}")
-    Call<UserDto> hitRecordProductOrderApi(@Path("userId") UUID userId, @Query("userId") UUID productId);
+    Call<UserDto> hitRecordProductOrderApi(@Path("userId") UUID userId, @Query("productId") UUID productId);
 
 
     @Headers({

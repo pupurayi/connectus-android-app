@@ -92,38 +92,5 @@ public class UserViewModel extends ViewModel {
             return responseLiveData;
         }
     }
-
-    public MutableLiveData<ResponseDto> hitRecordProductOrderApi(final Context context, UUID userId, UUID productId) {
-        responseLiveData = new MutableLiveData<>();
-        Call<UserDto> ul = apiService.hitRecordProductOrderApi(userId, productId);
-        try {
-            ul.enqueue(new Callback<UserDto>() {
-                @Override
-                public void onResponse(Call<UserDto> call, Response<UserDto> response) {
-                    if (response.code() == 200) {
-                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-                        UserDto userDto = response.body();
-                        sharedPreferencesManager.setUser(userDto);
-
-                        responseLiveData.setValue(new ResponseDto("success", "Profile Syncing Complete!", userDto));
-                    } else {
-                        String errorMsg = Utils.handleHttpException(response);
-                        responseLiveData.setValue(new ResponseDto("failed", errorMsg, null));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UserDto> call, Throwable t) {
-                    Log.d("error", t.toString());
-                    responseLiveData.setValue(new ResponseDto("error", "Connectivity Issues!", null));
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return responseLiveData;
-        }
-    }
-
 }
 
