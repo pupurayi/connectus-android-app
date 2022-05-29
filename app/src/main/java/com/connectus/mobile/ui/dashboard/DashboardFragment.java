@@ -29,6 +29,7 @@ import com.connectus.mobile.api.dto.UserDto;
 import com.connectus.mobile.database.DbHandler;
 import com.connectus.mobile.database.SharedPreferencesManager;
 import com.connectus.mobile.api.dto.ProductDto;
+import com.connectus.mobile.ui.product.RecommendationsMapFragment;
 import com.connectus.mobile.ui.product.SearchProductsFragment;
 import com.connectus.mobile.ui.product.ViewProductFragment;
 import com.connectus.mobile.ui.product.ProductRecyclerAdapter;
@@ -59,7 +60,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
     DrawerLayout drawerLayout;
 
     TextView textViewFullName, textViewNavHeaderFullName, textViewMsisdn, textViewNavHeaderMsisdn;
-    ImageView imageViewAvatar, imageViewNavHeaderAvatar, imageViewMenu;
+    ImageView imageViewAvatar, imageViewNavHeaderAvatar, imageViewMenu, imageViewRecommendationsMap;
     RecyclerView recyclerViewProducts;
     ProgressDialog pd;
 
@@ -126,6 +127,14 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         imageViewMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         imageViewAvatar.setOnClickListener(v -> showProfileDetailsFragment());
+        imageViewRecommendationsMap = view.findViewById(R.id.image_view_recommendations_map);
+        imageViewRecommendationsMap.setOnClickListener(view1 -> {
+            RecommendationsMapFragment recommendationsMapFragment = new RecommendationsMapFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.container, recommendationsMapFragment, RecommendationsMapFragment.class.getSimpleName());
+            transaction.addToBackStack(TAG);
+            transaction.commit();
+        });
     }
 
     @Override
