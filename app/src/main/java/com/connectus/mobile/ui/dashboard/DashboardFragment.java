@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.connectus.mobile.MainActivity;
 import com.connectus.mobile.R;
 import com.connectus.mobile.api.dto.ProductType;
 import com.connectus.mobile.api.dto.UserDto;
@@ -197,7 +198,8 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         pd.setMessage("Please Wait ...");
         pd.show();
 
-        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED, null, null, 0, 0, null).observe(getViewLifecycleOwner(), responseDto -> {
+        MainActivity mainActivity = ((MainActivity) getActivity());
+        productViewModel.getProducts(userDto.getId(), ProductType.RECOMMENDED, null, null, mainActivity.getCurrentLat(), mainActivity.getCurrentLng(), null).observe(getViewLifecycleOwner(), responseDto -> {
             pd.dismiss();
             switch (responseDto.getStatus()) {
                 case "success":

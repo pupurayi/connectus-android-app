@@ -63,7 +63,7 @@ public class ProductViewModel extends ViewModel {
         if (productType.equals(ProductType.USER)) {
             ul = apiService.getUserProducts(userId);
         } else if (productType.equals(ProductType.RECOMMENDED)) {
-            ul = apiService.getRecommendedProducts(userId);
+            ul = apiService.getRecommendedProducts(userId, lat, lng);
         } else if (productType.equals(ProductType.USER_RATING)) {
             ul = apiService.getProductsForUserRating(userId);
         } else if (productType.equals(ProductType.SEARCH_QUERY)) {

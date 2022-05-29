@@ -64,7 +64,7 @@ public interface APIService {
             "Accept: application/json"
     })
     @GET("/api/v1/product/recommended/user/{userId}")
-    Call<List<ProductDto>> getRecommendedProducts(@Path("userId") UUID userId);
+    Call<List<ProductDto>> getRecommendedProducts(@Path("userId") UUID userId, @Query("lat") double lat, @Query("lng") double lng);
 
     @Headers({
             "Accept: application/json"
