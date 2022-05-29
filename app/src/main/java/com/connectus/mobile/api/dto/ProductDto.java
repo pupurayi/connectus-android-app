@@ -12,11 +12,11 @@ public class ProductDto {
     private String imageFirst;
     private double lat;
     private double lng;
-    private int rating;
+    private float rating;
     private String created;
     private String updated;
 
-    public ProductDto(UUID id, UUID userId, String category, String name, String description, double price, String imageFirst, double lat, double lng, int rating, String created, String updated) {
+    public ProductDto(UUID id, UUID userId, String category, String name, String description, double price, String imageFirst, double lat, double lng, float rating, String created, String updated) {
         this.id = id;
         this.userId = userId;
         this.category = category;
@@ -103,11 +103,11 @@ public class ProductDto {
         this.lng = lng;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
