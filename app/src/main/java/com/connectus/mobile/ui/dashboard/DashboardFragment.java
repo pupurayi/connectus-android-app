@@ -149,6 +149,7 @@ public class DashboardFragment extends Fragment implements NavigationView.OnNavi
         });
         imageViewRefreshRecommendedProducts = view.findViewById(R.id.image_view_refresh_recommended_products);
         imageViewRefreshRecommendedProducts.setOnClickListener(view1 -> {
+            syncDisplay();
             fetchRecommendedProducts();
         });
     }

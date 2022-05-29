@@ -27,6 +27,15 @@
 
 
             <ImageView
+                android:id="@+id/image_view_refresh_recommended_products"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/refresh"
+                android:scaleType="centerInside"
+                android:src="@drawable/refresh" />
+
+            <ImageView
                 android:id="@+id/image_view_menu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -34,14 +43,6 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/menu" />
 
-            <ImageView
-                android:id="@+id/image_view_recommendations_map"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:contentDescription="@string/menu"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_google_maps" />
         </RelativeLayout>
 
         <ScrollView
@@ -121,24 +122,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+                        <ImageView
+                            android:id="@+id/image_view_recommendations_map"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:contentDescription="@string/menu"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_google_maps" />
+
                         <TextView
                             android:id="@+id/text_view_transactions_label"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
                             android:gravity="center_vertical"
                             android:text="@string/recommended_products"
                             android:textAllCaps="true"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey" />
-
-                        <ImageView
-                            android:id="@+id/image_view_refresh_recommended_products"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:contentDescription="@string/refresh"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/refresh" />
 
                     </RelativeLayout>
 
