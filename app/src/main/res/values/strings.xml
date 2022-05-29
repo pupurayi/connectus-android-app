@@ -73,4 +73,6 @@
     <string name="skip">Skip</string>
     <string name="review">Review Products</string>
     <string name="google_maps_api_key">AIzaSyA0Pp5EzLpfa0k6u783uYVpwiBwSpqxRRY</string>
+    <string name="geofence_range">Geofence Range (Km)</string>
+    <string name="update_geofence_range">Update Geofence Range</string>
 </resources>

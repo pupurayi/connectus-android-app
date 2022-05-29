@@ -32,8 +32,8 @@ public class SettingsFragment extends Fragment {
     ProgressDialog pd;
     ImageView imageViewBack;
     ImageView imageViewAvatar;
-    EditText editTextCurrentPassword, editTextNewPassword;
-    Button buttonChangePassword;
+    EditText editTextCurrentPassword, editTextNewPassword, editTextGeofenceRange;
+    Button buttonChangePassword, buttonUpdateGeofenceRange;
 
     boolean passwordShow = false;
     boolean verifyPasswordShow = false;
@@ -104,6 +104,10 @@ public class SettingsFragment extends Fragment {
             return false;
         });
 
+        editTextGeofenceRange = view.findViewById(R.id.edit_text_geofence_range);
+        Double geofenceRange = userDto.getGeofenceRange();
+        editTextGeofenceRange.setText(geofenceRange.toString());
+
         buttonChangePassword = view.findViewById(R.id.button_change_password);
         buttonChangePassword.setOnClickListener(v -> {
 
@@ -136,6 +140,32 @@ public class SettingsFragment extends Fragment {
                 }
             } else {
                 Snackbar.make(view, "Password should be longer than 8 characters!", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        buttonUpdateGeofenceRange = view.findViewById(R.id.button_save_geofence_range);
+        buttonUpdateGeofenceRange.setOnClickListener(v -> {
+
+            Double mGeofenceRange = Double.valueOf(editTextGeofenceRange.getText().toString().trim());
+            if (geofenceRange <= 0) {
+                pd.setMessage("Updating...");
+                pd.show();
+                userDto.setGeofenceRange(mGeofenceRange);
+                userViewModel.hitUpdateUser(getContext(), userDto).observe(getViewLifecycleOwner(), responseDto -> {
+                    pd.dismiss();
+                    switch (responseDto.getStatus()) {
+                        case "success":
+                            Utils.alert(getContext(), "Connect Us", responseDto.getMessage());
+                            break;
+                        case "failed":
+                        case "error":
+                            Snackbar.make(view, responseDto.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                    }
+                });
+            } else {
+                pd.dismiss();
+                Snackbar.make(view, "Geofence range cannot be null or equal to 0!", Snackbar.LENGTH_LONG).show();
             }
         });
     }

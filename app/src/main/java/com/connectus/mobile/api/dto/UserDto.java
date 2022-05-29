@@ -9,6 +9,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String avatar;
+    private Double geofenceRange;
     private String gender;
     private String dob;
     private String ethnicity;
@@ -74,6 +75,14 @@ public class UserDto {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Double getGeofenceRange() {
+        return geofenceRange;
+    }
+
+    public void setGeofenceRange(Double geofenceRange) {
+        this.geofenceRange = geofenceRange;
     }
 
     public String getGender() {
