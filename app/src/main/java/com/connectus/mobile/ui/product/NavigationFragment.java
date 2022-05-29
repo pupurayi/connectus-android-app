@@ -77,11 +77,6 @@ public class NavigationFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_navigation, container, false);
     }
 
-    public void refresh() {
-        final Handler handler = new Handler();
-        handler.postDelayed(() -> webView.loadUrl(getLink()), 60000);
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -102,8 +97,6 @@ public class NavigationFragment extends Fragment {
         webView.setWebViewClient(new MyWebViewClient());
         this.link = getLink();
         webView.loadUrl(link, headers);
-        refresh();
-
         imageViewBack = view.findViewById(R.id.image_view_back);
         imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
     }
