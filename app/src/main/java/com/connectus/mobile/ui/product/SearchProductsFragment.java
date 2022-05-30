@@ -158,12 +158,12 @@ public class SearchProductsFragment extends Fragment {
 
         buttonSearch = view.findViewById(R.id.button_search);
         buttonSearch.setOnClickListener(v -> {
-            String category = editTextProductCategory.getText().toString();
-            String name = editTextProductName.getText().toString();
-            String sortBy = editTextSortBy.getText().toString();
-            String location = editTextSortBy.getText().toString();
+            String category = editTextProductCategory.getText().toString().trim();
+            String name = editTextProductName.getText().toString().trim();
+            String sortBy = editTextSortBy.getText().toString().trim();
+            String location = editTextSortBy.getText().toString().trim();
 
-            if (!category.isEmpty() || !name.isEmpty() || !location.isEmpty()) {
+            if (!category.isEmpty() || !name.isEmpty() || !location.isEmpty() || !sortBy.isEmpty()) {
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", userDto.getId().toString());
                 bundle.putString("title", "Search Results");
@@ -188,7 +188,7 @@ public class SearchProductsFragment extends Fragment {
                 transaction.commit();
 
             } else {
-                Snackbar.make(view, "Please enter category, name or location!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Please enter category, name, location, sortBy!", Snackbar.LENGTH_LONG).show();
             }
         });
 
