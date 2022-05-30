@@ -161,7 +161,7 @@ public class SearchProductsFragment extends Fragment {
             String category = editTextProductCategory.getText().toString().trim();
             String name = editTextProductName.getText().toString().trim();
             String sortBy = editTextSortBy.getText().toString().trim();
-            String location = editTextSortBy.getText().toString().trim();
+            String location = editTextLocation.getText().toString().trim();
 
             if (!category.isEmpty() || !name.isEmpty() || !location.isEmpty() || !sortBy.isEmpty()) {
                 Bundle bundle = new Bundle();
